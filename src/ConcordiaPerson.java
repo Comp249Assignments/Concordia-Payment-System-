@@ -1,42 +1,42 @@
 
 public class ConcordiaPerson {
 	private String id;
+	private String name;
 	private double monthlyPay;
-	private int hours;
 	
 	public ConcordiaPerson(){
 		id = "0000000";
+		name = "";
 		monthlyPay = 0;
-		hours = 0;
 	}
 	
-	public ConcordiaPerson(String id, double monthlyPay, int hours){
+	public ConcordiaPerson(String id, String name, double monthlyPay){
 		this.id = id;
+		this.name = name;
 		this.monthlyPay = monthlyPay;
-		this.hours = hours;
 	}
 	
 	public void setID(String id){
 		this.id = id;
 	}
 	
-	public void setMonthlyPay(double monthlyPay){
-		this.monthlyPay = monthlyPay;
+	public void setName(String name){
+		this.name = name;
 	}
 	
-	public void setHours(int hours){
-		this.hours = hours;
+	public void setMonthlyPay(double monthlyPay){
+		this.monthlyPay = monthlyPay;
 	}
 	
 	public String getID(){
 		return id;
 	}
 	
-	public double getMonthlyPay(){
-		return monthlyPay;
+	public String getName(){
+		return name;
 	}
 	
-	public int getHours(){
-		return hours;
+	public double getMonthlyPay(){
+		return monthlyPay;
 	}
 }
