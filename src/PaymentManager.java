@@ -82,8 +82,26 @@ public class PaymentManager {
 	
 	//method to add individuals to the system
 	public static void addIndividual(){
+	int action;
+	System.out.println("would you like to \n" +
+			"1:Add a TA\n" +
+			"2:Add a Faculty Member\n" +
+			"3:Add a Staff Member\n" +
+			"4:Go back ");
+	action=getInputRange(1,4);
+	switch (action){
+	case 1:
+		
+		break;
+	case 2:
+		addFacultyMember();
+		break;
+	case 3:
+		
+		break;
 		
 	}
+}
 	
 	//method to update the attributes of individuals (might use the search method in order to find that individual?)
 	public static void update(){
