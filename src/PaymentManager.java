@@ -15,7 +15,7 @@ public class PaymentManager {
 		startUp();
 		scanner.close();
 	}
-	
+	//each TA has an individaul salary so we will have to put this in the TA class
 	public static void startUp(){
 		System.out.println("Welcome!");
 		if(load()==0)
