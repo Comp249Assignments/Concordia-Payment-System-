@@ -167,39 +167,80 @@ public class PaymentManager {
 		}
 		return true;
 	}
-	//adds faculty members
 	public static FacultyMember addFacultyMember(){
 	  int action;
-	  int monthlyPay,numCourses;
+	  int monthlyPay,numCourses,hours;
 	  String input,name,ID;
+	  double hourlyRate;
+	  //i would like to add a go back option
 	 System.out.println("would you like to add a\n" +
 	 		"1:Permenant Faculty Member\n" +
 	 		"2:Part time Faculty Member");
 	 action=getInputRange(1,2);
 	 switch (action){
-	 case 1:
-		 System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
+	 	case 1:
+	 		//input ID
+	 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
+	 		ID=scanner.next();
 		 
-		 ID=scanner.next();
-		
-		 System.out.println("please input this Faculty Members name");
-		 name=scanner.next();
-		 System.out.println("please input this Faculty Members monthly salary");
-		 do{
-			 input=scanner.next();
-		 }while(parseable(true,input));
-		 monthlyPay=Integer.parseInt(input);
-		 System.out.println("please input the amount of classes this faculty member is teaching");
-		 do{
-			 input=scanner.next();
-		 }while(parseable(true,input));
-		 numCourses=Integer.parseInt(input);
-		 System.out.println("please input the number of courses this Faculty Member will be teaching");
-		 FacultyMember permenantFaculty=new PermenantFaculty(ID, name, monthlyPay, numCourses);
-		 break;
-	 case 2:
+	 		//input name
+	 		System.out.println("please input this Faculty Members name");
+	 		name=scanner.next();
 		 
-		 break;
+	 		//input monthlyPay
+	 		System.out.println("please input this Faculty Members monthly salary");
+	 		do{
+	 			input=scanner.next();
+	 		}while(parseable(true,input));
+	 		monthlyPay=Integer.parseInt(input);
+		 
+	 		//input numClasses
+	 		System.out.println("please input the number of courses this Faculty Member will be teaching");
+	 		do{
+	 			input=scanner.next();
+	 		}while(parseable(true,input));
+	 		numCourses=Integer.parseInt(input);
+		 
+	 		FacultyMember permenantFaculty=new PermenantFaculty(ID, name, monthlyPay, numCourses);
+	 		return permenantFaculty;
+		 
+	 	case 2:
+	 		//input ID
+	 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
+	 		ID=scanner.next();
+	 		
+	 		//input name
+	 		System.out.println("please input this Faculty Members name");
+	 		name=scanner.next();
+	 		
+	 		//input hourlyRate
+	 		System.out.println("please input this Faculty Members hourly rate");
+	 		do{
+	 			input=scanner.next();
+	 		}while(parseable(false,input));
+	 		hourlyRate=Double.parseDouble(input);
+	 		
+	 		//input amount of hours
+	 		do{
+	 			input=scanner.next();
+	 		}while(parseable(true,input));
+	 		hours=Integer.parseInt(input);
+		 
+	 		//input numClasses
+	 		System.out.println("please input the amount of classes this faculty member is teaching");
+	 		do{
+	 			input=scanner.next();
+	 		}while(parseable(true,input));
+	 		numCourses=Integer.parseInt(input);
+	 		
+	 		FacultyMember partTimeFaculty=new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses);
+	 		return partTimeFaculty;
+	 		
+	 	default:
+	 		JOptionPane.showMessageDialog(null,"error gadiel1");
+	 		exit();
+	 		FacultyMember bad=new FacultyMember("-1","-1",-1,-1);
+	 		return bad;
+		 
 	 }
- }
 }
