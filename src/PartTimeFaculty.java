@@ -2,18 +2,11 @@
 public class PartTimeFaculty extends FacultyMember{
 
 	private int hours;
-	
-	
-
-
 	private double hourlyRate;
-	
-
-
 	private int bonus;
+	
 	public PartTimeFaculty(String id, String name, int hours, double hourlyRate, int numCourses){
-		
-		super(id, name, hours*hourlyRate, numCourses);
+		super(id, name, (hours*hourlyRate), numCourses);
 		bonus=0;
 		for(int i=0;i<numCourses;i++){
 			if(getStudentsPerClass(i)>60)

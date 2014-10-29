@@ -1,7 +1,7 @@
 
-public class PermenantFaculty extends FacultyMember {
+public class PermanentFaculty extends FacultyMember {
 
-	public PermenantFaculty(String id, String name, double monthlyPay, int numCourses){
+	public PermanentFaculty(String id, String name, double monthlyPay, int numCourses){
 		super(id, name, monthlyPay, numCourses);
 	}
 }

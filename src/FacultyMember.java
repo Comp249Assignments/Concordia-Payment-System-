@@ -3,8 +3,8 @@ public class FacultyMember extends ConcordiaPerson{
 	private String[] coursesTaught;
 	private int[] studentsPerClass;
 	
-	public FacultyMember(int numCourses,String id, String name, double monthlyPay){
-		super(id,monthlyPay,name);
+	public FacultyMember(String id, String name, double monthlyPay, int numCourses){
+		super(id, name, monthlyPay);
 		coursesTaught=new String[numCourses];
 		studentsPerClass=new int[numCourses];
 		//setting the contents of the arrays
@@ -22,8 +22,12 @@ public class FacultyMember extends ConcordiaPerson{
 		return coursesTaught;
 	}
 	
-	public int[] getStudentsPerClass(int courseNum){
+	public int[] getStudentsPerClass(){
 		return studentsPerClass;
+	}
+	
+	public int getStudentsPerClass(int courseNum){
+		return studentsPerClass[courseNum];
 	}
 	
 	public int getNumCourses(){
