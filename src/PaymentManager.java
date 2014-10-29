@@ -167,4 +167,39 @@ public class PaymentManager {
 		}
 		return true;
 	}
+	//adds faculty members
+	public static FacultyMember addFacultyMember(){
+	  int action;
+	  int monthlyPay,numCourses;
+	  String input,name,ID;
+	 System.out.println("would you like to add a\n" +
+	 		"1:Permenant Faculty Member\n" +
+	 		"2:Part time Faculty Member");
+	 action=getInputRange(1,2);
+	 switch (action){
+	 case 1:
+		 System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
+		 
+		 ID=scanner.next();
+		
+		 System.out.println("please input this Faculty Members name");
+		 name=scanner.next();
+		 System.out.println("please input this Faculty Members monthly salary");
+		 do{
+			 input=scanner.next();
+		 }while(parseable(true,input));
+		 monthlyPay=Integer.parseInt(input);
+		 System.out.println("please input the amount of classes this faculty member is teaching");
+		 do{
+			 input=scanner.next();
+		 }while(parseable(true,input));
+		 numCourses=Integer.parseInt(input);
+		 System.out.println("please input the number of courses this Faculty Member will be teaching");
+		 FacultyMember permenantFaculty=new PermenantFaculty(ID, name, monthlyPay, numCourses);
+		 break;
+	 case 2:
+		 
+		 break;
+	 }
+ }
 }
