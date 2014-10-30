@@ -2,7 +2,6 @@ import java.util.*;
 import javax.swing.*;
 
 public class PaymentManager {
-	private static boolean[] saveThisArrayList=new boolean[7];//goes in order Student->0 ta->1 etc..
 	private static Scanner scanner = new Scanner(System.in);
 	private static double underGradTAPay;
 	private static ArrayList<Student> students = new ArrayList();
@@ -19,9 +18,16 @@ public class PaymentManager {
 	//each TA has an individual salary so we will have to put this in the TA class
 	public static void startUp(){
 		System.out.println("Welcome!");
-		Arrays.fill(saveThisArrayList,false);
 		if(load()==0)
 		{
+			// creating the output file
+				try{
+					ObjectOutputStream saveLocation=new ObjectOutputStream(new FileOutputStream("Concordia payment database.txt"));
+					saveLocation.close();
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
 			System.out.println("How much are undergrad TAs paid?");
 			underGradTAPay = getInputDouble();
 		}
@@ -147,7 +153,6 @@ public class PaymentManager {
 			 
 		 		//PermenantFaculty permenantFaculty=
 		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses));
-		 		saveThisArrayList[3]=true;
 		 		break;
 			case 2:
 		 		//input ID
@@ -172,7 +177,6 @@ public class PaymentManager {
 		 		numCourses=getInputRange(1,2);
 		 		
 		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses));
-		 		saveThisArrayList[4]=true; 
 		 }
 	 }
 	
