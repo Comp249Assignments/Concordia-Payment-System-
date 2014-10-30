@@ -268,9 +268,7 @@ public class PaymentManager {
 		 		partTimeFaculty.add(pTFaculty);
 		 		break;
 		 	//We don't actually need the default case since there's no way anyone will actually get here, but you can keep it if you want
-		 	default:
-		 		JOptionPane.showMessageDialog(null,"error gadiel1");
-		 		exit();
+		 	
 		 }
 	}
 }
