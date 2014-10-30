@@ -88,10 +88,10 @@ public class PaymentManager {
 		boolean stop = false;
 		while(!stop){
 			System.out.println("Would you like to \n" +
-					"1:Add a student or TA\n" +
-					"2:Add a Faculty Member\n" +
-					"3:Add a Staff Member\n" +
-					"4:Go back");
+					"1: Add a Student or TA\n" +
+					"2: Add a Faculty Member\n" +
+					"3: Add a Staff Member\n" +
+					"4: Go back");
 			action=getInputRange(1,4);
 			switch (action){
 				case 1:
@@ -115,22 +115,22 @@ public class PaymentManager {
 	}
 	
 	//Method for adding a faculty member
-		public static void addFacultyMember(){
-		  int action;
-		  int monthlyPay,numCourses,hours;
-		  String input,name,ID;
-		  boolean k=false;
-		  double hourlyRate;
-		  
-		 System.out.println("Is the Faculty Member a\n" +
-		 		"1: Permanent Faculty Member\n" +
-		 		"2: Part time Faculty Member\n" +
+	public static void addFacultyMember(){
+		int action;
+		int monthlyPay,numCourses,hours;
+		String input,name,ID;
+		boolean k=false;
+		double hourlyRate;
+		
+		System.out.println("Is the Faculty Member a\n" +
+				"1: Permanent Faculty Member\n" +
+				"2: Part time Faculty Member\n" +
 		 		"3: Go back");
-		 action=getInputRange(1,2);
-		 switch (action){
-		 	case 1:
-		 		//input ID
-		 		System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
+		action=getInputRange(1,2);
+		switch (action){
+			case 1:
+				//input ID
+				System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
 		 		ID=scanner.next();
 			 
 		 		//input name
@@ -148,8 +148,8 @@ public class PaymentManager {
 		 		//PermenantFaculty permenantFaculty=
 		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses));
 		 		saveThisArrayList[3]=true;
-			 
-		 	case 2:
+		 		break;
+			case 2:
 		 		//input ID
 		 		System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
 		 		ID=scanner.next();
@@ -172,10 +172,7 @@ public class PaymentManager {
 		 		numCourses=getInputRange(1,2);
 		 		
 		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses));
-		 		saveThisArrayList[4]=true;
-		 		
-		 
-			 
+		 		saveThisArrayList[4]=true; 
 		 }
 	 }
 	
@@ -187,7 +184,7 @@ public class PaymentManager {
 		System.out.println("Is the staff a \n" +
 				"1: Part time staff member\n" +
 				"2: Permanent staff member\n" +
-				"3: Go back\n");
+				"3: Go back");
 		action=getInputRange(1,3);
 		
 		if(action < 3){
@@ -229,7 +226,7 @@ public class PaymentManager {
 		}
 	}
 	
-	//method to update the attributes of individuals (might use the search method in order to find that individual?)
+	//Method to update the attributes of individuals (might use the search method in order to find that individual?)
 	public static void update(){
 		
 	}
