@@ -84,26 +84,150 @@ public class PaymentManager {
 	
 	//method to add individuals to the system
 	public static void addIndividual(){
-	int action;
-	System.out.println("would you like to \n" +
-			"1:Add a TA\n" +
-			"2:Add a Faculty Member\n" +
-			"3:Add a Staff Member\n" +
-			"4:Go back ");
-	action=getInputRange(1,4);
-	switch (action){
-	case 1:
-		
-		break;
-	case 2:
-		addFacultyMember();
-		break;
-	case 3:
-		
-		break;
+		int action;
+		boolean stop = false;
+		while(!stop){
+			System.out.println("Would you like to \n" +
+					"1:Add a student or TA\n" +
+					"2:Add a Faculty Member\n" +
+					"3:Add a Staff Member\n" +
+					"4:Go back");
+			action=getInputRange(1,4);
+			switch (action){
+				case 1:
+					addStudent();
+					break;
+				case 2:
+					addFacultyMember();
+					break;
+				case 3:
+					addStaffMember();
+					break;
+				default:
+					stop = true;
+			}		
+		}
+	}
+	
+	//Method to add a Student or TA
+	public static void addStudent(){
 		
 	}
-}
+	
+	//Method for adding a faculty member
+		public static void addFacultyMember(){
+		  int action;
+		  int monthlyPay,numCourses,hours;
+		  String input,name,ID;
+		  boolean k=false;
+		  double hourlyRate;
+		  
+		 System.out.println("Is the Faculty Member a\n" +
+		 		"1: Permanent Faculty Member\n" +
+		 		"2: Part time Faculty Member\n" +
+		 		"3: Go back");
+		 action=getInputRange(1,2);
+		 switch (action){
+		 	case 1:
+		 		//input ID
+		 		System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
+		 		ID=scanner.next();
+			 
+		 		//input name
+		 		System.out.println("Please input this faculty member's name");
+		 		name=scanner.next();
+			 
+		 		//input numClasses
+		 		System.out.println("Please input the number of courses this faculty member will be teaching");
+		 		numCourses=getInputInt();
+		 		
+		 		//input monthlyPay
+		 		System.out.println("Please input this faculty member's monthly salary in dollars");
+		 		monthlyPay=getInputInt();
+			 
+		 		//PermenantFaculty permenantFaculty=
+		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses));
+		 		saveThisArrayList[3]=true;
+			 
+		 	case 2:
+		 		//input ID
+		 		System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
+		 		ID=scanner.next();
+		 		
+		 		//input name
+		 		System.out.println("Please input this faculty member's name");
+		 		name=scanner.next();
+		 		
+		 		//input hourlyRate
+		 		//Why do the next two things ask about TA??
+		 		System.out.println("Please input the amount the TA will be paid per hour in dollars");
+		 		hourlyRate=getInputDouble();
+		 		
+		 		//input amount of hours
+		 		System.out.println("please input the amount of hours the TA will be teaching for");
+		 		hours=getInputInt();
+			 
+		 		//input numClasses
+		 		System.out.println("Please input the amount of classes this faculty member is teaching");
+		 		numCourses=getInputRange(1,2);
+		 		
+		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses));
+		 		saveThisArrayList[4]=true;
+		 		
+		 
+			 
+		 }
+	 }
+	
+	//Method for adding any kind of staff member
+	public static void addStaffMember(){
+		int action, duration;
+		String id = "", name = "", input;
+		double pay;
+		System.out.println("Is the staff a \n" +
+				"1: Part time staff member\n" +
+				"2: Permanent staff member\n" +
+				"3: Go back\n");
+		action=getInputRange(1,3);
+		
+		if(action < 3){
+			System.out.println("Please input this staff member's ID");
+			id=scanner.next();
+			
+			System.out.println("Please input this staff member's name");
+ 			name=scanner.next();
+		}
+ 		
+		switch(action){
+			case 1:
+				System.out.println("Is this a commissioned staff member? \n" +
+						"1: Yes\n" +
+						"2: No");
+				action=getInputRange(1,2);
+		 		
+		 		System.out.println("How many months has this person been hired for?");
+		 		duration = getInputInt();
+		 		
+		 		System.out.println("How much will this person be paid over the duration of their contract?");
+		 		pay = getInputDouble();
+				switch(action){
+					case 1:
+						System.out.println("Where at Concordia does this person work?");
+				 		input = scanner.next();
+				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
+						break;
+					case 2:
+						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
+						break;
+				}
+				break;
+			case 2:
+				System.out.println("Please input this staff member's yearly salary");
+		 		pay = getInputDouble();
+		 		permanentStaff.add(new PermanentStaff(id, name, pay));
+				break;
+		}
+	}
 	
 	//method to update the attributes of individuals (might use the search method in order to find that individual?)
 	public static void update(){
@@ -186,6 +310,17 @@ public class PaymentManager {
 		return Double.parseDouble(input);
 	}
 	
+	//Method to get integer input and check for errors
+	public static int getInputInt(){
+		String input;
+		boolean parsed = false;
+		do{
+			input = scanner.next();
+			parsed = parseable(false, input);
+		}while(!parsed);
+		return Integer.parseInt(input);
+	}
+	
 	public static boolean parseable(boolean integer, String input){
 		try{
 			if(integer)
@@ -200,65 +335,4 @@ public class PaymentManager {
 		}
 		return true;
 	}
-	public static void addFacultyMember(){
-	  int action;
-	  int monthlyPay,numCourses,hours;
-	  String input,name,ID;
-	  boolean k=false;
-	  double hourlyRate;
-	  
-	 System.out.println("would you like to add a\n" +
-	 		"1:Permenant Faculty Member\n" +
-	 		"2:Part time Faculty Member");
-	 action=getInputRange(1,2);
-	 switch (action){
-	 	case 1:
-	 		//input ID
-	 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
-	 		ID=scanner.next();
-		 
-	 		//input name
-	 		System.out.println("please input this Faculty Members name");
-	 		name=scanner.next();
-		 
-	 		//input numClasses
-	 		System.out.println("please input the number of courses this Faculty Member will be teaching");
-	 		numCourses=getInputInt();
-	 		
-	 		//input monthlyPay
-	 		System.out.println("please input this Faculty Members monthly salary in dollars");
-	 		monthlyPay=getInputInt();
-		 
-	 		//PermenantFaculty permenantFaculty=
-	 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses));
-	 		saveThisArrayList[3]=true;
-		 
-	 	case 2:
-	 		//input ID
-	 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
-	 		ID=scanner.next();
-	 		
-	 		//input name
-	 		System.out.println("please input this Faculty Members name");
-	 		name=scanner.next();
-	 		
-	 		//input hourlyRate
-	 		System.out.println("please input the amount the TA will be paid per hour in dollars");
-	 		hourlyRate=getInputDouble();
-	 		
-	 		//input amount of hours
-	 		System.out.println("please input the amount of hours the TA will be teaching for");
-	 		hours=getInputInt();
-		 
-	 		//input numClasses
-	 		System.out.println("please input the amount of classes this faculty member is teaching");
-	 		numCourses=getInputRange(1,2);
-	 		
-	 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses));
-	 		saveThisArrayList[4]=true;
-	 		
-	 
-		 
-	 }
- }
 }
