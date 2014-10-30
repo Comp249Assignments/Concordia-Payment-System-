@@ -6,8 +6,8 @@ public class PaymentManager {
 	private static double underGradTAPay;
 	private static ArrayList<Student> students = new ArrayList();
 	private static ArrayList<TA> tas = new ArrayList();
-	private static ArrayList<PartTimeFaculty> partTimeFaculty = new ArrayList();
 	private static ArrayList<PermanentFaculty> permanentFaculty = new ArrayList();
+	private static ArrayList<PartTimeFaculty> partTimeFaculty = new ArrayList();
 	private static ArrayList<PermanentStaff> permanentStaff = new ArrayList();
 	private static ArrayList<PartTimeStaff> partTimeStaff = new ArrayList();
 	private static ArrayList<CommissionStaff> commissionStaff = new ArrayList();
