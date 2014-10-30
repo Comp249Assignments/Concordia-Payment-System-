@@ -1,4 +1,6 @@
+import java.io.*;
 import java.util.*;
+
 import javax.swing.*;
 
 public class PaymentManager {
@@ -20,14 +22,7 @@ public class PaymentManager {
 		System.out.println("Welcome!");
 		if(load()==0)
 		{
-			// creating the output file
-				try{
-					ObjectOutputStream saveLocation=new ObjectOutputStream(new FileOutputStream("Concordia payment database.txt"));
-					saveLocation.close();
-				}
-				catch(IOException e){
-					e.printStackTrace();
-				}
+			
 			System.out.println("How much are undergrad TAs paid?");
 			underGradTAPay = getInputDouble();
 		}
@@ -36,12 +31,20 @@ public class PaymentManager {
 	
 	//The method to load the system (returns 0 if there is no system to load)
 	public static int load(){
+		
 		return 0;
 	}
 	
 	//method to save the system. Should run whenever a change is made to the system, in case the user closes the program in an unexpected way
 	public static void save(){
-		
+		// creating the output file
+		try{
+			ObjectOutputStream saveLocation=new ObjectOutputStream(new FileOutputStream("Concordia payment database.txt"));
+			saveLocation.close();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public static void action(){
