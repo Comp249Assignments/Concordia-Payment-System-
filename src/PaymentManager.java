@@ -15,7 +15,7 @@ public class PaymentManager {
 		startUp();
 		scanner.close();
 	}
-	//each TA has an individaul salary so we will have to put this in the TA class
+	//each TA has an individual salary so we will have to put this in the TA class
 	public static void startUp(){
 		System.out.println("Welcome!");
 		if(load()==0)
@@ -125,7 +125,21 @@ public class PaymentManager {
 	
 	//Method returns the total pay for all Concordia employees
 	public static double totalPay(){
-		return 0;
+		double pay = 0;
+		
+		for(int x=0; x<tas.size(); x++)
+			pay+=tas.get(x).getMonthlyPay();
+		for(int x=0; x<partTimeFaculty.size(); x++)
+			pay+=partTimeFaculty.get(x).getMonthlyPay();
+		for(int x=0; x<permanentFaculty.size(); x++)
+			pay+=permanentFaculty.get(x).getMonthlyPay();
+		for(int x=0; x<permanentStaff.size(); x++)
+			pay+=permanentStaff.get(x).getMonthlyPay();
+		for(int x=0; x<partTimeStaff.size(); x++)
+			pay+=partTimeStaff.get(x).getMonthlyPay();
+		for(int x=0; x<commissionStaff.size(); x++)
+			pay+=commissionStaff.get(x).getMonthlyPay();
+		return pay;
 	}
 	
 	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
@@ -180,12 +194,11 @@ public class PaymentManager {
 		//If it is not parseable, this block will catch the error and execute the code within it
 		catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Error: The input received was not a number. Can you try that again?");
-			System.out.println("Error: The input received was not a number. Can you try that again?");
 			return false;
 		}
 		return true;
 	}
-	public static FacultyMember addFacultyMember(){
+	public static void addFacultyMember(){
 		int action;
 		int monthlyPay,numCourses,hours;
 		String input,name,ID;
@@ -219,9 +232,9 @@ public class PaymentManager {
 		 		}while(parseable(true,input));
 		 		numCourses=Integer.parseInt(input);
 			 
-		 		FacultyMember permenantFaculty=new PermanentFaculty(ID, name, monthlyPay, numCourses);
-		 		return permenantFaculty;
-			 
+		 		PermanentFaculty faculty=new PermanentFaculty(ID, name, monthlyPay, numCourses);
+		 		permanentFaculty.add(faculty);
+		 		break;
 		 	case 2:
 		 		//input ID
 		 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
@@ -251,15 +264,13 @@ public class PaymentManager {
 		 		}while(parseable(true,input));
 		 		numCourses=Integer.parseInt(input);
 		 		
-		 		FacultyMember partTimeFaculty=new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses);
-		 		return partTimeFaculty;
-		 		
+		 		PartTimeFaculty pTFaculty=new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses);
+		 		partTimeFaculty.add(pTFaculty);
+		 		break;
+		 	//We don't actually need the default case since there's no way anyone will actually get here, but you can keep it if you want
 		 	default:
 		 		JOptionPane.showMessageDialog(null,"error gadiel1");
 		 		exit();
-		 		FacultyMember bad=new FacultyMember("-1","-1",-1,-1);
-		 		return bad;
-			 
 		 }
 	}
 }
