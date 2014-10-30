@@ -199,76 +199,64 @@ public class PaymentManager {
 		return true;
 	}
 	public static void addFacultyMember(){
-		int action;
-		int monthlyPay,numCourses,hours;
-		String input,name,ID;
-		double hourlyRate;
-		//i would like to add a go back option
-		System.out.println("would you like to add a\n" +
+	  int action;
+	  int monthlyPay,numCourses,hours;
+	  String input,name,ID;
+	  boolean k=false;
+	  double hourlyRate;
+	  
+	 System.out.println("would you like to add a\n" +
 	 		"1:Permenant Faculty Member\n" +
 	 		"2:Part time Faculty Member");
-		action=getInputRange(1,2);
-		switch (action){
-			case 1:
-				//input ID
-		 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
-		 		ID=scanner.next();
-			 
-		 		//input name
-		 		System.out.println("please input this Faculty Members name");
-		 		name=scanner.next();
-			 
-		 		//input monthlyPay
-		 		System.out.println("please input this Faculty Members monthly salary");
-		 		do{
-		 			input=scanner.next();
-		 		}while(parseable(true,input));
-		 		monthlyPay=Integer.parseInt(input);
-			 
-		 		//input numClasses
-		 		System.out.println("please input the number of courses this Faculty Member will be teaching");
-		 		do{
-		 			input=scanner.next();
-		 		}while(parseable(true,input));
-		 		numCourses=Integer.parseInt(input);
-			 
-		 		PermanentFaculty faculty=new PermanentFaculty(ID, name, monthlyPay, numCourses);
-		 		permanentFaculty.add(faculty);
-		 		break;
-		 	case 2:
-		 		//input ID
-		 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
-		 		ID=scanner.next();
-		 		
-		 		//input name
-		 		System.out.println("please input this Faculty Members name");
-		 		name=scanner.next();
-		 		
-		 		//input hourlyRate
-		 		System.out.println("please input this Faculty Members hourly rate");
-		 		do{
-		 			input=scanner.next();
-		 		}while(parseable(false,input));
-		 		hourlyRate=Double.parseDouble(input);
-		 		
-		 		//input amount of hours
-		 		do{
-		 			input=scanner.next();
-		 		}while(parseable(true,input));
-		 		hours=Integer.parseInt(input);
-			 
-		 		//input numClasses
-		 		System.out.println("please input the amount of classes this faculty member is teaching");
-		 		do{
-		 			input=scanner.next();
-		 		}while(parseable(true,input));
-		 		numCourses=Integer.parseInt(input);
-		 		
-		 		PartTimeFaculty pTFaculty=new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses);
-		 		partTimeFaculty.add(pTFaculty);
-		 		break;
-		 	//We don't actually need the default case since there's no way anyone will actually get here, but you can keep it if you want
-		 	
-		 }
-	}
+	 action=getInputRange(1,2);
+	 switch (action){
+	 	case 1:
+	 		//input ID
+	 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
+	 		ID=scanner.next();
+		 
+	 		//input name
+	 		System.out.println("please input this Faculty Members name");
+	 		name=scanner.next();
+		 
+	 		//input numClasses
+	 		System.out.println("please input the number of courses this Faculty Member will be teaching");
+	 		numCourses=getInputInt();
+	 		
+	 		//input monthlyPay
+	 		System.out.println("please input this Faculty Members monthly salary in dollars");
+	 		monthlyPay=getInputInt();
+		 
+	 		//PermenantFaculty permenantFaculty=
+	 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses));
+	 		saveThisArrayList[3]=true;
+		 
+	 	case 2:
+	 		//input ID
+	 		System.out.println("please input this Faculty Members ID");//---------------------------------------------------------------------------------------
+	 		ID=scanner.next();
+	 		
+	 		//input name
+	 		System.out.println("please input this Faculty Members name");
+	 		name=scanner.next();
+	 		
+	 		//input hourlyRate
+	 		System.out.println("please input the amount the TA will be paid per hour in dollars");
+	 		hourlyRate=getInputDouble();
+	 		
+	 		//input amount of hours
+	 		System.out.println("please input the amount of hours the TA will be teaching for");
+	 		hours=getInputInt();
+		 
+	 		//input numClasses
+	 		System.out.println("please input the amount of classes this faculty member is teaching");
+	 		numCourses=getInputInt();
+	 		
+	 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses));
+	 		saveThisArrayList[4]=true;
+	 		
+	 
+		 
+	 }
+ }
 }
