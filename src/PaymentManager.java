@@ -146,9 +146,11 @@ public class PaymentManager {
 	//Method for adding a faculty member
 	public static void addFacultyMember(){
 		int action;
-		int monthlyPay,numCourses,hours;
-		String input,name,ID;
-		boolean k=false;
+		int monthlyPay,numCourses,hours,bonus=0;
+		String name,ID;
+		String [] classNames;
+		int [] studentsPerClass;
+		
 		double hourlyRate;
 		
 		System.out.println("Is the Faculty Member a\n" +
@@ -173,9 +175,24 @@ public class PaymentManager {
 		 		//input monthlyPay
 		 		System.out.println("Please input this faculty member's monthly salary in dollars");
 		 		monthlyPay=getInputInt();
-			 
+		 		
+		 		//input class names
+		 		classNames=new String[numCourses];
+		 		System.out.println("Please input the names of the classes");
+		 		for(int i=0;i<numCourses;i++){
+		 			System.out.println("Please put in the name of class number "+(i+1));
+		 			classNames[i]=scanner.next();
+		 		}
+		 		
+		 		//input students per class
+		 		studentsPerClass=new int[numCourses];
+		 		for(int i=0;i<numCourses;i++){
+		 			System.out.println("please put in the number of students in class "+ classNames[i]);
+		 			studentsPerClass[i]=getInputRange(0,999999999);
+		 			}
+		 		
 		 		//PermenantFaculty permenantFaculty=
-		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses));
+		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
 		 		break;
 			case 2:
 		 		//input ID
@@ -188,20 +205,38 @@ public class PaymentManager {
 		 		
 		 		//input hourlyRate
 		 		//Why do the next two things ask about TA??
-		 		System.out.println("Please input the amount the faculty member will be paid per hour in dollars");
+		 		System.out.println("Please input the amount the TA will be paid per hour in dollars");
 		 		hourlyRate=getInputDouble();
 		 		
 		 		//input amount of hours
-		 		System.out.println("Please input the amount of hours the faculty member will be teaching for");
+		 		System.out.println("please input the amount of hours the TA will be teaching for");
 		 		hours=getInputInt();
 			 
 		 		//input numClasses
 		 		System.out.println("Please input the amount of classes this faculty member is teaching");
 		 		numCourses=getInputRange(1,2);
 		 		
-		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses));
+		 		//input class names
+		 		classNames=new String[numCourses];
+		 		for(int i=0;i<numCourses;i++){
+		 			System.out.println("Please put in the name of class number "+(i+1));
+		 			classNames[i]=scanner.next();
+		 		}
+		 		
+		 		//input students per class
+		 		studentsPerClass=new int[numCourses];
+		 		for(int i=0;i<numCourses;i++){
+		 			System.out.println("please put in the number of students in class "+ classNames[i]);
+		 			studentsPerClass[i]=getInputRange(0,999999999);
+		 			}
+		 		//calculating bonus
+		 		for (int i=0; i<numCourses;i++){
+		 			bonus+=((studentsPerClass[i]>=40 && studentsPerClass[i]<=60)? 500:0);
+		 			bonus+=((studentsPerClass[i]>60)? 1000:0);		 		}
+		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus));
 		 }
 	 }
+	
 	
 	//Method for adding any kind of staff member
 	public static void addStaffMember(){
