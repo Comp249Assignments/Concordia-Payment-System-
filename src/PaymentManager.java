@@ -35,17 +35,36 @@ public class PaymentManager {
 		return 0;
 	}
 	
-	//method to save the system. Should run whenever a change is made to the system, in case the user closes the program in an unexpected way
-	public static void save(){
-		// creating the output file
+	//appends to the save file
+	public static void writeToSave(ArrayList t){
 		try{
-			ObjectOutputStream saveLocation=new ObjectOutputStream(new FileOutputStream("Concordia payment database.txt"));
-			saveLocation.close();
+			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file,true));
+			out.writeObject(t);
+			out.close();
 		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
+		
 	}
+	//method to save the system. Should run whenever a change is made to the system, in case the user closes the program in an unexpected way
+	public static void save(){
+		if(students.size()>0)
+			writeToSave(students);
+		if (tas.size()>0)
+			writeToSave(tas);
+		if (partTimeFaculty.size()>0)
+			writeToSave(partTimeFaculty);
+		if (permanentFaculty.size()>0)
+			writeToSave(permanentFaculty);
+		if (partTimeStaff.size()>0)
+			writeToSave(partTimeStaff);
+		if (permanentStaff.size()>0)
+			writeToSave(permanentStaff);
+		if (commissionStaff.size()>0)
+			writeToSave(tas);
+	}
+	
 	
 	public static void action(){
 		int action;
