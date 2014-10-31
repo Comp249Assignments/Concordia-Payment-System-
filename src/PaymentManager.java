@@ -4,6 +4,7 @@ import java.util.*;
 import javax.swing.*;
 
 public class PaymentManager {
+	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
 	private static double underGradTAPay;
 	private static ArrayList<Student> students = new ArrayList();
