@@ -1,36 +1,29 @@
+import java.io.Serializable;
 import java.util.*;
-public class FacultyMember extends ConcordiaPerson{
+public class FacultyMember extends ConcordiaPerson implements Serializable {
 	private String[] coursesTaught;
 	private int[] studentsPerClass;
 	
-	public FacultyMember(String id, String name, double monthlyPay, int numCourses){
-		super(id, name, monthlyPay);
+	
+	
+	public FacultyMember(String id, String name, double monthlyPay, int numCourses, String[] classNames, int[] studentsPerClass){
+		super(id,monthlyPay,name);
 		coursesTaught=new String[numCourses];
 		studentsPerClass=new int[numCourses];
-		//setting the contents of the arrays
-		for(int i=0;i<numCourses;i++){
-			Scanner kb=new Scanner(System.in);
-			System.out.print("please put in the number of students in this class");
-			studentsPerClass[i]=kb.nextInt();
-			kb.nextLine();
-			System.out.print("please put in the class chosen");
-			coursesTaught[i]=kb.nextLine();
-		}
+		coursesTaught=classNames;
+		this.studentsPerClass=studentsPerClass;
 	}
 	//getter methods
-	public String[] getCoursesTaught(){
-		return coursesTaught;
-	}
-	
-	public int[] getStudentsPerClass(){
-		return studentsPerClass;
+	public String getCoursesTaught(int courseNum){
+		return coursesTaught[courseNum];
 	}
 	
 	public int getStudentsPerClass(int courseNum){
 		return studentsPerClass[courseNum];
 	}
 	
-	public int getNumCourses(){
+	
+	public  int getNumCourses(){
 		return coursesTaught.length;
 	}
 	public int getNumStudents(){
@@ -43,7 +36,13 @@ public class FacultyMember extends ConcordiaPerson{
 	}
 	
 	public void setStudentsPerClass(int courseNum,int numStudents){
+	
 		this.studentsPerClass[courseNum]=numStudents;
 	}
+	
+	
+	
+
+	
 	
 }
