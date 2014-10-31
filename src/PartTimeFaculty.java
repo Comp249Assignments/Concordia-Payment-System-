@@ -1,26 +1,21 @@
+import java.io.Serializable;
 
-public class PartTimeFaculty extends FacultyMember{
+
+public class PartTimeFaculty extends FacultyMember implements Serializable{
 
 	private int hours;
 	private double hourlyRate;
 	private int bonus;
 	
-	public PartTimeFaculty(String id, String name, int hours, double hourlyRate, int numCourses){
-		super(id, name, (hours*hourlyRate), numCourses);
-		bonus=0;
-		for(int i=0;i<numCourses;i++){
-			if(getStudentsPerClass(i)>60)
-				bonus+=1000;
-			if(getStudentsPerClass(i)>40 && getStudentsPerClass(0)<60)
-				bonus+=500;
-		}
-		setMonthlyPay(hours*hourlyRate+bonus);
+	public PartTimeFaculty(String id, String name, int hours, double hourlyRate, int numCourses, String[] classNames, int[] studentsPerClass, int bonus){
+		super(id, name, hours*hourlyRate+bonus, numCourses, classNames, studentsPerClass);
+		this.bonus=bonus;
 		this.hours=hours;
 		this.hourlyRate=hourlyRate;
 	}
 	
 	
-	
+	//getters
 	public double getHourlyRate() {
 		return hourlyRate;
 	}
@@ -29,6 +24,11 @@ public class PartTimeFaculty extends FacultyMember{
 		return hours;
 	}
 	
+	public int getBonus(){
+		return bonus;
+	}
+	
+	//setters
 	public void setHourlyRate(double hourlyRate) {
 		this.hourlyRate = hourlyRate;
 	}
