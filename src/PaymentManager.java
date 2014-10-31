@@ -63,7 +63,7 @@ public class PaymentManager {
 		if (permanentStaff.size()>0)
 			writeToSave(permanentStaff);
 		if (commissionStaff.size()>0)
-			writeToSave(tas);
+			writeToSave(commissionStaff);
 	}
 	
 	
@@ -188,11 +188,11 @@ public class PaymentManager {
 		 		
 		 		//input hourlyRate
 		 		//Why do the next two things ask about TA??
-		 		System.out.println("Please input the amount the Faculty Member will be paid per hour in dollars");
+		 		System.out.println("Please input the amount the faculty member will be paid per hour in dollars");
 		 		hourlyRate=getInputDouble();
 		 		
 		 		//input amount of hours
-		 		System.out.println("please input the amount of hours the Faculty Member will be teaching for");
+		 		System.out.println("Please input the amount of hours the faculty member will be teaching for");
 		 		hours=getInputInt();
 			 
 		 		//input numClasses
