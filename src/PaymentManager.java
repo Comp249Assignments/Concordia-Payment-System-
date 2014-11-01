@@ -141,6 +141,7 @@ public class PaymentManager {
 	//method to save the system. 
 	
 	public static void save(){
+		arrayCeption.clear();
 		if(students.size()>0)
 			arrayCeption.add(students);
 		
