@@ -7,6 +7,7 @@ public class PaymentManager {
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
 	private static double underGradTAPay;
+	private static ArrayList<ArrayList> arrayCeption=new ArrayList();
 	private static ArrayList<Student> students = new ArrayList();
 	private static ArrayList<TA> tas = new ArrayList();
 	private static ArrayList<PermanentFaculty> permanentFaculty = new ArrayList();
@@ -32,15 +33,94 @@ public class PaymentManager {
 	
 	//The method to load the system (returns 0 if there is no system to load)
 	public static int load(){
+		ArrayList<Integer> ID=new ArrayList();
+		int index=0;
+		boolean stop=false;
+		try{
+			//making two input streams "idIn" is for retrieving the ID of the person and using an id
+			//cataloging system (that we will have to implement) determines to what group he belongs to
+			//"in2" is used to return the actual constructor and casts it into the correct group by
+			//using "idIn"
+			ObjectInputStream idIn=new ObjectInputStream(new FileInputStream(file));
+			ObjectInputStream in2=new ObjectInputStream(new FileInputStream(file));
+
+			
+			//wont stop until IOException is recieved (meaning we hit the end of the file)
+			while(!stop){
+				//retrieving the id and inputing it into an ArrayList ID
+				ID.add(((ConcordiaPerson) idIn.readObject()).getID());
+				
+				//students 1000000-2000000
+				if(ID.get(index)>=1000000 && ID.get(index)<2000000){
+					students.add((Student) in2.readObject());
+					load++;
+				}
+				//ta 2000000-3000000
+				if(ID.get(index)>=2000000 && ID.get(index)<3000000){
+					tas.add((TA) in2.readObject());
+					load++;
+				}
+				
+				//permanentFaculty 3000000-4000000
+				if(ID.get(index)>=3000000 && ID.get(index)<4000000){
+					permanentFaculty.add((PermanentFaculty) in2.readObject());
+					load++;
+				}
+				
+				//partTimeFaculty 4000000-5000000
+				if(ID.get(index)>=4000000 && ID.get(index)<5000000){
+					partTimeFaculty.add((PartTimeFaculty) in2.readObject());
+					load++;
+				}			
+				
+				//permanentStaff 5000000-6000000
+				if(ID.get(index)>=5000000 && ID.get(index)<6000000){
+					permanentStaff.add((PermanentStaff) in2.readObject());
+					load++;
+				}
+				
+				//partTimeStaff 6000000-7000000
+				if(ID.get(index)>=6000000 && ID.get(index)<7000000){
+					partTimeStaff.add((PartTimeStaff) in2.readObject());
+					load++;
+				}
+				
+				//commissionStaff 7000000-8000000
+				if(ID.get(index)>=7000000 && ID.get(index)<8000000){
+					commissionStaff.add((CommissionStaff) in2.readObject());
+					load++;
+				}
+			index++;
+		}
+			idIn.close();
+			
+			in2.close();
+			}
+			catch(FileNotFoundException e){
+				e.printStackTrace();
+				return 0;
+			}
+			catch(IOException e){
+				//when file ends stops the while loop
+				stop=true;
+			}
+			catch(ClassNotFoundException e){
+				e.printStackTrace();
+			}
 		
-		return 0;
+			
+		return load;
 	}
 	
-	//appends to the save file
-	public static void writeToSave(ArrayList t){
+	
+//overwrites the old save contents with the new ones
+	public static void writeToSave(ArrayList<ArrayList> t){
 		try{
-			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file,true));
-			out.writeObject(t);
+			file.delete();
+			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file,false));
+			for(int i=0;i<t.size();i++)
+				for(int j=0; j<t.get(i).size();j++)
+					out.writeObject(t.get(i).get(j));
 			out.close();
 		}
 		catch(IOException e){
@@ -48,22 +128,31 @@ public class PaymentManager {
 		}
 		
 	}
-	//method to save the system. Should run whenever a change is made to the system, in case the user closes the program in an unexpected way
+	//method to save the system. 
+	
 	public static void save(){
 		if(students.size()>0)
-			writeToSave(students);
+			arrayCeption.add(students);
+		
 		if (tas.size()>0)
-			writeToSave(tas);
+			arrayCeption.add(tas);
+		
 		if (partTimeFaculty.size()>0)
-			writeToSave(partTimeFaculty);
+			arrayCeption.add(partTimeFaculty);
+
 		if (permanentFaculty.size()>0)
-			writeToSave(permanentFaculty);
+			arrayCeption.add(permanentFaculty);
+
 		if (partTimeStaff.size()>0)
-			writeToSave(partTimeStaff);
+			arrayCeption.add(partTimeStaff);
+
 		if (permanentStaff.size()>0)
-			writeToSave(permanentStaff);
+			arrayCeption.add(permanentStaff);
+
 		if (commissionStaff.size()>0)
-			writeToSave(commissionStaff);
+			arrayCeption.add(commissionStaff);
+
+		writeToSave(arrayCeption);
 	}
 	
 	
