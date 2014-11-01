@@ -16,7 +16,7 @@ public class ConcordiaPerson {
 		this.monthlyPay = monthlyPay;
 	}
 	
-	public void setID(String id){
+	public void setID(int id){
 		this.id = id;
 	}
 	
