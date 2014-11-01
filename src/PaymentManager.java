@@ -4,6 +4,10 @@ import java.util.*;
 import javax.swing.*;
 
 public class PaymentManager {
+	
+	static int load=0;
+	private static int studentID=1000000, taID=2000000, permanentFacultyID=3000000, partTimeFacultyID=4000000,
+			permanentStaffID=5000000, partTimeStaffID=6000000, commissionStaffID=7000000;
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
 	private static double underGradTAPay;
@@ -31,7 +35,7 @@ public class PaymentManager {
 		action();
 	}
 	
-	//The method to load the system (returns 0 if there is no system to load)
+//The method to load the system (returns 0 if there is no system to load)
 	public static int load(){
 		ArrayList<Integer> ID=new ArrayList();
 		int index=0;
@@ -53,41 +57,48 @@ public class PaymentManager {
 				//students 1000000-2000000
 				if(ID.get(index)>=1000000 && ID.get(index)<2000000){
 					students.add((Student) in2.readObject());
+					studentID++;
 					load++;
 				}
 				//ta 2000000-3000000
 				if(ID.get(index)>=2000000 && ID.get(index)<3000000){
 					tas.add((TA) in2.readObject());
+					taID++;
 					load++;
 				}
 				
 				//permanentFaculty 3000000-4000000
 				if(ID.get(index)>=3000000 && ID.get(index)<4000000){
 					permanentFaculty.add((PermanentFaculty) in2.readObject());
+					permanentFacultyID++;
 					load++;
 				}
 				
 				//partTimeFaculty 4000000-5000000
 				if(ID.get(index)>=4000000 && ID.get(index)<5000000){
 					partTimeFaculty.add((PartTimeFaculty) in2.readObject());
+					partTimeFacultyID++;
 					load++;
 				}			
 				
 				//permanentStaff 5000000-6000000
 				if(ID.get(index)>=5000000 && ID.get(index)<6000000){
 					permanentStaff.add((PermanentStaff) in2.readObject());
+					permanentStaffID++;
 					load++;
 				}
 				
 				//partTimeStaff 6000000-7000000
 				if(ID.get(index)>=6000000 && ID.get(index)<7000000){
 					partTimeStaff.add((PartTimeStaff) in2.readObject());
+					partTimeStaffID++;
 					load++;
 				}
 				
 				//commissionStaff 7000000-8000000
 				if(ID.get(index)>=7000000 && ID.get(index)<8000000){
 					commissionStaff.add((CommissionStaff) in2.readObject());
+					commissionStaffID++;
 					load++;
 				}
 			index++;
@@ -111,7 +122,6 @@ public class PaymentManager {
 			
 		return load;
 	}
-	
 	
 //overwrites the old save contents with the new ones
 	public static void writeToSave(ArrayList<ArrayList> t){
@@ -249,10 +259,10 @@ public class PaymentManager {
 		action=getInputRange(1,2);
 		switch (action){
 			case 1:
-				//input ID
-				System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
-		 		ID=scanner.next();
-			 
+				
+				//generate ID
+				ID=permanentFacultyID;
+				
 		 		//input name
 		 		System.out.println("Please input this faculty member's name");
 		 		name=scanner.next();
@@ -284,10 +294,8 @@ public class PaymentManager {
 		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
 		 		break;
 			case 2:
-		 		//input ID
-		 		System.out.println("Please input this faculty member's ID");//---------------------------------------------------------------------------------------
-		 		ID=scanner.next();
-		 		
+		 		//generate ID
+				ID=partTimeFacultyID;
 		 		//input name
 		 		System.out.println("Please input this faculty member's name");
 		 		name=scanner.next();
@@ -329,8 +337,8 @@ public class PaymentManager {
 	
 	//Method for adding any kind of staff member
 	public static void addStaffMember(){
-		int action, duration;
-		String id = "", name = "", input;
+		int action, duration,id;
+		String name = "", input;
 		double pay;
 		System.out.println("Is the staff a \n" +
 				"1: Part time staff member\n" +
@@ -339,8 +347,6 @@ public class PaymentManager {
 		action=getInputRange(1,3);
 		
 		if(action < 3){
-			System.out.println("Please input this staff member's ID");
-			id=scanner.next();
 			
 			System.out.println("Please input this staff member's name");
  			name=scanner.next();
@@ -360,16 +366,22 @@ public class PaymentManager {
 		 		pay = getInputDouble();
 				switch(action){
 					case 1:
+						//generate ID
+						id=partTimeStaffID;
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
 				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
 						break;
 					case 2:
+						//generate ID
+						id=commissionedStaffID;
 						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 						break;
 				}
 				break;
 			case 2:
+				//generate ID
+				id=permanentStaffID;
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
 		 		permanentStaff.add(new PermanentStaff(id, name, pay));
