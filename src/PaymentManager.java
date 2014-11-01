@@ -266,7 +266,7 @@ public class PaymentManager {
 			case 1:
 				
 				//generate ID
-				ID=permanentFacultyID;
+				ID=permanentFacultyID++;
 				
 		 		
 			 
@@ -298,7 +298,7 @@ public class PaymentManager {
 		 		break;
 			case 2:
 		 		//generate ID
-				ID=partTimeFacultyID;
+				ID=partTimeFacultyID++;
 		 		
 		 		//input hourlyRate
 		 		
@@ -367,21 +367,21 @@ public class PaymentManager {
 				switch(action){
 					case 1:
 						//generate ID
-						id=partTimeStaffID;
+						id=partTimeStaffID++;
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
 				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
 						break;
 					case 2:
 						//generate ID
-						id=commissionedStaffID;
+						id=commissionedStaffID++;
 						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 						break;
 				}
 				break;
 			case 2:
 				//generate ID
-				id=permanentStaffID;
+				id=permanentStaffID++;
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
 		 		permanentStaff.add(new PermanentStaff(id, name, pay));
@@ -399,14 +399,66 @@ public class PaymentManager {
 		
 	}
 	
-	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
-	public static void search(){
-		
-	}
 	
 	//method to print out the paystubs for the employees
 	public static void paystubs(){
 		
+	}
+	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
+	//have graduated. Also changes TAs to regular student alumni if they graduate
+	public static void advanceToNextMonth(){
+		
+	}
+	
+	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
+	public static void search(){
+		int action,id;
+		String name;
+		
+		System.out.println("would you like to search by\n"
+				+ "1.Name\n"
+				+ "2.Id");
+		action=getInputRange(1,2);
+		switch (action){
+		case 1:
+			System.out.println("please enter the persons name");
+			name=scanner.next();
+			for(int i=0;i<arrayCeption.size();i++)
+				for(int j=0;j<arrayCeption.get(i).size();j++){
+					concordiaPerson.add((ConcordiaPerson) (arrayCeption.get(i).get(j)));
+					if(concordiaPerson.get(j).getName().equalsIgnoreCase(name)){
+						concordiaPerson.get(j).getID();
+						id=concordiaPerson.get(j).getID();
+						findUser(id);
+					}
+				}
+			break;
+		case 2:
+			System.out.println("please enter the persons id");
+			id=getInputRange(1000000,8000000);
+			findUser(id);
+			
+			break;
+		}
+		System.out.print("");
+	}
+	//finds user through his id
+	public static void findUser(int id){
+		if (id>=1000000 && id<2000000)
+			System.out.println(students.get(id-1000000));
+		
+		if (id>=2000000 && id<3000000)
+			 System.out.println(tas.get(id-2000000));
+		if (id>=3000000 && id<4000000)
+			System.out.println(permanentFaculty.get(id-3000000));
+		if (id>=4000000 && id<5000000)
+			 System.out.println(partTimeFaculty.get(id-4000000));
+		if (id>=5000000 && id<6000000)
+			 System.out.println(permanentStaff.get(id-5000000));
+		if (id>=6000000 && id<7000000)
+			 System.out.println(partTimeStaff.get(id-6000000));
+		if (id>=7000000 && id<8000000)
+			 System.out.println(commissionStaff.get(id-7000000));
 	}
 	
 	//Method returns the total pay for all Concordia employees
@@ -428,11 +480,7 @@ public class PaymentManager {
 		return pay;
 	}
 	
-	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
-	//have graduated. Also changes TAs to regular student alumni if they graduate
-	public static void advanceToNextMonth(){
-		
-	}
+	
 	
 	//Exits the program
 	public static void exit(){
