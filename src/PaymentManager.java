@@ -257,15 +257,18 @@ public class PaymentManager {
 				"2: Part time Faculty Member\n" +
 		 		"3: Go back");
 		action=getInputRange(1,2);
+		if (action<3){
+			//input name
+		 	System.out.println("Please input this faculty member's name");
+			name=scanner.next();	
+		}
 		switch (action){
 			case 1:
 				
 				//generate ID
 				ID=permanentFacultyID;
 				
-		 		//input name
-		 		System.out.println("Please input this faculty member's name");
-		 		name=scanner.next();
+		 		
 			 
 		 		//input numClasses
 		 		System.out.println("Please input the number of courses this faculty member will be teaching");
@@ -296,17 +299,14 @@ public class PaymentManager {
 			case 2:
 		 		//generate ID
 				ID=partTimeFacultyID;
-		 		//input name
-		 		System.out.println("Please input this faculty member's name");
-		 		name=scanner.next();
 		 		
 		 		//input hourlyRate
-		 		//Why do the next two things ask about TA??
-		 		System.out.println("Please input the amount the TA will be paid per hour in dollars");
+		 		
+		 		System.out.println("Please input the amount the faculty member will be paid per hour in dollars");
 		 		hourlyRate=getInputDouble();
 		 		
 		 		//input amount of hours
-		 		System.out.println("please input the amount of hours the TA will be teaching for");
+		 		System.out.println("please input the amount of hours the faculty member will be teaching for");
 		 		hours=getInputInt();
 			 
 		 		//input numClasses
