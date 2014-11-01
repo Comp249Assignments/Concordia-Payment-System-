@@ -411,9 +411,9 @@ public class PaymentManager {
 		
 	}
 	
-	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
+//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
 	public static void search(){
-		int action,id;
+		int action,id,buffer;
 		String name;
 		
 		System.out.println("would you like to search by\n"
@@ -422,46 +422,49 @@ public class PaymentManager {
 		action=getInputRange(1,2);
 		switch (action){
 		case 1:
+			int arrayIndex=0;
 			System.out.println("please enter the persons name");
 			name=scanner.next();
 			for(int i=0;i<arrayCeption.size();i++)
 				for(int j=0;j<arrayCeption.get(i).size();j++){
 					concordiaPerson.add((ConcordiaPerson) (arrayCeption.get(i).get(j)));
-					if(concordiaPerson.get(j).getName().equalsIgnoreCase(name)){
-						concordiaPerson.get(j).getID();
-						id=concordiaPerson.get(j).getID();
+					
+					if(concordiaPerson.get(arrayIndex).getName().equalsIgnoreCase(name)){
+						id=concordiaPerson.get(arrayIndex).getID();
 						findUser(id);
+						
 					}
+					arrayIndex++;
 				}
 			break;
 		case 2:
 			System.out.println("please enter the persons id");
 			id=getInputRange(1000000,8000000);
-			findUser(id);
+			buffer=findUser(id);
+			System.out.println(arrayCeption.get(buffer-1).get(id-buffer*1000000));
 			
+
 			break;
 		}
-		System.out.print("");
 	}
 	//finds user through his id
-	public static void findUser(int id){
+	public static int findUser(int id){
 		if (id>=1000000 && id<2000000)
-			System.out.println(students.get(id-1000000));
-		
+			return 1;
 		if (id>=2000000 && id<3000000)
-			 System.out.println(tas.get(id-2000000));
+			return 2;
 		if (id>=3000000 && id<4000000)
-			System.out.println(permanentFaculty.get(id-3000000));
+			return 3;
 		if (id>=4000000 && id<5000000)
-			 System.out.println(partTimeFaculty.get(id-4000000));
+			return 4;
 		if (id>=5000000 && id<6000000)
-			 System.out.println(permanentStaff.get(id-5000000));
+			 return 5;
 		if (id>=6000000 && id<7000000)
-			 System.out.println(partTimeStaff.get(id-6000000));
+			 return 6;
 		if (id>=7000000 && id<8000000)
-			 System.out.println(commissionStaff.get(id-7000000));
+			return 7;
+		return -1;
 	}
-	
 	//Method returns the total pay for all Concordia employees
 	public static double totalPay(){
 		double pay = 0;
