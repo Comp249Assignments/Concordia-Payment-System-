@@ -412,17 +412,19 @@ public class PaymentManager {
 	}
 	
 //method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
-	public static void search(){
-		int action,id,buffer;
+	public static int search(){
+		int action,id=0,employeeLocation=-1,employeeType;
+		boolean found=false;
 		String name;
 		
-		System.out.println("would you like to search by\n"
+		System.out.println("please enter a number to search by\n"
 				+ "1.Name\n"
-				+ "2.Id");
+				+ "2.or id");
 		action=getInputRange(1,2);
 		switch (action){
 		case 1:
 			int arrayIndex=0;
+			do{
 			System.out.println("please enter the persons name");
 			name=scanner.next();
 			for(int i=0;i<arrayCeption.size();i++)
@@ -431,40 +433,31 @@ public class PaymentManager {
 					
 					if(concordiaPerson.get(arrayIndex).getName().equalsIgnoreCase(name)){
 						id=concordiaPerson.get(arrayIndex).getID();
-						findUser(id);
-						
+						employeeLocation=id%1000000;
+						employeeType=id/1000000;
+						System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
+						found=true;
 					}
 					arrayIndex++;
 				}
-			break;
+			}while(!found);
+			return id;
 		case 2:
+			do{
 			System.out.println("please enter the persons id");
 			id=getInputRange(1000000,8000000);
-			buffer=findUser(id);
-			System.out.println(arrayCeption.get(buffer-1).get(id-buffer*1000000));
-			
-
-			break;
+			employeeLocation=id%1000000;
+			employeeType=id/1000000;
+			if(employeeLocation<=arrayCeption.get(employeeType-2).size()){
+			System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
+			return id;
+			}
+			System.out.println("Error: there is no person with that ID");
+			}while(true);
 		}
+		return id;
 	}
-	//finds user through his id
-	public static int findUser(int id){
-		if (id>=1000000 && id<2000000)
-			return 1;
-		if (id>=2000000 && id<3000000)
-			return 2;
-		if (id>=3000000 && id<4000000)
-			return 3;
-		if (id>=4000000 && id<5000000)
-			return 4;
-		if (id>=5000000 && id<6000000)
-			 return 5;
-		if (id>=6000000 && id<7000000)
-			 return 6;
-		if (id>=7000000 && id<8000000)
-			return 7;
-		return -1;
-	}
+	
 	//Method returns the total pay for all Concordia employees
 	public static double totalPay(){
 		double pay = 0;
