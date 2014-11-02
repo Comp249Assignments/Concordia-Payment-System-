@@ -134,7 +134,6 @@ public class PaymentManager {
 			in2.close();
 			}
 			catch(FileNotFoundException e){
-				e.printStackTrace();
 				return 0;
 			}
 			catch(IOException e){
