@@ -1,5 +1,5 @@
 
-public class ConcordiaPerson {
+public class ConcordiaPerson extends ConcordiaUniversity {
 	private int id;
 	private String name;
 	private double monthlyPay;
