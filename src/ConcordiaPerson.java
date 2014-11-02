@@ -40,6 +40,6 @@ public class ConcordiaPerson extends ConcordiaUniversity {
 		return monthlyPay;
 	}
 	public String toString(){
-		return ("Name:"+this.name+"\nID:"+this.id+"Monthly salary:"+this.monthlyPay);
+		return ("Name: "+this.name+" ID: "+this.id+" Monthly salary: "+this.monthlyPay);
 	}
 }

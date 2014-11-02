@@ -7,6 +7,11 @@ public class TA extends Student{
 		hours = 0;
 	}
 	
+	public TA(int id, String name, double hourlyPay, int monthsUntilGraduation, int hours){
+		super(id, name, (hourlyPay*hours), false, monthsUntilGraduation);
+		this.hours = hours;
+	}
+	
 	public void setHours(int hours){
 		this.hours = hours;
 	}

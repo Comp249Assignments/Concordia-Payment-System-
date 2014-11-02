@@ -1,6 +1,0 @@
-//needed for the load(); method in PaymentManager to work
-public class EmptyClass {
-public EmptyClass(){
-	
-}
-}
