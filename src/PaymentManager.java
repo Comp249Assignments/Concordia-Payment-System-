@@ -171,9 +171,9 @@ public class PaymentManager {
 
 			arrayCeption.add(partTimeFaculty);
 
-			arrayCeption.add(partTimeStaff);
-
 			arrayCeption.add(permanentStaff);
+			
+			arrayCeption.add(partTimeStaff);
 
 			arrayCeption.add(commissionStaff);
 
