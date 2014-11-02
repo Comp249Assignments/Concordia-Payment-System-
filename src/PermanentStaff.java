@@ -5,7 +5,7 @@ public class PermanentStaff extends StaffMember{
 		super();
 	}
 	
-	public PermanentStaff(String id, String name, double annualSalary){
+	public PermanentStaff(int id, String name, double annualSalary){
 		super(id, name, (annualSalary/12));
 	}
 }

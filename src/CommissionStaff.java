@@ -9,7 +9,7 @@ public class CommissionStaff extends PartTimeStaff{
 		salesMade = 0;
 	}
 	
-	public CommissionStaff(String id, String name, double contractPay, int monthlyContractDuration, String location){
+	public CommissionStaff(int id, String name, double contractPay, int monthlyContractDuration, String location){
 		super(id, name, contractPay, monthlyContractDuration);
 		this.location = location;
 		salesMade = 0;

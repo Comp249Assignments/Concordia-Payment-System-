@@ -5,12 +5,12 @@ public class ConcordiaPerson {
 	private double monthlyPay;
 	
 	public ConcordiaPerson(){
-		id = "0000000";
+		id = 0;
 		name = "";
 		monthlyPay = 0;
 	}
 	
-	public ConcordiaPerson(String id, String name, double monthlyPay){
+	public ConcordiaPerson(int id, String name, double monthlyPay){
 		this.id = id;
 		this.name = name;
 		this.monthlyPay = monthlyPay;
@@ -28,7 +28,7 @@ public class ConcordiaPerson {
 		this.monthlyPay = monthlyPay;
 	}
 	
-	public String getID(){
+	public int getID(){
 		return id;
 	}
 	

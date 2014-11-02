@@ -6,8 +6,8 @@ public class FacultyMember extends ConcordiaPerson implements Serializable {
 	
 	
 	
-	public FacultyMember(String id, String name, double monthlyPay, int numCourses, String[] classNames, int[] studentsPerClass){
-		super(id,monthlyPay,name);
+	public FacultyMember(int id, String name, double monthlyPay, int numCourses, String[] classNames, int[] studentsPerClass){
+		super(id,name,monthlyPay);
 		coursesTaught=new String[numCourses];
 		studentsPerClass=new int[numCourses];
 		coursesTaught=classNames;

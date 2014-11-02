@@ -5,7 +5,7 @@ public class StaffMember extends ConcordiaPerson{
 		super();
 	}
 	
-	public StaffMember(String id, String name, double monthlyPay){
+	public StaffMember(int id, String name, double monthlyPay){
 		super(id, name, monthlyPay);
 	}
 }

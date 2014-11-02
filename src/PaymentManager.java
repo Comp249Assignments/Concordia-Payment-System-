@@ -7,7 +7,7 @@ public class PaymentManager {
 	
 	static int load=0;
 	private static int studentID=1000000, taID=2000000, permanentFacultyID=3000000, partTimeFacultyID=4000000,
-			permanentStaffID=5000000, partTimeStaffID=6000000, commissionStaffID=7000000;
+			permanentStaffID=5000000, partTimeStaffID=6000000, commissionedStaffID=7000000;
 	private static ArrayList<Integer> badID=new ArrayList();
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
@@ -118,9 +118,9 @@ public class PaymentManager {
 				//commissionStaff 7000000-8000000
 				if((ID.get(index)>=7000000 && ID.get(index)<8000000)||ID.get(index)==6){
 					if(ID.get(index)==6){
-						badID.add(commissionStaffID);
+						badID.add(commissionedStaffID);
 					}
-					commissionStaffID++;
+					commissionedStaffID++;
 					load++;
 				}
 			
@@ -206,7 +206,7 @@ public class PaymentManager {
 					"5: Prepare paystubs\n"+
 					"6: Calculate the amount of money that needs to be paid to all Concordia employees\n"+
 					"7: Advance to next month\n"+
-					"8: List all the members in any group"
+					"8: List all the members in any group"+
 					"9: Exit");
 			action = getInputRange(1, 8);
 			switch(action){
@@ -276,9 +276,8 @@ public class PaymentManager {
 	
 	//Method for adding a faculty member
 	public static void addFacultyMember(){
-		int action;
-		int monthlyPay,numCourses,hours,bonus=0;
-		String name,ID;
+		int action, itsBadID, ID, monthlyPay,numCourses,hours,bonus=0;
+		String name="";
 		String [] classNames;
 		int [] studentsPerClass;
 		
@@ -433,7 +432,7 @@ public class PaymentManager {
 					case 2:
 						//generate ID
 						itsBadID=isItBadID(commissionedStaffID);
-						if(itsBadID==0{)
+						if(itsBadID==0){
 							id=commissionedStaffID++;
 							partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 						}
@@ -448,7 +447,7 @@ public class PaymentManager {
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
 				//generate ID
-				itsBadID=isItBadID(permanentStaffID)
+				itsBadID=isItBadID(permanentStaffID);
 				if(itsBadID==0){
 					id=permanentStaffID++;
 		 			permanentStaff.add(new PermanentStaff(id, name, pay));
@@ -475,19 +474,19 @@ public class PaymentManager {
 	public static void paystubs(){
 		int id;
 		DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		 Date date=new Date();
+		Date date=new Date();
 		do{
-		System.out.println("First we need to find the individual");
-		id=search();
+			System.out.println("First we need to find the individual");
+			id=search();
 		}while(id<10);
 		System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-2).get(id%1000000))+"\n"+dateFormat.format(date));
 		if(id/1000000==4){
 			System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-2).get(id%1000000)).getHours());
 			System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-2).get(id%1000000)).getHourlyRate());
 			
-			}
 		}
-		
+	}
+	
 	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
 	//have graduated. Also changes TAs to regular student alumni if they graduate
 	public static void advanceToNextMonth(){
@@ -581,37 +580,38 @@ public class PaymentManager {
 		String name;
 		boolean deleted=false;
 		
-		System.out.println("please enter a number to search by\n"
-				+ "1.Name\n"
-				+ "2.or id");
+		System.out.println("Please enter a number to search by\n"
+				+ "1: Name or\n"
+				+ "2: ID");
 		action=getInputRange(1,2);
 		switch (action){
 		case 1:
 			int arrayIndex=0;
 			do{
-			System.out.println("please enter the persons name");
-			name=scanner.next();
-			for(int i=0;i<arrayCeption.size();i++)
-				for(int j=0;j<arrayCeption.get(i).size();j++){
-					concordiaPerson.add((ConcordiaPerson) (arrayCeption.get(i).get(j)));
-					
-					if(concordiaPerson.get(arrayIndex).getName().equalsIgnoreCase(name)){
-						id=concordiaPerson.get(arrayIndex).getID();
-						employeeLocation=id%1000000;
-						employeeType=id/1000000;
-						if(((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID()<10){
-							i=100000;
-							deleted=true;
-							break;
+				System.out.println("Please enter the persons name");
+				name=scanner.next();
+				for(int i=0;i<arrayCeption.size();i++){
+					for(int j=0;j<arrayCeption.get(i).size();j++){
+						concordiaPerson.add((ConcordiaPerson) (arrayCeption.get(i).get(j)));
+						
+						if(concordiaPerson.get(arrayIndex).getName().equalsIgnoreCase(name)){
+							id=concordiaPerson.get(arrayIndex).getID();
+							employeeLocation=id%1000000;
+							employeeType=id/1000000;
+							if(((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID()<10){
+								i=100000;
+								deleted=true;
+								break;
+							}
+													
+							System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
+							return ((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID();
+	
 						}
-												
-						System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
-						return ((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID();
-
+						arrayIndex++;
 					}
-					arrayIndex++;
 				}
-			System.out.println("Error: there is no person with that name");
+				System.out.println("Error: there is no person with that name");
 			}while(!deleted);
 			return id;
 		case 2:
