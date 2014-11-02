@@ -8,6 +8,7 @@ public class PaymentManager {
 	static int load=0;
 	private static int studentID=1000000, taID=2000000, permanentFacultyID=3000000, partTimeFacultyID=4000000,
 			permanentStaffID=5000000, partTimeStaffID=6000000, commissionStaffID=7000000;
+	private static ArrayList<Integer> badID=new ArrayList();
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
 	private static double underGradTAPay;
@@ -55,52 +56,76 @@ public class PaymentManager {
 				ID.add(((ConcordiaPerson) idIn.readObject()).getID());
 				
 				//students 1000000-2000000
-				if(ID.get(index)>=1000000 && ID.get(index)<2000000){
+				if((ID.get(index)>=1000000 && ID.get(index)<2000000)||ID.get(index)==0){
 					students.add((Student) in2.readObject());
+					//if they were deleted in the previous session
+					if(ID.get(index)==0){
+						badID.add(studentID);
+					}
 					studentID++;
 					load++;
+					
 				}
 				//ta 2000000-3000000
-				if(ID.get(index)>=2000000 && ID.get(index)<3000000){
+				if((ID.get(index)>=2000000 && ID.get(index)<3000000)||ID.get(index)==1){
 					tas.add((TA) in2.readObject());
+					if(ID.get(index)==1){
+						badID.add(taID);
+					}
 					taID++;
 					load++;
 				}
 				
 				//permanentFaculty 3000000-4000000
-				if(ID.get(index)>=3000000 && ID.get(index)<4000000){
+				if((ID.get(index)>=3000000 && ID.get(index)<4000000)||ID.get(index)==2){
 					permanentFaculty.add((PermanentFaculty) in2.readObject());
+					if(ID.get(index)==2){
+						badID.add(permanentFacultyID);
+					}
 					permanentFacultyID++;
 					load++;
 				}
 				
 				//partTimeFaculty 4000000-5000000
-				if(ID.get(index)>=4000000 && ID.get(index)<5000000){
+				if((ID.get(index)>=4000000 && ID.get(index)<5000000)||ID.get(index)==3){
 					partTimeFaculty.add((PartTimeFaculty) in2.readObject());
+					if(ID.get(index)==3){
+						badID.add(partTimeFacultyID);
+					}
 					partTimeFacultyID++;
 					load++;
 				}			
 				
 				//permanentStaff 5000000-6000000
-				if(ID.get(index)>=5000000 && ID.get(index)<6000000){
+				if((ID.get(index)>=5000000 && ID.get(index)<6000000)||ID.get(index)==4){
 					permanentStaff.add((PermanentStaff) in2.readObject());
+					if(ID.get(index)==4){
+						badID.add(permanentStaffID);
+					}
 					permanentStaffID++;
 					load++;
 				}
 				
 				//partTimeStaff 6000000-7000000
-				if(ID.get(index)>=6000000 && ID.get(index)<7000000){
-					partTimeStaff.add((PartTimeStaff) in2.readObject());
+				if((ID.get(index)>=6000000 && ID.get(index)<7000000)||ID.get(index)==5){
+					if(ID.get(index)==5){
+						badID.add(partTimeStaffID);
+					}
 					partTimeStaffID++;
 					load++;
 				}
 				
 				//commissionStaff 7000000-8000000
-				if(ID.get(index)>=7000000 && ID.get(index)<8000000){
-					commissionStaff.add((CommissionStaff) in2.readObject());
+				if((ID.get(index)>=7000000 && ID.get(index)<8000000)||ID.get(index)==6){
+					if(ID.get(index)==6){
+						badID.add(commissionStaffID);
+					}
 					commissionStaffID++;
 					load++;
 				}
+			
+				
+			
 			index++;
 		}
 			idIn.close();
@@ -119,9 +144,10 @@ public class PaymentManager {
 				e.printStackTrace();
 			}
 		
-			
+			System.out.println(load);
 		return load;
 	}
+	
 	
 //overwrites the old save contents with the new ones
 	public static void writeToSave(ArrayList<ArrayList> t){
@@ -267,8 +293,15 @@ public class PaymentManager {
 			case 1:
 				
 				//generate ID
-				ID=permanentFacultyID++;
-				
+				itsBadID=isItBadID(permanentFacultyID);
+				if(itsBadID!=0){
+					permanentFaculty.remove(itsBadID-3000000);
+					ID=itsBadID;
+
+				}
+				else
+					ID=permanentFacultyID++;
+
 		 		
 			 
 		 		//input numClasses
@@ -295,14 +328,20 @@ public class PaymentManager {
 		 			}
 		 		
 		 		//PermenantFaculty permenantFaculty=
-		 		permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
+		 		if (itsBadID!=0)
+			 		permanentFaculty.add(itsBadID-3000000,new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
+		 		else
+		 			permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
 		 		break;
 			case 2:
 		 		//generate ID
-				ID=partTimeFacultyID++;
-		 		
+				itsBadID=isItBadID(partTimeFacultyID);
+				if(itsBadID==0)
+					ID=partTimeFacultyID++;
+				else
+					ID=itsBadID;
+					
 		 		//input hourlyRate
-		 		
 		 		System.out.println("Please input the amount the faculty member will be paid per hour in dollars");
 		 		hourlyRate=getInputDouble();
 		 		
@@ -331,14 +370,19 @@ public class PaymentManager {
 		 		for (int i=0; i<numCourses;i++){
 		 			bonus+=((studentsPerClass[i]>=40 && studentsPerClass[i]<=60)? 500:0);
 		 			bonus+=((studentsPerClass[i]>60)? 1000:0);		 		}
+		 		if(itsBadID==0)
 		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus));
-		 }
+		 		else
+			 		partTimeFaculty.add(itsBadID-4000000,new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus));
+
+		 		break;
+		}
 	 }
 	
 	
 	//Method for adding any kind of staff member
 	public static void addStaffMember(){
-		int action, duration,id;
+		int action, duration,id,itsBadID;
 		String name = "", input;
 		double pay;
 		System.out.println("Is the staff a \n" +
@@ -367,25 +411,49 @@ public class PaymentManager {
 		 		pay = getInputDouble();
 				switch(action){
 					case 1:
-						//generate ID
-						id=partTimeStaffID++;
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
-				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
+						//generate ID
+						itsBadID=isItBadID(partTimeStaffID);
+						if(itsBadID==0){
+							id=partTimeStaffID++;
+					 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
+
+						}
+						else{
+							id=itsBadID;
+							commissionStaff.add(itsBadID-5000000,new CommissionStaff(id, name, pay, duration, input));
+						}
 						break;
 					case 2:
 						//generate ID
-						id=commissionedStaffID++;
-						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
+						itsBadID=isItBadID(commissionedStaffID);
+						if(itsBadID==0{)
+							id=commissionedStaffID++;
+							partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
+						}
+						else{
+							id=itsBadID;
+							partTimeStaff.add(itsBadID-6000000,new PartTimeStaff(id, name, pay, duration));	
+						}
 						break;
 				}
 				break;
 			case 2:
-				//generate ID
-				id=permanentStaffID++;
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
-		 		permanentStaff.add(new PermanentStaff(id, name, pay));
+				//generate ID
+				itsBadID=isItBadID(permanentStaffID)
+				if(itsBadID==0){
+					id=permanentStaffID++;
+		 			permanentStaff.add(new PermanentStaff(id, name, pay));
+				}
+				else{
+					id=itsBadID;
+					permanentStaff.add(itsBadID-7000000,new PermanentStaff(id, name, pay));
+
+					
+				}
 				break;
 		}
 	}
@@ -395,10 +463,7 @@ public class PaymentManager {
 		
 	}
 	
-	//method to delete individuals from the system
-	public static void deleteIndividual(){
-		
-	}
+	
 	
 	
 	//method to print out the paystubs for the employees
@@ -411,11 +476,48 @@ public class PaymentManager {
 		
 	}
 	
-//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
+
+	//method for replacing the ID of old and deleted ConcordiaPerson's
+	public static int isItBadID(int id){
+		int employeeType=id/1000000;
+		 int itIs=0;
+		for(int i=0;i<badID.size();i++){
+			if(badID.get(i)/1000000==employeeType){
+				itIs=badID.get(i);
+				badID.remove(i);
+				break;
+			}
+		}
+		return itIs;
+	}
+	
+	//method to delete individuals from the system
+	public static void deleteIndividual(){
+		int id=search(),action=2;
+		if(id<10){
+			action=3;
+		}
+		if(action==2){
+		System.out.println("are you sure you want to delete\n"
+				+ (ConcordiaPerson)arrayCeption.get(id/1000000-2).get(id%1000000)+"\n"
+						+ "1.Yes\n"
+						+ "2.No");
+		action=getInputRange(1,2);
+		}
+		
+		if(action==1){
+		((ConcordiaPerson)arrayCeption.get(id/1000000-2).get(id%1000000)).setID(id/1000000-1);
+		System.out.println("please reset the program to initiate the changes");
+		}
+		else
+			System.out.println("Redirecting you to home page");
+	}
+	
+	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
 	public static int search(){
 		int action,id=0,employeeLocation=-1,employeeType;
-		boolean found=false;
 		String name;
+		boolean deleted=false;
 		
 		System.out.println("please enter a number to search by\n"
 				+ "1.Name\n"
@@ -435,12 +537,20 @@ public class PaymentManager {
 						id=concordiaPerson.get(arrayIndex).getID();
 						employeeLocation=id%1000000;
 						employeeType=id/1000000;
+						if(((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID()<10){
+							i=100000;
+							deleted=true;
+							break;
+						}
+												
 						System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
-						found=true;
+						return ((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID();
+
 					}
 					arrayIndex++;
 				}
-			}while(!found);
+			System.out.println("Error: there is no person with that name");
+			}while(!deleted);
 			return id;
 		case 2:
 			do{
@@ -449,14 +559,18 @@ public class PaymentManager {
 			employeeLocation=id%1000000;
 			employeeType=id/1000000;
 			if(employeeLocation<=arrayCeption.get(employeeType-2).size()){
-			System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
+				if(((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID()<10){
+					break;
+				}			System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
 			return id;
 			}
 			System.out.println("Error: there is no person with that ID");
 			}while(true);
 		}
-		return id;
+		System.out.println("Error: there is no person with that ID");
+		return 1;
 	}
+	
 	
 	//Method returns the total pay for all Concordia employees
 	public static double totalPay(){
