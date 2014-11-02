@@ -6,8 +6,8 @@ import javax.swing.*;
 public class PaymentManager {
 	
 	static int load=0;
-	private static int studentID=1000000, taID=2000000, permanentFacultyID=3000000, partTimeFacultyID=4000000,
-			permanentStaffID=5000000, partTimeStaffID=6000000, commissionedStaffID=7000000;
+	private static int studentID=1000000, gradTAID=2000000, permanentFacultyID=3000000, partTimeFacultyID=4000000,
+			permanentStaffID=5000000, partTimeStaffID=6000000, commissionedStaffID=7000000, underGradTAID = 8000000;
 	private static ArrayList<Integer> badID=new ArrayList();
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
@@ -15,7 +15,8 @@ public class PaymentManager {
 	private static ArrayList<ConcordiaPerson> concordiaPerson=new ArrayList();
 	private static ArrayList<ArrayList> arrayCeption=new ArrayList();
 	private static ArrayList<Student> students = new ArrayList();
-	private static ArrayList<TA> tas = new ArrayList();
+	private static ArrayList<GradTA> gradTAs = new ArrayList();
+	private static ArrayList<UnderGradTA> underGradTAs = new ArrayList();
 	private static ArrayList<PermanentFaculty> permanentFaculty = new ArrayList();
 	private static ArrayList<PartTimeFaculty> partTimeFaculty = new ArrayList();
 	private static ArrayList<PermanentStaff> permanentStaff = new ArrayList();
@@ -259,7 +260,85 @@ public class PaymentManager {
 	
 	//Method to add a Student or TA
 	public static void addStudent(){
+		int action, duration,id,itsBadID, hours;
+		String name = "", input;
+		boolean alumni = false;
+		double pay;
+		System.out.println("Is the student a \n" +
+				"1: Regular student/alumni\n" +
+				"2: TA\n" +
+				"3: Go back");
+		action=getInputRange(1,3);
 		
+		if(action < 3){
+			System.out.println("Please input the student's name");
+ 			name=scanner.next();
+		}
+		switch(action){
+			case 1:
+				System.out.println("Is this an alumni? \n" +
+						"1: Yes\n" +
+						"2: No");
+				if(getInputRange(1,2)==1){
+					alumni = true;
+					duration=0;
+				}
+				else{
+					alumni = false;
+					System.out.println("How many months until this student graduates?");
+					duration = getInputInt();
+				}
+				
+				itsBadID=isItBadID(studentID);
+				if(itsBadID==0){
+					id=studentID++;
+			 		students.add(new Student(id, name, 0, alumni, duration));
+				}
+				else{
+					id=itsBadID;
+					students.add(itsBadID-1000000, new Student(id, name, 0, alumni, duration));
+				}
+				break;
+			case 2:
+				System.out.println("Is this a(n) \n" +
+						"1: Grad TA\n" +
+						"2: Undergrad TA");
+				action=getInputRange(1,2);
+				
+				System.out.println("How many months until this student graduates?");
+				duration = getInputInt();
+				
+				System.out.println("How many hours per month does this TA work for?");
+				hours = getInputInt();
+				
+				System.out.println("How much does this TA get paid per hour?");
+				pay = getInputDouble();
+				
+				if(action==1){
+					itsBadID=isItBadID(gradTAID);
+					if(itsBadID==0){
+						id=gradTAID++;
+				 		gradTAs.add(new GradTA(id, name, pay, duration, hours));
+					}
+					else{
+						id=itsBadID;
+						gradTAs.add(itsBadID-2000000, new GradTA(id, name, pay, duration, hours));
+					}
+				}
+				else{
+					itsBadID=isItBadID(underGradTAID);
+					if(itsBadID==0){
+						id=underGradTAID++;
+				 		underGradTAs.add(new UnderGradTA(id, name, pay, duration, hours));
+					}
+					else{
+						id=itsBadID;
+						underGradTAs.add(itsBadID-8000000, new UnderGradTA(id, name, pay, duration, hours));
+					}
+				}
+				
+				break;
+		}
 	}
 	
 
@@ -504,7 +583,7 @@ public class PaymentManager {
 	//method for replacing the ID of old and deleted ConcordiaPerson's
 	public static int isItBadID(int id){
 		int employeeType=id/1000000;
-		 int itIs=0;
+		int itIs=0;
 		for(int i=0;i<badID.size();i++){
 			if(badID.get(i)/1000000==employeeType){
 				itIs=badID.get(i);
