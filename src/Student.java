@@ -1,6 +1,5 @@
 
 public class Student extends ConcordiaPerson{
-<<<<<<< HEAD
 	private boolean alumni;
 	private int monthsUntilGraduation;
 	
@@ -31,7 +30,4 @@ public class Student extends ConcordiaPerson{
 		else
 			return true;
 	}
-=======
-public student(){}
->>>>>>> origin/master
 }
