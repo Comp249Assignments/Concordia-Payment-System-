@@ -12,6 +12,7 @@ public class PaymentManager {
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
 	private static double underGradTAPay;
+	private static ArrayList<ConcordiaPerson> concordiaPerson=new ArrayList();
 	private static ArrayList<ArrayList> arrayCeption=new ArrayList();
 	private static ArrayList<Student> students = new ArrayList();
 	private static ArrayList<TA> tas = new ArrayList();
