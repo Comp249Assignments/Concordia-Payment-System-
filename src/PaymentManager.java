@@ -160,28 +160,21 @@ public class PaymentManager {
 		
 	}
 	//method to save the system. 
-	
 	public static void save(){
 		arrayCeption.clear();
 		if(students.size()>0)
 			arrayCeption.add(students);
 		
-		if (tas.size()>0)
 			arrayCeption.add(tas);
 		
-		if (partTimeFaculty.size()>0)
-			arrayCeption.add(partTimeFaculty);
-
-		if (permanentFaculty.size()>0)
 			arrayCeption.add(permanentFaculty);
 
-		if (partTimeStaff.size()>0)
+			arrayCeption.add(partTimeFaculty);
+
 			arrayCeption.add(partTimeStaff);
 
-		if (permanentStaff.size()>0)
 			arrayCeption.add(permanentStaff);
 
-		if (commissionStaff.size()>0)
 			arrayCeption.add(commissionStaff);
 
 		writeToSave(arrayCeption);
@@ -269,6 +262,7 @@ public class PaymentManager {
 		
 	}
 	
+
 	//Method for adding a faculty member
 	public static void addFacultyMember(){
 		int action, itsBadID, ID, monthlyPay,numCourses,hours,bonus=0;
@@ -296,54 +290,58 @@ public class PaymentManager {
 				if(itsBadID!=0){
 					permanentFaculty.remove(itsBadID-3000000);
 					ID=itsBadID;
-
 				}
 				else
 					ID=permanentFacultyID++;
-			 
+
 		 		//input numClasses
 		 		System.out.println("Please input the number of courses this faculty member will be teaching");
 		 		numCourses=getInputInt();
 		 		
+		 		//input monthlyPay
+		 		System.out.println("Please input this faculty member's monthly salary in dollars");
+		 		monthlyPay=getInputInt();
+		 		
 		 		//input class names
 		 		classNames=new String[numCourses];
-		 		System.out.println("Please input the names of the classes");
 		 		for(int i=0;i<numCourses;i++){
-		 			System.out.println("Please input the name of class number "+(i+1));
+		 			System.out.println("Please put in the name of class number "+(i+1));
 		 			classNames[i]=scanner.next();
 		 		}
 		 		
 		 		//input students per class
 		 		studentsPerClass=new int[numCourses];
 		 		for(int i=0;i<numCourses;i++){
-		 			System.out.println("Please input the number of students in class "+ classNames[i]);
+		 			System.out.println("please put in the number of students in class "+ classNames[i]);
 		 			studentsPerClass[i]=getInputRange(0,999999999);
 		 			}
 		 		
-		 		//input monthlyPay
-		 		System.out.println("Please input this faculty member's monthly salary in dollars");
-		 		monthlyPay=getInputInt();
-		 		
 		 		//PermenantFaculty permenantFaculty=
-		 		if (itsBadID!=0)
+		 		if (itsBadID!=0){
 			 		permanentFaculty.add(itsBadID-3000000,new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
-		 		else
+
+		 		}
+			 		else
 		 			permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
+
 		 		break;
 			case 2:
 		 		//generate ID
 				itsBadID=isItBadID(partTimeFacultyID);
-				if(itsBadID==0)
-					ID=partTimeFacultyID++;
-				else
+				if(itsBadID!=0){
 					ID=itsBadID;
+					partTimeFaculty.remove(itsBadID-4000000);
+				}
+				else
+					ID=partTimeFacultyID++;
+
 					
 		 		//input hourlyRate
 		 		System.out.println("Please input the amount the faculty member will be paid per hour in dollars");
 		 		hourlyRate=getInputDouble();
 		 		
 		 		//input amount of hours
-		 		System.out.println("Please input the amount of hours the faculty member will be teaching for");
+		 		System.out.println("please input the amount of hours the faculty member will be teaching for");
 		 		hours=getInputInt();
 			 
 		 		//input numClasses
@@ -360,7 +358,7 @@ public class PaymentManager {
 		 		//input students per class
 		 		studentsPerClass=new int[numCourses];
 		 		for(int i=0;i<numCourses;i++){
-		 			System.out.println("Please put in the number of students in class "+ classNames[i]);
+		 			System.out.println("please put in the number of students in class "+ classNames[i]);
 		 			studentsPerClass[i]=getInputRange(0,999999999);
 		 			}
 		 		//calculating bonus
