@@ -28,12 +28,7 @@ public class PaymentManager {
 	//each TA has an individual salary so we will have to put this in the TA class
 	public static void startUp(){
 		System.out.println("Welcome!");
-		if(load()==0)
-		{
-			
-			System.out.println("How much are undergrad TAs paid?");
-			underGradTAPay = getInputDouble();
-		}
+		load();
 		action();
 	}
 	
@@ -206,7 +201,7 @@ public class PaymentManager {
 					"5: Prepare paystubs\n"+
 					"6: Calculate the amount of money that needs to be paid to all Concordia employees\n"+
 					"7: Advance to next month\n"+
-					"8: List all the members in any group"+
+					"8: List all the members in any group\n"+
 					"9: Exit");
 			action = getInputRange(1, 8);
 			switch(action){
@@ -305,31 +300,29 @@ public class PaymentManager {
 				}
 				else
 					ID=permanentFacultyID++;
-
-		 		
 			 
 		 		//input numClasses
 		 		System.out.println("Please input the number of courses this faculty member will be teaching");
 		 		numCourses=getInputInt();
 		 		
-		 		//input monthlyPay
-		 		System.out.println("Please input this faculty member's monthly salary in dollars");
-		 		monthlyPay=getInputInt();
-		 		
 		 		//input class names
 		 		classNames=new String[numCourses];
 		 		System.out.println("Please input the names of the classes");
 		 		for(int i=0;i<numCourses;i++){
-		 			System.out.println("Please put in the name of class number "+(i+1));
+		 			System.out.println("Please input the name of class number "+(i+1));
 		 			classNames[i]=scanner.next();
 		 		}
 		 		
 		 		//input students per class
 		 		studentsPerClass=new int[numCourses];
 		 		for(int i=0;i<numCourses;i++){
-		 			System.out.println("please put in the number of students in class "+ classNames[i]);
+		 			System.out.println("Please input the number of students in class "+ classNames[i]);
 		 			studentsPerClass[i]=getInputRange(0,999999999);
 		 			}
+		 		
+		 		//input monthlyPay
+		 		System.out.println("Please input this faculty member's monthly salary in dollars");
+		 		monthlyPay=getInputInt();
 		 		
 		 		//PermenantFaculty permenantFaculty=
 		 		if (itsBadID!=0)
@@ -350,7 +343,7 @@ public class PaymentManager {
 		 		hourlyRate=getInputDouble();
 		 		
 		 		//input amount of hours
-		 		System.out.println("please input the amount of hours the faculty member will be teaching for");
+		 		System.out.println("Please input the amount of hours the faculty member will be teaching for");
 		 		hours=getInputInt();
 			 
 		 		//input numClasses
@@ -367,7 +360,7 @@ public class PaymentManager {
 		 		//input students per class
 		 		studentsPerClass=new int[numCourses];
 		 		for(int i=0;i<numCourses;i++){
-		 			System.out.println("please put in the number of students in class "+ classNames[i]);
+		 			System.out.println("Please put in the number of students in class "+ classNames[i]);
 		 			studentsPerClass[i]=getInputRange(0,999999999);
 		 			}
 		 		//calculating bonus
@@ -466,9 +459,6 @@ public class PaymentManager {
 	public static void update(){
 		
 	}
-	
-	
-	
 	
 	//method to print out the paystubs for the employees
 	public static void paystubs(){
