@@ -205,7 +205,8 @@ public class PaymentManager {
 					"5: Prepare paystubs\n"+
 					"6: Calculate the amount of money that needs to be paid to all Concordia employees\n"+
 					"7: Advance to next month\n"+
-					"8: Exit");
+					"8: List all the members in any group"
+					"9: Exit");
 			action = getInputRange(1, 8);
 			switch(action){
 				case 1:
@@ -230,6 +231,9 @@ public class PaymentManager {
 					advanceToNextMonth();
 					break;
 				case 8:
+					list();
+					break;
+				case 9:
 					exit();
 					stop = true;
 					break;
@@ -512,7 +516,51 @@ public class PaymentManager {
 		else
 			System.out.println("Redirecting you to home page");
 	}
-	
+	//this method allows you to list all the members of any group
+	public static void list(){
+		int action;
+		System.out.println("would you like to list\n"
+				+ "1: Students\n"
+				+ "2:Ta's\n"
+				+ "3:Permanent faculty members\n"
+				+ "4:Part time faculty members\n"
+				+ "5:Permanent staff\n"
+				+ "6:Part time staff\n"
+				+ "7:Commissioned staff\n");
+		action=getInputRange(1,7);
+		switch (action){
+		case 1:
+			for(int i=0;i<students.size();i++)
+				System.out.println(students.get(i));
+			break;
+		case 2:
+			for(int i=0;i<tas.size();i++)
+				System.out.println(tas.get(i));
+			break;
+		case 3:
+			for(int i=0;i<permanentFaculty.size();i++)
+				System.out.println(permanentFaculty.get(i));
+			break;
+		case 4:
+			for(int i=0;i<partTimeFaculty.size();i++)
+				System.out.println(partTimeFaculty.get(i));
+			break;
+		case 5:
+			for(int i=0;i<permanentStaff.size();i++)
+				System.out.println(permanentStaff.get(i));
+			break;
+		case 6:
+			for(int i=0;i<partTimeStaff.size();i++)
+				System.out.println(partTimeStaff.get(i));
+			break;
+		case 7:
+			for(int i=0;i<commissionStaff.size();i++)
+				System.out.println(commissionStaff.get(i));
+			break;
+		}
+		
+	}
+
 	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
 	public static int search(){
 		int action,id=0,employeeLocation=-1,employeeType;
