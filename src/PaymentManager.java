@@ -197,6 +197,7 @@ public class PaymentManager {
 		int action;
 		boolean stop = false;
 		while(!stop){
+			save();
 			System.out.println("What do you wish to do? \n"+
 					"1: Add individuals to the system\n"+
 					"2: Update attributes of individuals\n"+
