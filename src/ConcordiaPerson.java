@@ -39,4 +39,7 @@ public class ConcordiaPerson extends ConcordiaUniversity {
 	public double getMonthlyPay(){
 		return monthlyPay;
 	}
+	public String toString(){
+		return ("Name:"+this.name+"\nID:"+this.id+"Monthly salary:"+this.monthlyPay);
+	}
 }
