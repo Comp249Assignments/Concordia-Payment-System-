@@ -466,7 +466,6 @@ public class PaymentManager {
 		action=getInputRange(1,3);
 		
 		if(action < 3){
-			
 			System.out.println("Please input this staff member's name");
  			name=scanner.next();
 		}
@@ -500,7 +499,6 @@ public class PaymentManager {
 		 	//	permanentStaff.add(new PermanentStaff(id, name, pay));
 				break;
 		}
-	}
 	
 	//Method to update the attributes of individuals (might use the search method in order to find that individual?)
 	public static void update(){
