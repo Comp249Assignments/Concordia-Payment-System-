@@ -921,45 +921,103 @@ public class PaymentManager {
 	public static void list(){
 		int action;
 		System.out.println("would you like to list\n"
-				+ "1: Students\n"
-				+ "2: TA's\n"
-				+ "3: Permanent faculty members\n"
-				+ "4: Part time faculty members\n"
-				+ "5: Permanent staff\n"
-				+ "6: Part time staff\n"
-				+ "7: Commissioned staff\n");
-		action=getInputRange(1,7);
+				+ "1: Regular students\n"
+				+ "2: Grad TAs\n"
+				+ "3: Undergrad TAs\n"
+				+ "4: Permanent faculty members\n"
+				+ "5: Part time faculty members\n"
+				+ "6: Permanent staff\n"
+				+ "7: Part time staff\n"
+				+ "8: Commissioned staff\n"
+				+ "9: All Students\n"
+				+ "10:All Faculty\n"
+				+ "11:All Staff\n"
+				+ "12:Everyone\n");
+		action=getInputRange(1,12);
 		switch (action){
 		case 1:
-			for(int i=0;i<students.size();i++)
-				System.out.println(students.get(i));
+			listStudents();
 			break;
 		case 2:
-			for(int i=0;i<tas.size();i++)
-				System.out.println(tas.get(i));
+			listGradTAs();
 			break;
 		case 3:
-			for(int i=0;i<permanentFaculty.size();i++)
-				System.out.println(permanentFaculty.get(i));
+			listUndergradTAs();
 			break;
 		case 4:
-			for(int i=0;i<partTimeFaculty.size();i++)
-				System.out.println(partTimeFaculty.get(i));
+			listPermanentFaculty();
 			break;
 		case 5:
-			for(int i=0;i<permanentStaff.size();i++)
-				System.out.println(permanentStaff.get(i));
+			listPartTimeFaculty();
 			break;
 		case 6:
-			for(int i=0;i<partTimeStaff.size();i++)
-				System.out.println(partTimeStaff.get(i));
+			listPermanentStaff();
 			break;
 		case 7:
-			for(int i=0;i<commissionStaff.size();i++)
-				System.out.println(commissionStaff.get(i));
+			listPartTimeStaff();
+			break;
+		case 8:
+			listCommissionStaff();
+			break;
+		case 9:
+			listStudents();
+			listGradTAs();
+			listUndergradTAs();
+			break;
+		case 10:
+			listPermanentFaculty();
+			listPartTimeFaculty();
+			break;
+		case 11:
+			listPermanentStaff();
+			listPartTimeStaff();
+			listCommissionStaff();
+			break;
+		case 12:
+			listStudents();
+			listGradTAs();
+			listUndergradTAs();
+			listPermanentFaculty();
+			listPartTimeFaculty();
+			listPermanentStaff();
+			listPartTimeStaff();
+			listCommissionStaff();
 			break;
 		}
 		
+	}
+	
+	public static void listStudents(){
+		for(int i=0;i<students.size();i++)
+			System.out.println(students.get(i));
+	}
+	public static void listGradTAs(){
+		for(int i=0;i<gradTAs.size();i++)
+			System.out.println(gradTAs.get(i));
+	}
+	public static void listUndergradTAs(){
+		for(int i=0;i<underGradTAs.size();i++)
+			System.out.println(underGradTAs.get(i));
+	}
+	public static void listPartTimeFaculty(){
+		for(int i=0;i<partTimeFaculty.size();i++)
+			System.out.println(partTimeFaculty.get(i));
+	}
+	public static void listPermanentFaculty(){
+		for(int i=0;i<permanentFaculty.size();i++)
+			System.out.println(permanentFaculty.get(i));
+	}
+	public static void listPermanentStaff(){
+		for(int i=0;i<permanentStaff.size();i++)
+			System.out.println(permanentStaff.get(i));
+	}
+	public static void listPartTimeStaff(){
+		for(int i=0;i<partTimeStaff.size();i++)
+			System.out.println(partTimeStaff.get(i));
+	}
+	public static void listCommissionStaff(){
+		for(int i=0;i<commissionStaff.size();i++)
+			System.out.println(commissionStaff.get(i));
 	}
 
 	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
@@ -1018,12 +1076,13 @@ public class PaymentManager {
 			}
 			System.out.println("Error: there is no person with that ID");
 			}while(true);
+			break;
+		case 3: 
+			return 13; 
 		}
 		System.out.println("Error: there is no person with that ID");
 		return 1;
-		break;
-		case 3: 
-			return 13; 
+		
 	}
 	
 	
