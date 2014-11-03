@@ -105,6 +105,7 @@ public class PaymentManager {
 				
 				//partTimeStaff 6000000-7000000
 				if((ID.get(index)>=6000000 && ID.get(index)<7000000)||ID.get(index)==5){
+				partTimeStaff.add((PartTimeStaff) in2.readObject());
 					if(ID.get(index)==5){
 						badID.add(partTimeStaffID);
 					}
@@ -114,6 +115,8 @@ public class PaymentManager {
 				
 				//commissionStaff 7000000-8000000
 				if((ID.get(index)>=7000000 && ID.get(index)<8000000)||ID.get(index)==6){
+					commissionStaff.add((CommissionStaff) in2.readObject());
+
 					if(ID.get(index)==6){
 						badID.add(commissionedStaffID);
 					}
