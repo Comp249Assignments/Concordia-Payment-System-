@@ -36,4 +36,7 @@ public class Student extends ConcordiaPerson{
 	public int getMonthsLeftUntilGraduation(){
 		return monthsUntilGraduation;
 	}
+	public String toString(){
+		return (super.toString()"\nMonths left until graduation: "+monthsUntilGraduation+);
+	}
 }
