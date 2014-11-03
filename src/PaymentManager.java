@@ -470,7 +470,6 @@ public class PaymentManager {
 		}
 	 }
 	
-	
 	//Method for adding any kind of staff member
 	public static void addStaffMember(){
 		int action, duration,id,itsBadID;
@@ -499,17 +498,10 @@ public class PaymentManager {
 		 		
 		 		System.out.println("How much will this person be paid over the duration of their contract?");
 		 		pay = getInputDouble();
-					switch(action){
+				switch(action){
 					case 1:
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
-<<<<<<< HEAD
-				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
-						break;
-					case 2:
-						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
-						break;
-=======
 				 		//generate ID
 						itsBadID=isItBadID(commissionedStaffID);
 						if(itsBadID!=0){
@@ -534,16 +526,11 @@ public class PaymentManager {
 							partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 							
 						}						break;
->>>>>>> origin/master
 				}
 				break;
 			case 2:
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
-<<<<<<< HEAD
-		 		permanentStaff.add(new PermanentStaff(id, name, pay));
-				break;
-=======
 		 		//generate ID
 				itsBadID=isItBadID(permanentStaffID);
 				if(itsBadID!=0){
@@ -556,7 +543,6 @@ public class PaymentManager {
 					id=permanentStaffID++;
 		 			permanentStaff.add(new PermanentStaff(id, name, pay));
 				}				break;
->>>>>>> origin/master
 		}
 	}
 	
