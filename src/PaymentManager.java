@@ -63,13 +63,13 @@ public class PaymentManager {
 					load++;
 					
 				}
-				//ta 2000000-3000000
+				//grad ta 2000000-3000000
 				if((ID.get(index)>=2000000 && ID.get(index)<3000000)||ID.get(index)==1){
-					tas.add((TA) in2.readObject());
+					gradTAs.add((GradTA) in2.readObject());
 					if(ID.get(index)==1){
-						badID.add(taID);
+						badID.add(gradTAID);
 					}
-					taID++;
+					gradTAID++;
 					load++;
 				}
 				
@@ -123,6 +123,16 @@ public class PaymentManager {
 					commissionedStaffID++;
 					load++;
 				}
+				
+				//undergrad ta 8000000-9000000
+				if((ID.get(index)>=8000000 && ID.get(index)<9000000)||ID.get(index)==7){
+					underGradTAs.add((UnderGradTA) in2.readObject());
+					if(ID.get(index)==1){
+						badID.add(gradTAID);
+					}
+					gradTAID++;
+					load++;
+				}
 			
 				
 			
@@ -168,8 +178,8 @@ public class PaymentManager {
 		arrayCeption.clear();
 			arrayCeption.add(students);
 		
-			arrayCeption.add(tas);
-		
+			arrayCeption.add(gradTAs);
+			
 			arrayCeption.add(permanentFaculty);
 
 			arrayCeption.add(partTimeFaculty);
@@ -179,6 +189,8 @@ public class PaymentManager {
 			arrayCeption.add(partTimeStaff);
 
 			arrayCeption.add(commissionStaff);
+			
+			arrayCeption.add(underGradTAs);
 
 		writeToSave(arrayCeption);
 	}
@@ -505,10 +517,157 @@ public class PaymentManager {
 		 	//	permanentStaff.add(new PermanentStaff(id, name, pay));
 				break;
 		}
+	}
 	
 	//Method to update the attributes of individuals (might use the search method in order to find that individual?)
 	public static void update(){
-		
+		int action, id, employeeType;
+		boolean stop = false;
+		System.out.println("We must search for the person to delete first");
+		do{
+			System.out.println("First we need to find the individual");
+			id=search();
+		}while(id<10);
+		employeeType = id/1000000;
+		switch(employeeType){
+			case 1:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Alumni status\n" +
+						"3: Months until graduation");
+				action = getInputRange(1,3);
+				if(action==1){
+					System.out.println("Please input the new name");
+					students.get(id%1000000).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Input\n"+
+							"1: Is alumni"+
+							"2: Is not alumni");
+					action=getInputRange(1,2);
+					if(action==1)
+						students.get(id%1000000).setAlumni(true);
+					else
+						students.get(id%1000000).setAlumni(false);
+				}
+				else{
+					System.out.println("Please input the number of months until graduation for this student");
+					students.get(id%1000000).setMonthsUntilGraduation(getInputInt());
+				}
+				break;
+			case 2:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Alumni status\n" +
+						"3: Months until graduation"+
+						"4: Hours worked per month"+
+						"5: Hourly pay");
+				action = getInputRange(1,5);
+				if(action==1){
+					System.out.println("Please input the new name");
+					gradTAs.get(id%1000000).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Input\n"+
+							"1: Is alumni"+
+							"2: Is not alumni");
+					action=getInputRange(1,2);
+					if(action==1)
+						gradTAs.get(id%1000000).setAlumni(true);
+					else
+						gradTAs.get(id%1000000).setAlumni(false);
+				}
+				else if(action==3){
+					System.out.println("Please input the number of months until graduation for this student");
+					gradTAs.get(id%1000000).setMonthsUntilGraduation(getInputInt());
+				}
+				else if(action==4){
+					System.out.println("Please input the numbers of hours this TA works per month");
+					int hours = getInputRange(0, 1000000);
+					double hourlyPay = (gradTAs.get(id%1000000).getMonthlyPay()/gradTAs.get(id%1000000).getHours());
+					gradTAs.get(id%1000000).setHours(hours);
+					gradTAs.get(id%1000000).setMonthlyPay(hours*hourlyPay);
+				}
+				else{
+					System.out.println("Please input the hourly pay for this TA");
+					gradTAs.get(id%1000000).setMonthlyPay(getInputDouble()*gradTAs.get(id%1000000).getHours());
+				}
+				break;
+			case 3:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Monthly pay\n" +
+						"3: Classes"+
+						"4: Students per class");
+				action = getInputRange(1,5);
+				if(action==1){
+					System.out.println("Please input the new name");
+					permanentFaculty.get(id%1000000).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Please input the monthly pay for this person");
+					permanentFaculty.get(id%1000000).setMonthlyPay(getInputDouble());
+				}
+				else if(action==3){
+					for(int i=0; i<permanentFaculty.get(id%1000000).getNumCourses(); i++){
+						System.out.print("Input the name of class " + (i+1));
+						permanentFaculty.get(id%1000000).setCoursesTaught(i, scanner.next());
+					}
+				}
+				else{
+					for(int i=0; i<permanentFaculty.get(id%1000000).getNumCourses(); i++){
+						System.out.print("Input the number of students in class " + permanentFaculty.get(id%1000000).getCoursesTaught(i));
+						permanentFaculty.get(id%1000000).setStudentsPerClass(i, getInputRange(0, 1000));
+					}
+				}
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Alumni status\n" +
+						"3: Months until graduation"+
+						"4: Hours worked per month"+
+						"5: Hourly pay");
+				action = getInputRange(1,5);
+				if(action==1){
+					System.out.println("Please input the new name");
+					underGradTAs.get(id%1000000).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Input\n"+
+							"1: Is alumni"+
+							"2: Is not alumni");
+					action=getInputRange(1,2);
+					if(action==1)
+						underGradTAs.get(id%1000000).setAlumni(true);
+					else
+						underGradTAs.get(id%1000000).setAlumni(false);
+				}
+				else if(action==3){
+					System.out.println("Please input the number of months until graduation for this student");
+					underGradTAs.get(id%1000000).setMonthsUntilGraduation(getInputInt());
+				}
+				else if(action==4){
+					System.out.println("Please input the numbers of hours this TA works per month");
+					int hours = getInputRange(0, 1000000);
+					double hourlyPay = (underGradTAs.get(id%1000000).getMonthlyPay()/underGradTAs.get(id%1000000).getHours());
+					underGradTAs.get(id%1000000).setHours(hours);
+					underGradTAs.get(id%1000000).setMonthlyPay(hours*hourlyPay);
+				}
+				else{
+					System.out.println("Please input the hourly pay for this TA");
+					underGradTAs.get(id%1000000).setMonthlyPay(getInputDouble()*underGradTAs.get(id%1000000).getHours());
+				}
+				break;
+		}
 	}
 	
 	//method to print out the paystubs for the employees
@@ -575,12 +734,12 @@ public class PaymentManager {
 		int action;
 		System.out.println("would you like to list\n"
 				+ "1: Students\n"
-				+ "2:Ta's\n"
-				+ "3:Permanent faculty members\n"
-				+ "4:Part time faculty members\n"
-				+ "5:Permanent staff\n"
-				+ "6:Part time staff\n"
-				+ "7:Commissioned staff\n");
+				+ "2: TA's\n"
+				+ "3: Permanent faculty members\n"
+				+ "4: Part time faculty members\n"
+				+ "5: Permanent staff\n"
+				+ "6: Part time staff\n"
+				+ "7: Commissioned staff\n");
 		action=getInputRange(1,7);
 		switch (action){
 		case 1:
@@ -679,8 +838,10 @@ public class PaymentManager {
 	public static double totalPay(){
 		double pay = 0;
 		
-		for(int x=0; x<tas.size(); x++)
-			pay+=tas.get(x).getMonthlyPay();
+		for(int x=0; x<gradTAs.size(); x++)
+			pay+=gradTAs.get(x).getMonthlyPay();
+		for(int x=0; x<underGradTAs.size(); x++)
+			pay+=underGradTAs.get(x).getMonthlyPay();
 		for(int x=0; x<partTimeFaculty.size(); x++)
 			pay+=partTimeFaculty.get(x).getMonthlyPay();
 		for(int x=0; x<permanentFaculty.size(); x++)

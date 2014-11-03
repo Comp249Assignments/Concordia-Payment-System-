@@ -20,8 +20,16 @@ public class Student extends ConcordiaPerson{
 		return alumni;
 	}
 	
+	public int getMonthsUntilGraduation(){
+		return monthsUntilGraduation;
+	}
+	
 	public void setAlumni(boolean alumni){
 		this.alumni = alumni;
+	}
+	
+	public void setMonthsUntilGraduation(int monthsUntilGraduation){
+		this.monthsUntilGraduation = monthsUntilGraduation;
 	}
 	
 	public boolean qualifiesForTA(){
