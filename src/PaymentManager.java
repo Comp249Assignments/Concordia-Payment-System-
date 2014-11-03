@@ -367,10 +367,10 @@ public class PaymentManager {
 		
 		System.out.println("Is the Faculty Member a\n" +
 				"1: Permanent Faculty Member\n" +
-				"2: Part time Faculty Member\n" +
-		 		"3: Go back");
-		action=getInputRange(1,2);
-		if (action<3){
+				"2: Part time Faculty Member\n"+
+				"3: Go back");
+		action=getInputRange(1,3);
+		if(action<3){
 			//input name
 		 	System.out.println("Please input this faculty member's name");
 			name=scanner.next();	
@@ -828,11 +828,13 @@ public class PaymentManager {
 			System.out.println("First we need to find the individual");
 			id=search();
 		}while(id<10);
-		System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
-		if(id/1000000==4){
-			System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
-			System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
+		if (id!=13){
+			System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
+			if(id/1000000==4){
+				System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+				System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
 			
+		}
 		}
 	}
 	
@@ -854,6 +856,20 @@ public class PaymentManager {
 			}
 				
 		}
+		for (int i=0; i<commissionStaff.size();i++){
+			commissionStaff.get(i).advanceMonthlyContractDuration;
+			if (commissionStaff.get(i).getMonthlyContractDuration()<0){
+				id=commissionStaff.get(i).getID();
+				commissionStaff.get(i).setID(id/1000000-1);
+			}
+		}
+		for (int i=0; i<partTimeStaff.size();i++){
+			partTimeStaff.get(i).advanceMonthlyContractDuration;
+			if (partTimeStaff.get(i).getMonthlyContractDuration()<0){
+				id=partTimeStaff.get(i).getID();
+				partTimeStaff.get(i).setID(id/1000000-1);
+			}
+			}
 		
 	}
 	
@@ -876,7 +892,7 @@ public class PaymentManager {
 	//method to delete individuals from the system
 	public static void deleteIndividual(){
 		int id=search(),action=2;
-		if(id<10){
+		if(id<10 || id==13){
 			action=3;
 		}
 		if(action==2){
@@ -947,8 +963,10 @@ public class PaymentManager {
 		
 		System.out.println("Please enter a number to search by\n"
 				+ "1: Name or\n"
-				+ "2: ID");
-		action=getInputRange(1,2);
+				+ "2: ID\n"
+				+ "3: Go back");
+		action=getInputRange(1,3);
+		
 		switch (action){
 		case 1:
 			int arrayIndex=0;
@@ -996,6 +1014,9 @@ public class PaymentManager {
 		}
 		System.out.println("Error: there is no person with that ID");
 		return 1;
+		break;
+		case 3: 
+			return 13; 
 	}
 	
 	
