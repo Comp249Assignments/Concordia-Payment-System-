@@ -44,7 +44,7 @@ public class FacultyMember extends ConcordiaPerson{
 	public String toString(){
 		String buffer="";
 		for (int i=0;i<coursesTaught.length; i++){
-		buffer=buffer+"Course: " +coursesTaught[i]+" Students attending: "+studentsPerClass + "\n";
+		buffer=buffer+"Course: " +coursesTaught[i]+" Students attending: "+studentsPerClass[i] + "\n";
 		}
 		return (super.toString()+"\n"+buffer);
 	}
