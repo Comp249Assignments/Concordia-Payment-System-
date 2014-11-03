@@ -34,4 +34,7 @@ public class CommissionStaff extends PartTimeStaff{
 	public double getSalesMade(){
 		return salesMade;
 	}
+	public String toString(){
+		return (super.toString()+"\nThey work at: "+location+"\nAmount of sales made "+monthlyContractDuration)
+	}
 }
