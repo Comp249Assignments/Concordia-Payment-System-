@@ -1,3 +1,7 @@
+/*Names of team members: Sean Marcoux, Gadiel Weigensberg
+ *IDs: 7511876, 7164777
+ */
+
 import java.io.*;
 import java.util.*;
 import java.text.*;
