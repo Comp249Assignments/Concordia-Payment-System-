@@ -690,8 +690,25 @@ public class PaymentManager {
 	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
 	//have graduated. Also changes TAs to regular student alumni if they graduate
 	public static void advanceToNextMonth(){
+		int id;
+		for(int i=0; i<students.size();i++){
+			students.get(i).advanceMonthsLeftUntilGraduation();
+			if (students.get(i).getMonthsUntilGraduation()<0){
+				id=students.get(i).getID();
+				students.get(i).setID(id/1000000-1);
+			}
+		}
+		for(int i=0; i<partTimeFaculty.size(); i++){
+			partTimeFaculty.get(i).advanceMonthsLeft();
+			if (partTimeFaculty.get(i).getMonthsLeft()<0){
+				id=partTimeFaculty.get(i).getID();
+				partTimeFaculty.get(i).setID(id/1000000-1);
+			}
+				
+		}
 		
 	}
+	
 	
 
 	//method for replacing the ID of old and deleted ConcordiaPerson's
