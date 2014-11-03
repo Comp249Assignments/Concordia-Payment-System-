@@ -694,8 +694,7 @@ public class PaymentManager {
 		for(int i=0; i<students.size();i++){
 			students.get(i).advanceMonthsLeftUntilGraduation();
 			if (students.get(i).getMonthsUntilGraduation()<0){
-				id=students.get(i).getID();
-				students.get(i).setID(id/1000000-1);
+				students.get(i).setAlumni(true);
 			}
 		}
 		for(int i=0; i<partTimeFaculty.size(); i++){
