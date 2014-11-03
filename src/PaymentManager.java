@@ -346,7 +346,7 @@ public class PaymentManager {
 
 	//Method for adding a faculty member
 	public static void addFacultyMember(){
-		int action, itsBadID, ID, monthlyPay,numCourses,hours,bonus=0;
+		int action, itsBadID, ID, monthlyPay,numCourses,hours,monthsLeft,bonus=0;
 		String name="";
 		String [] classNames;
 		int [] studentsPerClass;
@@ -417,6 +417,10 @@ public class PaymentManager {
 					ID=partTimeFacultyID++;
 
 					
+				//input months to be hired for
+		 		System.out.println("Please input for how long will this faculty member be hired");
+		 		monthsLeft=getInputInt();
+		 		
 		 		//input hourlyRate
 		 		System.out.println("Please input the amount the faculty member will be paid per hour in dollars");
 		 		hourlyRate=getInputDouble();
