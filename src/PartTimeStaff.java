@@ -16,6 +16,9 @@ public class PartTimeStaff extends StaffMember{
 		this.monthlyContractDuration = monthlyContractDuration;
 	}
 	
+	public void advanceMonthlyContractDuration(){
+		monthlyContractDuration--;
+	}
 	public int getMonthlyContractDuration(){
 		return monthlyContractDuration;
 	}
