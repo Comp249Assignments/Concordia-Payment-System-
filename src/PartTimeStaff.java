@@ -1,6 +1,7 @@
 
 public class PartTimeStaff extends StaffMember{
 	private int monthlyContractDuration;
+	private int monthsLeft;
 	
 	public PartTimeStaff(){
 		super();
@@ -10,6 +11,7 @@ public class PartTimeStaff extends StaffMember{
 	public PartTimeStaff(int id, String name, double contractPay, int monthlyContractDuration){
 		super(id, name, (contractPay/monthlyContractDuration));
 		this.monthlyContractDuration = monthlyContractDuration;
+		monthsLeft = monthlyContractDuration;
 	}
 	
 	public void setMonthlyContractDuration(int monthlyContractDuration){
@@ -18,5 +20,13 @@ public class PartTimeStaff extends StaffMember{
 	
 	public int getMonthlyContractDuration(){
 		return monthlyContractDuration;
+	}
+	
+	public void setMonthsLeft(int monthsLeft){
+		this.monthsLeft = monthsLeft;
+	}
+	
+	public int getMonthsLeft(){
+		return monthsLeft;
 	}
 }

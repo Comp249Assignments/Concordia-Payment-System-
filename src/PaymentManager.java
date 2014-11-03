@@ -696,11 +696,87 @@ public class PaymentManager {
 				}
 				break;
 			case 5:
-				
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Annual salary");
+				action = getInputRange(1,2);
+				if(action==1){
+					System.out.println("Please input the new name");
+					permanentStaff.get(id%1000000).setName(scanner.next());
+				}
+				else{
+					System.out.println("Please input this person's annual salary");
+					permanentStaff.get(id%1000000).setMonthlyPay((getInputDouble()/12));
+				}
 				break;
 			case 6:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Countract pay\n" +
+						"3: Total months on contract"+
+						"4: Months left on contract");
+				action = getInputRange(1,4);
+				if(action==1){
+					System.out.println("Please input the new name");
+					partTimeStaff.get(id%1000000).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Please input the amount this person will be paid during the full time of their contract");
+					partTimeStaff.get(id%1000000).setMonthlyPay(((getInputDouble()/partTimeStaff.get(id%1000000).getMonthlyContractDuration())));
+				}
+				else if(action==3){
+					System.out.println("Please input the number of months on the contract");
+					double contractPay = partTimeStaff.get(id%1000000).getMonthlyPay()*partTimeStaff.get(id%1000000).getMonthlyContractDuration();
+					int months = getInputRange(1,1000000);
+					partTimeStaff.get(id%1000000).setMonthlyContractDuration(months);
+					partTimeStaff.get(id%1000000).setMonthlyPay((contractPay/months));
+				}
+				else{
+					System.out.println("Please input the number of months this person has left to work");
+					partTimeStaff.get(id%1000000).setMonthsLeft(getInputRange(1,1000000));
+				}
 				break;
 			case 7:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Countract pay\n" +
+						"3: Total months on contract"+
+						"4: Months left on contract"+
+						"5: Work location"+
+						"6: Sales made"+
+						"7: Add sales to the sales made");
+				action = getInputRange(1,7);
+				if(action==1){
+					System.out.println("Please input the new name");
+					commissionStaff.get(id%1000000).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Please input the amount this person will be paid during the full time of their contract");
+					commissionStaff.get(id%1000000).setMonthlyPay(((getInputDouble()/commissionStaff.get(id%1000000).getMonthlyContractDuration())));
+				}
+				else if(action==3){
+					System.out.println("Please input the number of months on the contract");
+					double contractPay = commissionStaff.get(id%1000000).getMonthlyPay()*commissionStaff.get(id%1000000).getMonthlyContractDuration();
+					int months = getInputRange(1,1000000);
+					commissionStaff.get(id%1000000).setMonthlyContractDuration(months);
+					commissionStaff.get(id%1000000).setMonthlyPay((contractPay/months));
+				}
+				else if(action==4){
+					System.out.println("Please input the number of months this person has left to work");
+					commissionStaff.get(id%1000000).setMonthsLeft(getInputRange(1,1000000));
+				}
+				else if(action==5){
+					System.out.println("Please input the new location this person will be working at in Concordia");
+					commissionStaff.get(id%1000000).setLocation(scanner.next());
+				}
+				else if(action==6){
+					System.out.println("Please input the total sales this person made this month");
+					commissionStaff.get(id%1000000).setSalesMade(getInputDouble());
+				}
+				else{
+					System.out.println("Please input the sale you wish to add to this person's total sales made this month");
+					commissionStaff.get(id%1000000).addSales(getInputDouble());
+				}
 				break;
 			case 8:
 				System.out.println("Would you like to update the \n" +
