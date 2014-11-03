@@ -11,7 +11,6 @@ public class PaymentManager {
 	private static ArrayList<Integer> badID=new ArrayList();
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
-	private static double underGradTAPay;
 	private static ArrayList<ConcordiaPerson> concordiaPerson=new ArrayList();
 	private static ArrayList<ArrayList> arrayCeption=new ArrayList();
 	private static ArrayList<Student> students = new ArrayList();
@@ -504,17 +503,17 @@ public class PaymentManager {
 					case 1:
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
-				 		//commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
+				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
 						break;
 					case 2:
-						//partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
+						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 						break;
 				}
 				break;
 			case 2:
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
-		 	//	permanentStaff.add(new PermanentStaff(id, name, pay));
+		 		permanentStaff.add(new PermanentStaff(id, name, pay));
 				break;
 		}
 	}
