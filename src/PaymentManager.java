@@ -211,7 +211,7 @@ public class PaymentManager {
 					"7: Advance to next month\n"+
 					"8: List all the members in any group\n"+
 					"9: Exit");
-			action = getInputRange(1, 9);
+			action = getInputRange(1, 8);
 			switch(action){
 				case 1:
 					addIndividual();
@@ -367,10 +367,9 @@ public class PaymentManager {
 		
 		System.out.println("Is the Faculty Member a\n" +
 				"1: Permanent Faculty Member\n" +
-				"2: Part time Faculty Member\n" +
-		 		"3: Go back");
+				"2: Part time Faculty Member\n");
 		action=getInputRange(1,2);
-		if (action<3){
+		
 			//input name
 		 	System.out.println("Please input this faculty member's name");
 			name=scanner.next();	
@@ -552,7 +551,7 @@ public class PaymentManager {
 				}
 				else{
 					System.out.println("Please input the number of months until graduation for this student");
-					students.get(id%1000000).setMonthsUntilGraduation(getInputRange(1,1000000));
+					students.get(id%1000000).setMonthsUntilGraduation(getInputInt());
 				}
 				break;
 			case 2:
@@ -579,7 +578,7 @@ public class PaymentManager {
 				}
 				else if(action==3){
 					System.out.println("Please input the number of months until graduation for this student");
-					gradTAs.get(id%1000000).setMonthsUntilGraduation(getInputRange(1,1000000));
+					gradTAs.get(id%1000000).setMonthsUntilGraduation(getInputInt());
 				}
 				else if(action==4){
 					System.out.println("Please input the numbers of hours this TA works per month");
@@ -622,81 +621,8 @@ public class PaymentManager {
 				}
 				break;
 			case 4:
-				System.out.println("Would you like to update the \n" +
-						"1: Name\n" +
-						"2: Hourly pay\n" +
-						"3: Hours"+
-						"4: Classes"+
-						"5: Students per class"+
-						"6: Remaining months of employment");
-				action = getInputRange(1,6);
-				if(action==1){
-					System.out.println("Please input the new name");
-					partTimeFaculty.get(id%1000000).setName(scanner.next());
-				}
-				else if(action==2){
-					int maxStudents=0, bonus = 0;;
-					System.out.println("Please input the hourly pay for this person");
-					double pay = getInputDouble();
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						if(partTimeFaculty.get(id%1000000).getStudentsPerClass(i)>maxStudents)
-							maxStudents = partTimeFaculty.get(id%1000000).getStudentsPerClass(i);
-					}
-					if(maxStudents>60){
-						bonus=1000;
-					}
-					else if(maxStudents>=40){
-						bonus=500;
-					}
-					partTimeFaculty.get(id%1000000).setMonthlyPay(pay*partTimeFaculty.get(id%1000000).getHours()+bonus);
-					partTimeFaculty.get(id%1000000).setHourlyRate(pay);
-				}
-				else if(action==3){
-					int maxStudents=0, bonus = 0;;
-					System.out.println("Please input the hours this person works per month");
-					int hours = getInputRange(0, 1000000);
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						if(partTimeFaculty.get(id%1000000).getStudentsPerClass(i)>maxStudents)
-							maxStudents = partTimeFaculty.get(id%1000000).getStudentsPerClass(i);
-					}
-					if(maxStudents>60){
-						bonus=1000;
-					}
-					else if(maxStudents>=40){
-						bonus=500;
-					}
-					partTimeFaculty.get(id%1000000).setMonthlyPay(hours*partTimeFaculty.get(id%1000000).getHourlyRate()+bonus);
-					partTimeFaculty.get(id%1000000).setHours(hours);
-				}
-				else if(action==4){
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						System.out.print("Input the name of class " + (i+1));
-						partTimeFaculty.get(id%1000000).setCoursesTaught(i, scanner.next());
-					}
-				}
-				else if(action==5){
-					int students=0, maxStudents = 0;
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						System.out.print("Input the number of students in class " + partTimeFaculty.get(id%1000000).getCoursesTaught(i));
-						students = getInputRange(0, 1000);
-						if(students>maxStudents)
-							maxStudents = students;
-						partTimeFaculty.get(id%1000000).setStudentsPerClass(i, students);
-					}
-					if(maxStudents>60){
-						partTimeFaculty.get(id%1000000).setMonthlyPay(partTimeFaculty.get(id%1000000).getMonthlyPay()+1000);
-					}
-					else if(maxStudents>=40){
-						partTimeFaculty.get(id%1000000).setMonthlyPay(partTimeFaculty.get(id%1000000).getMonthlyPay()+500);
-					}
-				}
-				else{
-					System.out.println("Please input the number of months this employee has left to work");
-					partTimeFaculty.get(id%1000000).setMonthsleft(getInputRange(1,1000000));
-				}
 				break;
 			case 5:
-				
 				break;
 			case 6:
 				break;
@@ -726,7 +652,7 @@ public class PaymentManager {
 				}
 				else if(action==3){
 					System.out.println("Please input the number of months until graduation for this student");
-					underGradTAs.get(id%1000000).setMonthsUntilGraduation(getInputRange(1,1000000));
+					underGradTAs.get(id%1000000).setMonthsUntilGraduation(getInputInt());
 				}
 				else if(action==4){
 					System.out.println("Please input the numbers of hours this TA works per month");
@@ -752,11 +678,13 @@ public class PaymentManager {
 			System.out.println("First we need to find the individual");
 			id=search();
 		}while(id<10);
-		System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
-		if(id/1000000==4){
-			System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
-			System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
+		if (id!=13){
+			System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
+			if(id/1000000==4){
+				System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+				System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
 			
+		}
 		}
 	}
 	
@@ -800,7 +728,7 @@ public class PaymentManager {
 	//method to delete individuals from the system
 	public static void deleteIndividual(){
 		int id=search(),action=2;
-		if(id<10){
+		if(id<10 || id==13){
 			action=3;
 		}
 		if(action==2){
@@ -871,8 +799,10 @@ public class PaymentManager {
 		
 		System.out.println("Please enter a number to search by\n"
 				+ "1: Name or\n"
-				+ "2: ID");
-		action=getInputRange(1,2);
+				+ "2: ID\n"
+				+ "3: Go back");
+		action=getInputRange(1,3);
+		
 		switch (action){
 		case 1:
 			int arrayIndex=0;
@@ -920,6 +850,9 @@ public class PaymentManager {
 		}
 		System.out.println("Error: there is no person with that ID");
 		return 1;
+		break;
+		case 3: 
+			return 13; 
 	}
 	
 	
