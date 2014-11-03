@@ -859,13 +859,25 @@ public class PaymentManager {
 		}while(id<10);
 		if (id!=13){
 			System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
+			if(id/1000000==2){
+				System.out.println("Hours: "+((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+				System.out.println("Hourly wage: "+(((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getMonthlyPay()/((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours()));
+				
+			}
 			if(id/1000000==4){
 				System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
 				System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
 			
 		}
+			if(id/1000000==8){
+				System.out.println("Hours: "+((UnderGradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+				System.out.println("Hourly wage: "+(((UnderGradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getMonthlyPay()/((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours()));
+				
+			}
+			
 		}
 	}
+	
 	
 	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
 	//have graduated. Also changes TAs to regular student alumni if they graduate
