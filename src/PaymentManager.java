@@ -844,28 +844,35 @@ public class PaymentManager {
 		int id;
 		for(int i=0; i<students.size();i++){
 			students.get(i).advanceMonthsLeftUntilGraduation();
-			if (students.get(i).getMonthsUntilGraduation()<0){
+			if (students.get(i).getMonthsLeftUntilGraduation()<=0){
 				students.get(i).setAlumni(true);
 			}
 		}
 		for(int i=0; i<partTimeFaculty.size(); i++){
 			partTimeFaculty.get(i).advanceMonthsLeft();
-			if (partTimeFaculty.get(i).getMonthsLeft()<0){
+			if (partTimeFaculty.get(i).getMonthsLeft()<=0){
 				id=partTimeFaculty.get(i).getID();
 				partTimeFaculty.get(i).setID(id/1000000-1);
 			}
-				
 		}
+		double totalSales=0;
 		for (int i=0; i<commissionStaff.size();i++){
-			commissionStaff.get(i).advanceMonthlyContractDuration;
-			if (commissionStaff.get(i).getMonthlyContractDuration()<0){
+			for(int x=0; x<commissionStaff.size(); i++){
+				totalSales+=commissionStaff.get(x).getSalesMade();
+				if(x!=i&&commissionStaff.get(x).getLocation().equals(commissionStaff.get(i).getLocation())){
+					totalSales+=commissionStaff.get(i).getSalesMade();
+				}
+			}
+			commissionStaff.get(i).setMonthlyPay(commissionStaff.get(i).getMonthlyPay()+(totalSales/100));
+			commissionStaff.get(i).advanceMonth();
+			if (commissionStaff.get(i).getMonthsLeft()<=0){
 				id=commissionStaff.get(i).getID();
 				commissionStaff.get(i).setID(id/1000000-1);
 			}
 		}
 		for (int i=0; i<partTimeStaff.size();i++){
-			partTimeStaff.get(i).advanceMonthlyContractDuration;
-			if (partTimeStaff.get(i).getMonthlyContractDuration()<0){
+			partTimeStaff.get(i).advanceMonthlyContractDuration();
+			if (partTimeStaff.get(i).getMonthsLeft()<=0){
 				id=partTimeStaff.get(i).getID();
 				partTimeStaff.get(i).setID(id/1000000-1);
 			}

@@ -42,6 +42,6 @@ public class Student extends ConcordiaPerson{
 			buffer="an alumni";
 		else
 			buffer="not an alumni";
-		return (super.toString()"\nMonths left until graduation: "+monthsUntilGraduation+"\nHe is "+buffer);
+		return (super.toString()+"\nMonths left until graduation: "+monthsUntilGraduation+"\nHe is "+buffer);
 	}
 }

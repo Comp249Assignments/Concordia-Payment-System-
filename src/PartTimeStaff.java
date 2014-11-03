@@ -19,7 +19,7 @@ public class PartTimeStaff extends StaffMember{
 	}
 	
 	public void advanceMonthlyContractDuration(){
-		monthlyContractDuration--;
+		monthsLeft--;
 	}
 	public int getMonthlyContractDuration(){
 		return monthlyContractDuration;

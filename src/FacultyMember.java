@@ -42,11 +42,11 @@ public class FacultyMember extends ConcordiaPerson implements Serializable {
 	}
 	
 	public String toString(){
-		String buffer;
-		for (int i=0;i<coursesTaught.lenght(); i++){
-		buffer="Course: " +coursesTaught[i]+"\nStudents attending: "+studentsPerClass;
+		String buffer="";
+		for (int i=0;i<coursesTaught.length; i++){
+		buffer=buffer+"Course: " +coursesTaught[i]+" Students attending: "+studentsPerClass + "\n";
 		}
-		return (super.toString()"\n"+buffer)
+		return (super.toString()+"\n"+buffer);
 	}
 	
 

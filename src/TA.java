@@ -20,6 +20,6 @@ public class TA extends Student{
 		return hours;
 	}
 	public String toString(){
-		return(super.toString()+"\nHours per month: "+hours)
+		return(super.toString()+"\nHours per month: "+hours);
 	}
 }
