@@ -22,4 +22,7 @@ public class PartTimeStaff extends StaffMember{
 	public int getMonthlyContractDuration(){
 		return monthlyContractDuration;
 	}
+	public String toString(){
+		return (super.toString()+"\nMonths of employment left: "+monthlyContractDuration );
+	}
 }
