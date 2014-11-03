@@ -451,9 +451,9 @@ public class PaymentManager {
 		 			bonus+=((studentsPerClass[i]>=40 && studentsPerClass[i]<=60)? 500:0);
 		 			bonus+=((studentsPerClass[i]>60)? 1000:0);		 		}
 		 		if(itsBadID==0)
-		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus));
+		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus,monthsLeft));
 		 		else
-			 		partTimeFaculty.add(itsBadID-4000000,new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus));
+			 		partTimeFaculty.add(itsBadID-4000000,new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus, monthsLeft));
 
 		 		break;
 		}
