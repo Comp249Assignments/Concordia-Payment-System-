@@ -471,7 +471,7 @@ public class PaymentManager {
  			name=scanner.next();
 		}
  		
-		switch(action){
+	switch(action){
 			case 1:
 				System.out.println("Is this a commissioned staff member? \n" +
 						"1: Yes\n" +
@@ -483,70 +483,21 @@ public class PaymentManager {
 		 		
 		 		System.out.println("How much will this person be paid over the duration of their contract?");
 		 		pay = getInputDouble();
-			switch(action){
+				switch(action){
 					case 1:
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
-						//generate ID
-						itsBadID=isItBadID(commissionedStaffID);
-						if(itsBadID!=0){
-							id=itsBadID;
-							commissionStaff.add(itsBadID-7000000,new CommissionStaff(id, name, pay, duration, input));
-						}
-						else{
-							id=commissionedStaffID++;
-					 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
-							}
+				 		//commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
 						break;
 					case 2:
-						//generate ID
-						itsBadID=isItBadID(partTimeStaffID);
-						if(itsBadID!=0){
-							id=itsBadID;
-							partTimeStaff.remove(itsBadID-6000000);
-							partTimeStaff.add(itsBadID-6000000,new PartTimeStaff(id, name, pay, duration));	
-						}
-						else{
-							id=partTimeStaffID++;
-							partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
-							
-						}
+						//partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 						break;
 				}
 				break;
 			case 2:
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
-				//generate ID
-				itsBadID=isItBadID(permanentStaffID);
-				if(itsBadID!=0){
-					id=itsBadID;
-					permanentStaff.remove(itsBadID-5000000);
-					permanentStaff.add(itsBadID-5000000,new PermanentStaff(id, name, pay));
-					
-				}
-				else{
-					id=permanentStaffID++;
-		 			permanentStaff.add(new PermanentStaff(id, name, pay));
-				}
-				break;
-		}
-	}		break;
-			case 2:
-				System.out.println("Please input this staff member's yearly salary");
-		 		pay = getInputDouble();
-				//generate ID
-				itsBadID=isItBadID(permanentStaffID);
-				if(itsBadID==0){
-					id=permanentStaffID++;
-		 			permanentStaff.add(new PermanentStaff(id, name, pay));
-				}
-				else{
-					id=itsBadID;
-					permanentStaff.add(itsBadID-7000000,new PermanentStaff(id, name, pay));
-
-					
-				}
+		 	//	permanentStaff.add(new PermanentStaff(id, name, pay));
 				break;
 		}
 	}
