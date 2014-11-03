@@ -38,8 +38,8 @@ public class PartTimeFaculty extends FacultyMember implements Serializable{
 		this.hours = hours;
 	}
 	
-	public String paymentStub(){
-		return "name:"+getName()+"\nid:"+getID()+"\npayment:"+getMonthlyPay()+"\nhours worked"+hours+"\nhouly rate:"+hourlyRate;
+	public String toString(){
+		return (super.toString+"\nHours: "+hours+"\nHourly wage: "+hourlyRate+"\nBonus: "+bonus;
 	}
 	
 }
