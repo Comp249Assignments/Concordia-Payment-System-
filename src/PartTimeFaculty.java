@@ -6,14 +6,19 @@ public class PartTimeFaculty extends FacultyMember implements Serializable{
 	private int hours;
 	private double hourlyRate;
 	private int bonus;
-	
-	public PartTimeFaculty(){}
-	public PartTimeFaculty(int id, String name, int hours, double hourlyRate, int numCourses, String[] classNames, int[] studentsPerClass, int bonus){
+	private int monthsLeft;
+	public PartTimeFaculty(){
+		
+	}
+	public PartTimeFaculty(int id, String name, int hours, double hourlyRate, int numCourses, String[] classNames, int[] studentsPerClass, int bonus, int monthsLeft){
 		super(id, name, hours*hourlyRate+bonus, numCourses, classNames, studentsPerClass);
 		this.bonus=bonus;
 		this.hours=hours;
 		this.hourlyRate=hourlyRate;
+		this.monthsLeft=monthsLeft;
 	}
+	
+	
 	
 	
 	//getters
