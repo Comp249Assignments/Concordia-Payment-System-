@@ -47,4 +47,7 @@ public class PartTimeFaculty extends FacultyMember implements Serializable{
 		return (super.toString+"\nHours: "+hours+"\nHourly wage: "+hourlyRate+"\nBonus: "+bonus);
 	}
 	
+	public int getMonthsLeft(){
+		return this.monthsLeft;
+	}
 }
