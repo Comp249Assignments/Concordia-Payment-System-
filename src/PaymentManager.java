@@ -499,22 +499,64 @@ public class PaymentManager {
 		 		
 		 		System.out.println("How much will this person be paid over the duration of their contract?");
 		 		pay = getInputDouble();
-				switch(action){
+					switch(action){
 					case 1:
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
+<<<<<<< HEAD
 				 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
 						break;
 					case 2:
 						partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 						break;
+=======
+				 		//generate ID
+						itsBadID=isItBadID(commissionedStaffID);
+						if(itsBadID!=0){
+							id=itsBadID;
+							commissionStaff.add(itsBadID-7000000,new CommissionStaff(id, name, pay, duration, input));
+						}
+						else{
+							id=commissionedStaffID++;
+					 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
+							}
+						break;
+					case 2:
+						//generate ID
+						itsBadID=isItBadID(partTimeStaffID);
+						if(itsBadID!=0){
+							id=itsBadID;
+							partTimeStaff.remove(itsBadID-6000000);
+							partTimeStaff.add(itsBadID-6000000,new PartTimeStaff(id, name, pay, duration));	
+						}
+						else{
+							id=partTimeStaffID++;
+							partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
+							
+						}						break;
+>>>>>>> origin/master
 				}
 				break;
 			case 2:
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
+<<<<<<< HEAD
 		 		permanentStaff.add(new PermanentStaff(id, name, pay));
 				break;
+=======
+		 		//generate ID
+				itsBadID=isItBadID(permanentStaffID);
+				if(itsBadID!=0){
+					id=itsBadID;
+					permanentStaff.remove(itsBadID-5000000);
+					permanentStaff.add(itsBadID-5000000,new PermanentStaff(id, name, pay));
+					
+				}
+				else{
+					id=permanentStaffID++;
+		 			permanentStaff.add(new PermanentStaff(id, name, pay));
+				}				break;
+>>>>>>> origin/master
 		}
 	}
 	
@@ -829,13 +871,25 @@ public class PaymentManager {
 		}while(id<10);
 		if (id!=13){
 			System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
+			if(id/1000000==2){
+				System.out.println("Hours: "+((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+				System.out.println("Hourly wage: "+(((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getMonthlyPay()/((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours()));
+				
+			}
 			if(id/1000000==4){
 				System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
 				System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
 			
 		}
+			if(id/1000000==8){
+				System.out.println("Hours: "+((UnderGradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+				System.out.println("Hourly wage: "+(((UnderGradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getMonthlyPay()/((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours()));
+				
+			}
+			
 		}
 	}
+	
 	
 	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
 	//have graduated. Also changes TAs to regular student alumni if they graduate
