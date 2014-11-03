@@ -10,9 +10,12 @@ public class FacultyMember extends ConcordiaPerson{
 	public FacultyMember(int id, String name, double monthlyPay, int numCourses, String[] classNames, int[] studentsPerClass){
 		super(id,name,monthlyPay);
 		coursesTaught=new String[numCourses];
-		studentsPerClass=new int[numCourses];
-		coursesTaught=classNames;
-		this.studentsPerClass=studentsPerClass;
+		this.studentsPerClass=new int[numCourses];
+		for(int i=0; i<classNames.length; i++)
+		{
+			coursesTaught[i]=classNames[i];
+			this.studentsPerClass[i]=studentsPerClass[i];
+		}
 	}
 	//getter methods
 	public String getCoursesTaught(int courseNum){
