@@ -19,4 +19,7 @@ public class TA extends Student{
 	public int getHours(){
 		return hours;
 	}
+	public String toString(){
+		return(super.toString()+"\nHours per month: "+hours)
+	}
 }
