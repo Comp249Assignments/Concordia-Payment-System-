@@ -706,6 +706,20 @@ public class PaymentManager {
 			}
 				
 		}
+		for (int i=0; i<commissionStaff.size();i++){
+			commissionStaff.get(i).advanceMonthlyContractDuration;
+			if (commissionStaff.get(i).getMonthlyContractDuration()<0){
+				id=commissionStaff.get(i).getID();
+				commissionStaff.get(i).setID(id/1000000-1);
+			}
+		}
+		for (int i=0; i<partTimeStaff.size();i++){
+			partTimeStaff.get(i).advanceMonthlyContractDuration;
+			if (partTimeStaff.get(i).getMonthlyContractDuration()<0){
+				id=partTimeStaff.get(i).getID();
+				partTimeStaff.get(i).setID(id/1000000-1);
+			}
+			}
 		
 	}
 	
