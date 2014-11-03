@@ -50,7 +50,10 @@ public class PartTimeFaculty extends FacultyMember implements Serializable{
 	public int getMonthsLeft(){
 		return this.monthsLeft;
 	}
-	public void setMonthsLeft(){
+	public void upwardMonthsLeft(){
 		this.monthsLeft++;
+	}
+	public void setMonthsleft(int i){
+		this.monthsLeft=i;
 	}
 }
