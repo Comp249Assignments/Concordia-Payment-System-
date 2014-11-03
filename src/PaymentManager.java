@@ -542,7 +542,7 @@ public class PaymentManager {
 				}
 				else if(action==2){
 					System.out.println("Input\n"+
-							"1: Is alumni"+
+							"1: Is alumni\n"+
 							"2: Is not alumni");
 					action=getInputRange(1,2);
 					if(action==1)
@@ -559,8 +559,8 @@ public class PaymentManager {
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Alumni status\n" +
-						"3: Months until graduation"+
-						"4: Hours worked per month"+
+						"3: Months until graduation\n"+
+						"4: Hours worked per month\n"+
 						"5: Hourly pay");
 				action = getInputRange(1,5);
 				if(action==1){
@@ -569,7 +569,7 @@ public class PaymentManager {
 				}
 				else if(action==2){
 					System.out.println("Input\n"+
-							"1: Is alumni"+
+							"1: Is alumni\n"+
 							"2: Is not alumni");
 					action=getInputRange(1,2);
 					if(action==1)
@@ -597,7 +597,7 @@ public class PaymentManager {
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Monthly pay\n" +
-						"3: Classes"+
+						"3: Classes\n"+
 						"4: Students per class");
 				action = getInputRange(1,5);
 				if(action==1){
@@ -625,9 +625,9 @@ public class PaymentManager {
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Hourly pay\n" +
-						"3: Hours"+
-						"4: Classes"+
-						"5: Students per class"+
+						"3: Hours\n"+
+						"4: Classes\n"+
+						"5: Students per class\n"+
 						"6: Remaining months of employment");
 				action = getInputRange(1,6);
 				if(action==1){
@@ -713,7 +713,7 @@ public class PaymentManager {
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Countract pay\n" +
-						"3: Total months on contract"+
+						"3: Total months on contract\n"+
 						"4: Months left on contract");
 				action = getInputRange(1,4);
 				if(action==1){
@@ -740,10 +740,10 @@ public class PaymentManager {
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Countract pay\n" +
-						"3: Total months on contract"+
-						"4: Months left on contract"+
-						"5: Work location"+
-						"6: Sales made"+
+						"3: Total months on contract\n"+
+						"4: Months left on contract\n"+
+						"5: Work location\n"+
+						"6: Sales made\n"+
 						"7: Add sales to the sales made");
 				action = getInputRange(1,7);
 				if(action==1){
@@ -782,8 +782,8 @@ public class PaymentManager {
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Alumni status\n" +
-						"3: Months until graduation"+
-						"4: Hours worked per month"+
+						"3: Months until graduation\n"+
+						"4: Hours worked per month\n"+
 						"5: Hourly pay");
 				action = getInputRange(1,5);
 				if(action==1){
@@ -792,7 +792,7 @@ public class PaymentManager {
 				}
 				else if(action==2){
 					System.out.println("Input\n"+
-							"1: Is alumni"+
+							"1: Is alumni\n"+
 							"2: Is not alumni");
 					action=getInputRange(1,2);
 					if(action==1)

@@ -1,6 +1,6 @@
 import java.io.Serializable;
 import java.util.*;
-public class FacultyMember extends ConcordiaPerson implements Serializable {
+public class FacultyMember extends ConcordiaPerson{
 	private String[] coursesTaught;
 	private int[] studentsPerClass;
 	

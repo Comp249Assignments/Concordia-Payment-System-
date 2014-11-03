@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 
-public class PartTimeFaculty extends FacultyMember implements Serializable{
+public class PartTimeFaculty extends FacultyMember{
 
 	private int hours;
 	private double hourlyRate;
