@@ -163,7 +163,6 @@ public class PaymentManager {
 	//method to save the system. 
 	public static void save(){
 		arrayCeption.clear();
-		if(students.size()>0)
 			arrayCeption.add(students);
 		
 			arrayCeption.add(tas);
@@ -514,10 +513,10 @@ public class PaymentManager {
 			System.out.println("First we need to find the individual");
 			id=search();
 		}while(id<10);
-		System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-2).get(id%1000000))+"\n"+dateFormat.format(date));
+		System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
 		if(id/1000000==4){
-			System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-2).get(id%1000000)).getHours());
-			System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-2).get(id%1000000)).getHourlyRate());
+			System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
+			System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
 			
 		}
 	}
@@ -551,14 +550,14 @@ public class PaymentManager {
 		}
 		if(action==2){
 		System.out.println("are you sure you want to delete\n"
-				+ (ConcordiaPerson)arrayCeption.get(id/1000000-2).get(id%1000000)+"\n"
+				+ (ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000)+"\n"
 						+ "1.Yes\n"
 						+ "2.No");
 		action=getInputRange(1,2);
 		}
 		
 		if(action==1){
-		((ConcordiaPerson)arrayCeption.get(id/1000000-2).get(id%1000000)).setID(id/1000000-1);
+		((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000)).setID(id/1000000-1);
 		System.out.println("please reset the program to initiate the changes");
 		}
 		else
@@ -633,14 +632,14 @@ public class PaymentManager {
 							id=concordiaPerson.get(arrayIndex).getID();
 							employeeLocation=id%1000000;
 							employeeType=id/1000000;
-							if(((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID()<10){
+							if(((ConcordiaPerson) arrayCeption.get(employeeType-1).get(employeeLocation)).getID()<10){
 								i=100000;
 								deleted=true;
 								break;
 							}
 													
-							System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
-							return ((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID();
+							System.out.println(arrayCeption.get(employeeType-1).get(employeeLocation));
+							return ((ConcordiaPerson) arrayCeption.get(employeeType-1).get(employeeLocation)).getID();
 	
 						}
 						arrayIndex++;
@@ -655,10 +654,10 @@ public class PaymentManager {
 			id=getInputRange(1000000,8000000);
 			employeeLocation=id%1000000;
 			employeeType=id/1000000;
-			if(employeeLocation<=arrayCeption.get(employeeType-2).size()){
-				if(((ConcordiaPerson) arrayCeption.get(employeeType-2).get(employeeLocation)).getID()<10){
+			if(employeeLocation<=arrayCeption.get(employeeType-1).size()){
+				if(((ConcordiaPerson) arrayCeption.get(employeeType-1).get(employeeLocation)).getID()<10){
 					break;
-				}			System.out.println(arrayCeption.get(employeeType-2).get(employeeLocation));
+				}			System.out.println(arrayCeption.get(employeeType-1).get(employeeLocation));
 			return id;
 			}
 			System.out.println("Error: there is no person with that ID");
