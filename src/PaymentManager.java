@@ -794,7 +794,6 @@ public class PaymentManager {
 	
 	//method to print out the paystubs for the employees
 	public static void paystubs(){
-		int id;
 		int action;
 		System.out.println("would you like to view the paystub of \n"
 				+ "1.All members"
@@ -812,13 +811,10 @@ public class PaymentManager {
 		case 2:
 		int [] arrayLocation=search();
 		
+		if(arrayLocation[0]==-1)
+			break;
 		DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date=new Date();
-		do{
-			System.out.println("First we need to find the individual");
-			id=search();
-		}while(id<10);
-		
 			System.out.println(arrayCeption.get(arrayLocation[0]).get(arrayLocation[1])+"\n"+dateFormat.format(date));
 			break;
 			
