@@ -47,7 +47,7 @@ public class PaymentManager {
 		try{
 			
 			ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
-
+			baseRate=((UnderGradTA) in.readObject);
 			
 			//wont stop until IOException is recieved (meaning we hit the end of the file)
 			while(!stop){
@@ -138,6 +138,7 @@ public class PaymentManager {
 		try{
 			file.delete();
 			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file,false));
+			out.writeObject(baseRate);
 			for(int i=0;i<t.size();i++)
 				for(int j=0; j<t.get(i).size();j++)
 					out.writeObject(t.get(i).get(j));
