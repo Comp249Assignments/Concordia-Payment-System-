@@ -25,14 +25,20 @@ public class PaymentManager {
 	private static ArrayList<PermanentStaff> permanentStaff = new ArrayList();
 	private static ArrayList<PartTimeStaff> partTimeStaff = new ArrayList();
 	private static ArrayList<CommissionStaff> commissionStaff = new ArrayList();
+	private static UnderGradTA baseRate;
 	public static void main(String[] args) {
 		startUp();
 		scanner.close();
 	}
 	//each TA has an individual salary so we will have to put this in the TA class
 	public static void startUp(){
+		double hourlyPay;
 		System.out.println("Welcome!");
-		load();
+		if(load()==0){
+			System.out.println("What is the base hourly pay for an Undergrad TA?");
+			hourlyPay = getInputDouble();
+			baseRate = new UnderGradTA(hourlyPay);
+		}
 		action();
 	}
 	//The method to load the system (returns 0 if there is no system to load)
