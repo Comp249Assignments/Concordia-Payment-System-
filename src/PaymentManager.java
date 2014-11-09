@@ -458,7 +458,7 @@ public class PaymentManager {
 		}
 	}
 	
-	//Method to update the attributes of individuals (might use the search method in order to find that individual?)
+	//Method to update the attributes of individuals.  Uses the search method to find the individual and then gives options based on the type of employee it is
 	public static void update(){
 		int action, hours;
 		int[] person;
@@ -827,9 +827,6 @@ public class PaymentManager {
 		int id;
 		for(int i=0; i<students.size();i++){
 			students.get(i).advanceMonthsLeftUntilGraduation();
-			if (students.get(i).getMonthsLeftUntilGraduation()<=0){
-				students.get(i).setAlumni(true);
-			}
 		}
 		for(int i=0; i<partTimeFaculty.size(); i++){
 			partTimeFaculty.get(i).advanceMonthsLeft();
@@ -849,16 +846,14 @@ public class PaymentManager {
 			commissionStaff.get(i).advanceMonth();
 			if (commissionStaff.get(i).getMonthsLeft()<=0){
 				commissionStaff.remove(i);
-				
 			}
 		}
 		for (int i=0; i<partTimeStaff.size();i++){
 			partTimeStaff.get(i).advanceMonthlyContractDuration();
 			if (partTimeStaff.get(i).getMonthsLeft()<=0){
-				partTimeStaff.remove(i);
-				
+				partTimeStaff.remove(i);		
 			}
-			}
+		}
 		
 	}
 	
@@ -991,68 +986,48 @@ public class PaymentManager {
 	}
 
 	//method to search for individuals, list individuals based on criteria, and check people who don't qualify for a TA position
-	public static int search(){
+	public static int[] search(){
 		int action,id=0,employeeLocation=-1,employeeType;
 		String name;
 		boolean deleted=false;
+		ConcordiaPerson person;
 		
 		System.out.println("Please enter a number to search by\n"
 				+ "1: Name or\n"
 				+ "2: ID\n"
 				+ "3: Go back");
 		action=getInputRange(1,3);
-		
 		switch (action){
-		case 1:
-			int arrayIndex=0;
-			do{
-				System.out.println("Please enter the persons name");
+			case 1:
+				System.out.println("Please enter the persons full name");
 				name=scanner.next();
-				for(int i=0;i<arrayCeption.size();i++){
+				for(int i=0;i<arrayCeption.size();i++){ 
 					for(int j=0;j<arrayCeption.get(i).size();j++){
-						concordiaPerson.add((ConcordiaPerson) (arrayCeption.get(i).get(j)));
-						
-						if(concordiaPerson.get(arrayIndex).getName().equalsIgnoreCase(name)){
-							id=concordiaPerson.get(arrayIndex).getID();
-							employeeLocation=id%1000000;
-							employeeType=id/1000000;
-							if(((ConcordiaPerson) arrayCeption.get(employeeType-1).get(employeeLocation)).getID()<10){
-								i=100000;
-								deleted=true;
-								break;
-							}
-													
-							System.out.println(arrayCeption.get(employeeType-1).get(employeeLocation));
-							return ((ConcordiaPerson) arrayCeption.get(employeeType-1).get(employeeLocation)).getID();
-	
+						person = (ConcordiaPerson)arrayCeption.get(i).get(j);
+						if (person.getName().equalsIgnoreCase(name)){
+							System.out.println(person);
+							return new int[] {i,j};
 						}
-						arrayIndex++;
 					}
-				}
-				System.out.println("Error: there is no person with that name");
-			}while(!deleted);
-			return id;
-		case 2:
-			do{
-			System.out.println("please enter the persons id");
-			id=getInputRange(1000000,8000000);
-			employeeLocation=id%1000000;
-			employeeType=id/1000000;
-			if(employeeLocation<=arrayCeption.get(employeeType-1).size()){
-				if(((ConcordiaPerson) arrayCeption.get(employeeType-1).get(employeeLocation)).getID()<10){
-					break;
-				}			System.out.println(arrayCeption.get(employeeType-1).get(employeeLocation));
-			return id;
-			}
-			System.out.println("Error: there is no person with that ID");
-			}while(true);
-			break;
-		case 3: 
-			return 13; 
+				} 
+				System.out.println(name+" was not found.");
+				return new int []{-1,-1};
+				
+			case 2:
+				System.out.println("please enter a id number");
+				id=getInputRange(1000000,9999999);
+				for(int i=0;i<arrayCeption.size();i++){ 
+					for(int j=0;j<arrayCeption.get(i).size();j++){
+						person = (ConcordiaPerson)arrayCeption.get(i).get(j);
+						if (person.getID() == id){
+							System.out.println(person);
+							return new int[] {i,j};
+						}
+					}
+				} 
+				System.out.println(id+" was not found.");
+				return new int []{-1,-1};
 		}
-		System.out.println("Error: there is no person with that ID");
-		return 1;
-		
 	}
 	
 	
