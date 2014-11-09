@@ -1,4 +1,4 @@
-/*Names of team members: Sean Marcoux, Gadiel Weigensberg
+/*Names of team members: Sean Marcoux, Gadiel Weigensberg, Andre Manata
  *IDs: 7511876, 7164777
  */
 
