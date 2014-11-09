@@ -788,33 +788,38 @@ public class PaymentManager {
 	//method to print out the paystubs for the employees
 	public static void paystubs(){
 		int id;
+		int action;
+		System.out.println("would you like to view the paystub of \n"
+				+ "1.All members"
+				+ "2.A specific member");
+		action=getInputRange(1,2);
+		switch(action){
+		
+		case 1:
+			for(int i=0;i<arrayCeption.size();i++){
+				for(int j=0;j<arrayCeption.get(i).size();j++){
+					System.out.println(arrayCeption.get(i).get(j));
+				}
+			}
+		
+		case 2:
+		int [] arrayLocation=search();
+		
 		DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date=new Date();
 		do{
 			System.out.println("First we need to find the individual");
 			id=search();
 		}while(id<10);
-		if (id!=13){
-			System.out.println(((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000))+"\n"+dateFormat.format(date));
-			if(id/1000000==2){
-				System.out.println("Hours: "+((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
-				System.out.println("Hourly wage: "+(((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getMonthlyPay()/((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours()));
-				
-			}
-			if(id/1000000==4){
-				System.out.println("Hours: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
-				System.out.println("Hourly wage: "+((PartTimeFaculty)arrayCeption.get(id/1000000-1).get(id%1000000)).getHourlyRate());
+		
+			System.out.println(arrayCeption.get(arrayLocation[0]).get(arrayLocation[1])+"\n"+dateFormat.format(date));
+			break;
+			
+		
 			
 		}
-			if(id/1000000==8){
-				System.out.println("Hours: "+((UnderGradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours());
-				System.out.println("Hourly wage: "+(((UnderGradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getMonthlyPay()/((GradTA)arrayCeption.get(id/1000000-1).get(id%1000000)).getHours()));
-				
-			}
-			
-		}
+		
 	}
-	
 	
 //method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
 	//have graduated. Also changes TAs to regular student alumni if they graduate
