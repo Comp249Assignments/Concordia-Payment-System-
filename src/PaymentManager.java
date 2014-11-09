@@ -855,6 +855,20 @@ public class PaymentManager {
 			}
 		}
 		
+		for (int i=0; i<gradTAs.size();i++){
+			gradTAs.get(i).advanceMonthsLeftUntilGraduation();
+			if(!gradTAs.get(i).qualifiesForTA()){
+				students.add(new Student(gradTAs.get(i).getID(), gradTAs.get(i).getName(), 0, true, 0));
+			}
+		}
+		
+		for (int i=0; i<underGradTAs.size();i++){
+			underGradTAs.get(i).advanceMonthsLeftUntilGraduation();
+			if(!underGradTAs.get(i).qualifiesForTA()){
+				students.add(new Student(underGradTAs.get(i).getID(), underGradTAs.get(i).getName(), 0, true, 0));
+			}
+		}
+		
 	}
 	
 	
@@ -1028,6 +1042,7 @@ public class PaymentManager {
 				System.out.println(id+" was not found.");
 				return new int []{-1,-1};
 		}
+		return new int[]{-1, -1};
 	}
 	
 	
