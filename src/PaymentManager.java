@@ -43,7 +43,6 @@ public class PaymentManager {
 	//The method to load the system (returns 0 if there is no system to load)
 	public static int load(){
 		ConcordiaPerson loadingBuffer=new ConcordiaPerson();
-		int index=0;
 		boolean stop=false;
 		try{
 			
@@ -58,6 +57,7 @@ public class PaymentManager {
 				if(loadingBuffer instanceof GradTA){
 					gradTAs.add((GradTA) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 					// to make sure it isn't loaded into the Student ArrayList as Well
 					loadingBuffer=null;
 				}
@@ -66,6 +66,7 @@ public class PaymentManager {
 				if(loadingBuffer instanceof UnderGradTA){
 					underGradTAs.add((UnderGradTA) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 					loadingBuffer=null;
 				}
 			
@@ -73,36 +74,42 @@ public class PaymentManager {
 				if(loadingBuffer instanceof Student){
 					students.add((Student) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 				}
 			
 				//permanentFaculty 
 				if(loadingBuffer instanceof PermanentFaculty){
 					permanentFaculty.add((PermanentFaculty) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 				}
 				
 				//partTimeFaculty 
 				if(loadingBuffer instanceof PartTimeFaculty){
 					partTimeFaculty.add((PartTimeFaculty) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 				}			
 				
 				//permanentStaff 
 				if(loadingBuffer instanceof PermanentStaff){
 					permanentStaff.add((PermanentStaff) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 				}
 				
 				//commissionStaff 
 				if(loadingBuffer instanceof CommissionStaff){
 					commissionStaff.add((CommissionStaff) loadingBuffer);
 					load++;
+					concordiaPersonID++;
 					loadingBuffer=null;
 				}
 				
 				//partTimeStaff 
 				if(loadingBuffer instanceof PartTimeStaff){
 				partTimeStaff.add((PartTimeStaff) loadingBuffer);
+				concordiaPersonID++;
 					load++;
 				}
 				
@@ -111,7 +118,7 @@ public class PaymentManager {
 			
 				
 			
-			index++;
+			
 		}
 			
 			in.close();
@@ -827,6 +834,9 @@ public class PaymentManager {
 		int id;
 		for(int i=0; i<students.size();i++){
 			students.get(i).advanceMonthsLeftUntilGraduation();
+			if (students.get(i).getMonthsLeftUntilGraduation()<=0){
+				students.get(i).setAlumni(true);
+			}
 		}
 		for(int i=0; i<partTimeFaculty.size(); i++){
 			partTimeFaculty.get(i).advanceMonthsLeft();
@@ -846,14 +856,16 @@ public class PaymentManager {
 			commissionStaff.get(i).advanceMonth();
 			if (commissionStaff.get(i).getMonthsLeft()<=0){
 				commissionStaff.remove(i);
+				
 			}
 		}
 		for (int i=0; i<partTimeStaff.size();i++){
 			partTimeStaff.get(i).advanceMonthlyContractDuration();
 			if (partTimeStaff.get(i).getMonthsLeft()<=0){
-				partTimeStaff.remove(i);		
+				partTimeStaff.remove(i);
+				
 			}
-		}
+			}
 		
 		for (int i=0; i<gradTAs.size();i++){
 			gradTAs.get(i).advanceMonthsLeftUntilGraduation();
@@ -875,23 +887,25 @@ public class PaymentManager {
 
 	
 	
+	
 	//method to delete individuals from the system
 	public static void deleteIndividual(){
-		int id=search(),action=2;
-		if(id<10 || id==13){
+		int action=2;
+		int [] arrayLocation=search();
+		if(arrayLocation[0]==-1){
 			action=3;
 		}
 		if(action==2){
 		System.out.println("are you sure you want to delete\n"
-				+ (ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000)+"\n"
+				+ (ConcordiaPerson)arrayCeption.get(arrayLocation[0]).get(arrayLocation[1])+"\n"
 						+ "1.Yes\n"
 						+ "2.No");
 		action=getInputRange(1,2);
 		}
 		
 		if(action==1){
-		((ConcordiaPerson)arrayCeption.get(id/1000000-1).get(id%1000000)).setID(id/1000000-1);
-		System.out.println("please reset the program to initiate the changes");
+		arrayCeption.get(arrayLocation[0]).remove(arrayLocation[0]);
+		System.out.println("The member has been deleted");
 		}
 		else
 			System.out.println("Redirecting you to home page");
@@ -1026,14 +1040,14 @@ public class PaymentManager {
 				} 
 				System.out.println(name+" was not found.");
 				return new int []{-1,-1};
-				
+		    
 			case 2:
 				System.out.println("please enter a id number");
 				id=getInputRange(1000000,9999999);
 				for(int i=0;i<arrayCeption.size();i++){ 
 					for(int j=0;j<arrayCeption.get(i).size();j++){
 						person = (ConcordiaPerson)arrayCeption.get(i).get(j);
-						if (person.getID() == id){
+						if (person.getID()==id){
 							System.out.println(person);
 							return new int[] {i,j};
 						}
@@ -1042,7 +1056,7 @@ public class PaymentManager {
 				System.out.println(id+" was not found.");
 				return new int []{-1,-1};
 		}
-		return new int[]{-1, -1};
+		return new int[]{-1,-1};
 	}
 	
 	
