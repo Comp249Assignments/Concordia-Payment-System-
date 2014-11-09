@@ -301,10 +301,10 @@ public class PaymentManager {
 				System.out.println("How many hours per month does this TA work for?");
 				hours = getInputInt();
 				
-				System.out.println("How much does this TA get paid per hour?");
-				pay = getInputDouble();
+				pay = baseRate.getMonthlyPay();
 				
 				if(action==1){
+					pay= pay*1.2;
 					itsBadID=isItBadID(gradTAID);
 					if(itsBadID==0){
 						id=gradTAID++;
@@ -525,24 +525,26 @@ public class PaymentManager {
 	
 	//Method to update the attributes of individuals (might use the search method in order to find that individual?)
 	public static void update(){
-		int action, id, employeeType;
+		int action;
+		int[] person;
 		boolean stop = false;
 		System.out.println("We must search for the person to delete first");
 		do{
 			System.out.println("First we need to find the individual");
-			id=search();
-		}while(id<10);
-		employeeType = id/1000000;
-		switch(employeeType){
+			person=search();
+		}while(person[0]>0);
+		switch(person[0]){
 			case 1:
+				int hours;
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Alumni status\n" +
-						"3: Months until graduation");
-				action = getInputRange(1,3);
+						"3: Months until graduation\n"+
+						"4: Make into a TA");
+				action = getInputRange(1,4);
 				if(action==1){
 					System.out.println("Please input the new name");
-					students.get(id%1000000).setName(scanner.next());
+					students.get(person[1]).setName(scanner.next());
 				}
 				else if(action==2){
 					System.out.println("Input\n"+
@@ -550,13 +552,34 @@ public class PaymentManager {
 							"2: Is not alumni");
 					action=getInputRange(1,2);
 					if(action==1)
-						students.get(id%1000000).setAlumni(true);
+						students.get(person[1]).setAlumni(true);
 					else
-						students.get(id%1000000).setAlumni(false);
+						students.get(person[1]).setAlumni(false);
+				}
+				else if(action==3){
+					System.out.println("Please input the number of months until graduation for this student");
+					students.get(person[1]).setMonthsUntilGraduation(getInputRange(1,1000000));
 				}
 				else{
-					System.out.println("Please input the number of months until graduation for this student");
-					students.get(id%1000000).setMonthsUntilGraduation(getInputRange(1,1000000));
+					if(students.get(person[1]).qualifiesForTA()){
+						System.out.println("Is this a(n)\n"+
+								"1: Grad Student\n"+
+								"2: Undergrad Student");
+						action = getInputRange(1,2);
+						System.out.println("How many hours will this person work per month?");
+						hours = getInputInt();
+						if(action==1){
+							gradTAs.add(new GradTA(students.get(person[1]).getID(), students.get(person[1]).getName(), (baseRate.getMonthlyPay()*1.2), students.get(person[1]).getMonthsLeftUntilGraduation(), hours));
+							students.remove(person[1]);
+						}
+						else{
+							underGradTAs.add(new UnderGradTA(students.get(person[1]).getID(), students.get(person[1]).getName(), baseRate.getMonthlyPay(), students.get(person[1]).getMonthsLeftUntilGraduation(), hours));
+							students.remove(person[1]);
+						}
+					}
+					else{
+						System.out.println("This student cannot be a TA");
+					}
 				}
 				break;
 			case 2:
@@ -569,7 +592,7 @@ public class PaymentManager {
 				action = getInputRange(1,5);
 				if(action==1){
 					System.out.println("Please input the new name");
-					gradTAs.get(id%1000000).setName(scanner.next());
+					gradTAs.get(person[1]).setName(scanner.next());
 				}
 				else if(action==2){
 					System.out.println("Input\n"+
@@ -577,27 +600,70 @@ public class PaymentManager {
 							"2: Is not alumni");
 					action=getInputRange(1,2);
 					if(action==1)
-						gradTAs.get(id%1000000).setAlumni(true);
+					{
+						students.add(new Student(gradTAs.get(person[1]).getID(), gradTAs.get(person[0]).getName(), 0, true, 0));
+						gradTAs.remove(person[1]);
+					}
 					else
-						gradTAs.get(id%1000000).setAlumni(false);
+						gradTAs.get(person[1]).setAlumni(false);
 				}
 				else if(action==3){
 					System.out.println("Please input the number of months until graduation for this student");
-					gradTAs.get(id%1000000).setMonthsUntilGraduation(getInputRange(1,1000000));
+					gradTAs.get(person[1]).setMonthsUntilGraduation(getInputRange(1,1000000));
 				}
 				else if(action==4){
 					System.out.println("Please input the numbers of hours this TA works per month");
 					int hours = getInputRange(0, 1000000);
-					double hourlyPay = (gradTAs.get(id%1000000).getMonthlyPay()/gradTAs.get(id%1000000).getHours());
-					gradTAs.get(id%1000000).setHours(hours);
-					gradTAs.get(id%1000000).setMonthlyPay(hours*hourlyPay);
+					double hourlyPay = (gradTAs.get(person[1]).getMonthlyPay()/gradTAs.get(person[1]).getHours());
+					gradTAs.get(person[1]).setHours(hours);
+					gradTAs.get(person[1]).setMonthlyPay(hours*hourlyPay);
 				}
 				else{
 					System.out.println("Please input the hourly pay for this TA");
-					gradTAs.get(id%1000000).setMonthlyPay(getInputDouble()*gradTAs.get(id%1000000).getHours());
+					gradTAs.get(person[1]).setMonthlyPay(getInputDouble()*gradTAs.get(person[1]).getHours());
 				}
 				break;
 			case 3:
+				System.out.println("Would you like to update the \n" +
+						"1: Name\n" +
+						"2: Alumni status\n" +
+						"3: Months until graduation\n"+
+						"4: Hours worked per month\n"+
+						"5: Hourly pay");
+				action = getInputRange(1,5);
+				if(action==1){
+					System.out.println("Please input the new name");
+					underGradTAs.get(person[1]).setName(scanner.next());
+				}
+				else if(action==2){
+					System.out.println("Input\n"+
+							"1: Is alumni\n"+
+							"2: Is not alumni");
+					action=getInputRange(1,2);
+					if(action==1){
+						students.add(new Student(underGradTAs.get(person[1]).getID(), underGradTAs.get(person[0]).getName(), 0, true, 0));
+						underGradTAs.remove(person[1]);
+					}
+					else
+						underGradTAs.get(person[1]).setAlumni(false);
+				}
+				else if(action==3){
+					System.out.println("Please input the number of months until graduation for this student");
+					underGradTAs.get(person[1]).setMonthsUntilGraduation(getInputRange(1,1000000));
+				}
+				else if(action==4){
+					System.out.println("Please input the numbers of hours this TA works per month");
+					int hours = getInputRange(0, 1000000);
+					double hourlyPay = (underGradTAs.get(person[1]).getMonthlyPay()/underGradTAs.get(person[1]).getHours());
+					underGradTAs.get(person[1]).setHours(hours);
+					underGradTAs.get(person[1]).setMonthlyPay(hours*hourlyPay);
+				}
+				else{
+					System.out.println("Please input the hourly pay for this TA");
+					underGradTAs.get(person[1]).setMonthlyPay(getInputDouble()*underGradTAs.get(person[1]).getHours());
+				}
+				break;
+			case 4:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Monthly pay\n" +
@@ -606,26 +672,26 @@ public class PaymentManager {
 				action = getInputRange(1,5);
 				if(action==1){
 					System.out.println("Please input the new name");
-					permanentFaculty.get(id%1000000).setName(scanner.next());
+					permanentFaculty.get(person[1]).setName(scanner.next());
 				}
 				else if(action==2){
 					System.out.println("Please input the monthly pay for this person");
-					permanentFaculty.get(id%1000000).setMonthlyPay(getInputDouble());
+					permanentFaculty.get(person[1]).setMonthlyPay(getInputDouble());
 				}
 				else if(action==3){
-					for(int i=0; i<permanentFaculty.get(id%1000000).getNumCourses(); i++){
+					for(int i=0; i<permanentFaculty.get(person[1]).getNumCourses(); i++){
 						System.out.print("Input the name of class " + (i+1));
-						permanentFaculty.get(id%1000000).setCoursesTaught(i, scanner.next());
+						permanentFaculty.get(person[1]).setCoursesTaught(i, scanner.next());
 					}
 				}
 				else{
-					for(int i=0; i<permanentFaculty.get(id%1000000).getNumCourses(); i++){
-						System.out.print("Input the number of students in class " + permanentFaculty.get(id%1000000).getCoursesTaught(i));
-						permanentFaculty.get(id%1000000).setStudentsPerClass(i, getInputRange(0, 1000));
+					for(int i=0; i<permanentFaculty.get(person[1]).getNumCourses(); i++){
+						System.out.print("Input the number of students in class " + permanentFaculty.get(person[1]).getCoursesTaught(i));
+						permanentFaculty.get(person[1]).setStudentsPerClass(i, getInputRange(0, 1000));
 					}
 				}
 				break;
-			case 4:
+			case 5:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Hourly pay\n" +
@@ -636,15 +702,15 @@ public class PaymentManager {
 				action = getInputRange(1,6);
 				if(action==1){
 					System.out.println("Please input the new name");
-					partTimeFaculty.get(id%1000000).setName(scanner.next());
+					partTimeFaculty.get(person[1]).setName(scanner.next());
 				}
 				else if(action==2){
 					int maxStudents=0, bonus = 0;;
 					System.out.println("Please input the hourly pay for this person");
 					double pay = getInputDouble();
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						if(partTimeFaculty.get(id%1000000).getStudentsPerClass(i)>maxStudents)
-							maxStudents = partTimeFaculty.get(id%1000000).getStudentsPerClass(i);
+					for(int i=0; i<partTimeFaculty.get(person[1]).getNumCourses(); i++){
+						if(partTimeFaculty.get(person[1]).getStudentsPerClass(i)>maxStudents)
+							maxStudents = partTimeFaculty.get(person[1]).getStudentsPerClass(i);
 					}
 					if(maxStudents>60){
 						bonus=1000;
@@ -652,16 +718,16 @@ public class PaymentManager {
 					else if(maxStudents>=40){
 						bonus=500;
 					}
-					partTimeFaculty.get(id%1000000).setMonthlyPay(pay*partTimeFaculty.get(id%1000000).getHours()+bonus);
-					partTimeFaculty.get(id%1000000).setHourlyRate(pay);
+					partTimeFaculty.get(person[1]).setMonthlyPay(pay*partTimeFaculty.get(person[1]).getHours()+bonus);
+					partTimeFaculty.get(person[1]).setHourlyRate(pay);
 				}
 				else if(action==3){
 					int maxStudents=0, bonus = 0;;
 					System.out.println("Please input the hours this person works per month");
 					int hours = getInputRange(0, 1000000);
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						if(partTimeFaculty.get(id%1000000).getStudentsPerClass(i)>maxStudents)
-							maxStudents = partTimeFaculty.get(id%1000000).getStudentsPerClass(i);
+					for(int i=0; i<partTimeFaculty.get(person[1]).getNumCourses(); i++){
+						if(partTimeFaculty.get(person[1]).getStudentsPerClass(i)>maxStudents)
+							maxStudents = partTimeFaculty.get(person[1]).getStudentsPerClass(i);
 					}
 					if(maxStudents>60){
 						bonus=1000;
@@ -669,51 +735,51 @@ public class PaymentManager {
 					else if(maxStudents>=40){
 						bonus=500;
 					}
-					partTimeFaculty.get(id%1000000).setMonthlyPay(hours*partTimeFaculty.get(id%1000000).getHourlyRate()+bonus);
-					partTimeFaculty.get(id%1000000).setHours(hours);
+					partTimeFaculty.get(person[1]).setMonthlyPay(hours*partTimeFaculty.get(person[1]).getHourlyRate()+bonus);
+					partTimeFaculty.get(person[1]).setHours(hours);
 				}
 				else if(action==4){
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
+					for(int i=0; i<partTimeFaculty.get(person[1]).getNumCourses(); i++){
 						System.out.print("Input the name of class " + (i+1));
-						partTimeFaculty.get(id%1000000).setCoursesTaught(i, scanner.next());
+						partTimeFaculty.get(person[1]).setCoursesTaught(i, scanner.next());
 					}
 				}
 				else if(action==5){
 					int students=0, maxStudents = 0;
-					for(int i=0; i<partTimeFaculty.get(id%1000000).getNumCourses(); i++){
-						System.out.print("Input the number of students in class " + partTimeFaculty.get(id%1000000).getCoursesTaught(i));
+					for(int i=0; i<partTimeFaculty.get(person[1]).getNumCourses(); i++){
+						System.out.print("Input the number of students in class " + partTimeFaculty.get(person[1]).getCoursesTaught(i));
 						students = getInputRange(0, 1000);
 						if(students>maxStudents)
 							maxStudents = students;
-						partTimeFaculty.get(id%1000000).setStudentsPerClass(i, students);
+						partTimeFaculty.get(person[1]).setStudentsPerClass(i, students);
 					}
 					if(maxStudents>60){
-						partTimeFaculty.get(id%1000000).setMonthlyPay(partTimeFaculty.get(id%1000000).getMonthlyPay()+1000);
+						partTimeFaculty.get(person[1]).setMonthlyPay(partTimeFaculty.get(person[1]).getMonthlyPay()+1000);
 					}
 					else if(maxStudents>=40){
-						partTimeFaculty.get(id%1000000).setMonthlyPay(partTimeFaculty.get(id%1000000).getMonthlyPay()+500);
+						partTimeFaculty.get(person[1]).setMonthlyPay(partTimeFaculty.get(person[1]).getMonthlyPay()+500);
 					}
 				}
 				else{
 					System.out.println("Please input the number of months this employee has left to work");
-					partTimeFaculty.get(id%1000000).setMonthsleft(getInputRange(1,1000000));
+					partTimeFaculty.get(person[1]).setMonthsleft(getInputRange(1,1000000));
 				}
 				break;
-			case 5:
+			case 6:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Annual salary");
 				action = getInputRange(1,2);
 				if(action==1){
 					System.out.println("Please input the new name");
-					permanentStaff.get(id%1000000).setName(scanner.next());
+					permanentStaff.get(person[1]).setName(scanner.next());
 				}
 				else{
 					System.out.println("Please input this person's annual salary");
-					permanentStaff.get(id%1000000).setMonthlyPay((getInputDouble()/12));
+					permanentStaff.get(person[1]).setMonthlyPay((getInputDouble()/12));
 				}
 				break;
-			case 6:
+			case 7:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Countract pay\n" +
@@ -722,25 +788,25 @@ public class PaymentManager {
 				action = getInputRange(1,4);
 				if(action==1){
 					System.out.println("Please input the new name");
-					partTimeStaff.get(id%1000000).setName(scanner.next());
+					partTimeStaff.get(person[1]).setName(scanner.next());
 				}
 				else if(action==2){
 					System.out.println("Please input the amount this person will be paid during the full time of their contract");
-					partTimeStaff.get(id%1000000).setMonthlyPay(((getInputDouble()/partTimeStaff.get(id%1000000).getMonthlyContractDuration())));
+					partTimeStaff.get(person[1]).setMonthlyPay(((getInputDouble()/partTimeStaff.get(person[1]).getMonthlyContractDuration())));
 				}
 				else if(action==3){
 					System.out.println("Please input the number of months on the contract");
-					double contractPay = partTimeStaff.get(id%1000000).getMonthlyPay()*partTimeStaff.get(id%1000000).getMonthlyContractDuration();
+					double contractPay = partTimeStaff.get(person[1]).getMonthlyPay()*partTimeStaff.get(person[1]).getMonthlyContractDuration();
 					int months = getInputRange(1,1000000);
-					partTimeStaff.get(id%1000000).setMonthlyContractDuration(months);
-					partTimeStaff.get(id%1000000).setMonthlyPay((contractPay/months));
+					partTimeStaff.get(person[1]).setMonthlyContractDuration(months);
+					partTimeStaff.get(person[1]).setMonthlyPay((contractPay/months));
 				}
 				else{
 					System.out.println("Please input the number of months this person has left to work");
-					partTimeStaff.get(id%1000000).setMonthsLeft(getInputRange(1,1000000));
+					partTimeStaff.get(person[1]).setMonthsLeft(getInputRange(1,1000000));
 				}
 				break;
-			case 7:
+			case 8:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Countract pay\n" +
@@ -752,72 +818,34 @@ public class PaymentManager {
 				action = getInputRange(1,7);
 				if(action==1){
 					System.out.println("Please input the new name");
-					commissionStaff.get(id%1000000).setName(scanner.next());
+					commissionStaff.get(person[1]).setName(scanner.next());
 				}
 				else if(action==2){
 					System.out.println("Please input the amount this person will be paid during the full time of their contract");
-					commissionStaff.get(id%1000000).setMonthlyPay(((getInputDouble()/commissionStaff.get(id%1000000).getMonthlyContractDuration())));
+					commissionStaff.get(person[1]).setMonthlyPay(((getInputDouble()/commissionStaff.get(person[1]).getMonthlyContractDuration())));
 				}
 				else if(action==3){
 					System.out.println("Please input the number of months on the contract");
-					double contractPay = commissionStaff.get(id%1000000).getMonthlyPay()*commissionStaff.get(id%1000000).getMonthlyContractDuration();
+					double contractPay = commissionStaff.get(person[1]).getMonthlyPay()*commissionStaff.get(person[1]).getMonthlyContractDuration();
 					int months = getInputRange(1,1000000);
-					commissionStaff.get(id%1000000).setMonthlyContractDuration(months);
-					commissionStaff.get(id%1000000).setMonthlyPay((contractPay/months));
+					commissionStaff.get(person[1]).setMonthlyContractDuration(months);
+					commissionStaff.get(person[1]).setMonthlyPay((contractPay/months));
 				}
 				else if(action==4){
 					System.out.println("Please input the number of months this person has left to work");
-					commissionStaff.get(id%1000000).setMonthsLeft(getInputRange(1,1000000));
+					commissionStaff.get(person[1]).setMonthsLeft(getInputRange(1,1000000));
 				}
 				else if(action==5){
 					System.out.println("Please input the new location this person will be working at in Concordia");
-					commissionStaff.get(id%1000000).setLocation(scanner.next());
+					commissionStaff.get(person[1]).setLocation(scanner.next());
 				}
 				else if(action==6){
 					System.out.println("Please input the total sales this person made this month");
-					commissionStaff.get(id%1000000).setSalesMade(getInputDouble());
+					commissionStaff.get(person[1]).setSalesMade(getInputDouble());
 				}
 				else{
 					System.out.println("Please input the sale you wish to add to this person's total sales made this month");
-					commissionStaff.get(id%1000000).addSales(getInputDouble());
-				}
-				break;
-			case 8:
-				System.out.println("Would you like to update the \n" +
-						"1: Name\n" +
-						"2: Alumni status\n" +
-						"3: Months until graduation\n"+
-						"4: Hours worked per month\n"+
-						"5: Hourly pay");
-				action = getInputRange(1,5);
-				if(action==1){
-					System.out.println("Please input the new name");
-					underGradTAs.get(id%1000000).setName(scanner.next());
-				}
-				else if(action==2){
-					System.out.println("Input\n"+
-							"1: Is alumni\n"+
-							"2: Is not alumni");
-					action=getInputRange(1,2);
-					if(action==1)
-						underGradTAs.get(id%1000000).setAlumni(true);
-					else
-						underGradTAs.get(id%1000000).setAlumni(false);
-				}
-				else if(action==3){
-					System.out.println("Please input the number of months until graduation for this student");
-					underGradTAs.get(id%1000000).setMonthsUntilGraduation(getInputRange(1,1000000));
-				}
-				else if(action==4){
-					System.out.println("Please input the numbers of hours this TA works per month");
-					int hours = getInputRange(0, 1000000);
-					double hourlyPay = (underGradTAs.get(id%1000000).getMonthlyPay()/underGradTAs.get(id%1000000).getHours());
-					underGradTAs.get(id%1000000).setHours(hours);
-					underGradTAs.get(id%1000000).setMonthlyPay(hours*hourlyPay);
-				}
-				else{
-					System.out.println("Please input the hourly pay for this TA");
-					underGradTAs.get(id%1000000).setMonthlyPay(getInputDouble()*underGradTAs.get(id%1000000).getHours());
+					commissionStaff.get(person[1]).addSales(getInputDouble());
 				}
 				break;
 		}

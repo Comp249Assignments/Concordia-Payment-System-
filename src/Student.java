@@ -36,6 +36,8 @@ public class Student extends ConcordiaPerson{
 	}
 	public void advanceMonthsLeftUntilGraduation(){
 		monthsUntilGraduation--;
+		if(monthsUntilGraduation<=0)
+			alumni=true;
 	}
 	public int getMonthsLeftUntilGraduation(){
 		return monthsUntilGraduation;
