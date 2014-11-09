@@ -790,7 +790,7 @@ public class PaymentManager {
 	public static void paystubs(){
 		int action;
 		System.out.println("would you like to view the paystub of \n"
-				+ "1.All members"
+				+ "1.All members\n"
 				+ "2.A specific member");
 		action=getInputRange(1,2);
 		switch(action){
