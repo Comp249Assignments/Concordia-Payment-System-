@@ -835,7 +835,7 @@ public class PaymentManager {
 		}
 		double totalSales=0;
 		for (int i=0; i<commissionStaff.size();i++){
-			for(int x=0; x<commissionStaff.size(); i++){
+			for(int x=0; x<commissionStaff.size(); x++){
 				totalSales+=commissionStaff.get(x).getSalesMade();
 				if(x!=i&&commissionStaff.get(x).getLocation().equals(commissionStaff.get(i).getLocation())){
 					totalSales+=commissionStaff.get(i).getSalesMade();
