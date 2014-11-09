@@ -9,9 +9,8 @@ import javax.swing.*;
 
 public class PaymentManager {
 	
-	static int load=0;
-	private static int studentID=1000000, gradTAID=2000000, permanentFacultyID=3000000, partTimeFacultyID=4000000,
-			permanentStaffID=5000000, partTimeStaffID=6000000, commissionedStaffID=7000000, underGradTAID = 8000000;
+	static int load=0;	
+	private static int concordiaID=1000000;
 	private static ArrayList<Integer> badID=new ArrayList();
 	private static	File file=new File("Concordia database.txt");
 	private static Scanner scanner = new Scanner(System.in);
@@ -25,20 +24,14 @@ public class PaymentManager {
 	private static ArrayList<PermanentStaff> permanentStaff = new ArrayList();
 	private static ArrayList<PartTimeStaff> partTimeStaff = new ArrayList();
 	private static ArrayList<CommissionStaff> commissionStaff = new ArrayList();
-	private static UnderGradTA baseRate;
 	public static void main(String[] args) {
 		startUp();
 		scanner.close();
 	}
 	//each TA has an individual salary so we will have to put this in the TA class
 	public static void startUp(){
-		double hourlyPay;
 		System.out.println("Welcome!");
-		if(load()==0){
-			System.out.println("What is the base hourly pay for an Undergrad TA?");
-			hourlyPay = getInputDouble();
-			baseRate = new UnderGradTA(hourlyPay);
-		}
+		load();
 		action();
 	}
 	//The method to load the system (returns 0 if there is no system to load)
@@ -250,7 +243,7 @@ public class PaymentManager {
 	
 	//Method to add a Student or TA
 	public static void addStudent(){
-		int action, duration,id,itsBadID, hours;
+		int action, duration,id, hours;
 		String name = "", input;
 		boolean alumni = false;
 		double pay;
@@ -279,15 +272,8 @@ public class PaymentManager {
 					duration = getInputInt();
 				}
 				
-				itsBadID=isItBadID(studentID);
-				if(itsBadID==0){
-					id=studentID++;
-			 		students.add(new Student(id, name, 0, alumni, duration));
-				}
-				else{
-					id=itsBadID;
-					students.add(itsBadID-1000000, new Student(id, name, 0, alumni, duration));
-				}
+				id=concordiaID++;
+			 	students.add(new Student(id, name, 0, alumni, duration));
 				break;
 			case 2:
 				System.out.println("Is this a(n) \n" +
@@ -305,26 +291,13 @@ public class PaymentManager {
 				pay = getInputDouble();
 				
 				if(action==1){
-					itsBadID=isItBadID(gradTAID);
-					if(itsBadID==0){
-						id=gradTAID++;
+						id=concordiaID++;
 				 		gradTAs.add(new GradTA(id, name, pay, duration, hours));
-					}
-					else{
-						id=itsBadID;
-						gradTAs.add(itsBadID-2000000, new GradTA(id, name, pay, duration, hours));
-					}
 				}
+				
 				else{
-					itsBadID=isItBadID(underGradTAID);
-					if(itsBadID==0){
-						id=underGradTAID++;
+						id=concordiaID++;
 				 		underGradTAs.add(new UnderGradTA(id, name, pay, duration, hours));
-					}
-					else{
-						id=itsBadID;
-						underGradTAs.add(itsBadID-8000000, new UnderGradTA(id, name, pay, duration, hours));
-					}
 				}
 				
 				break;
@@ -334,7 +307,7 @@ public class PaymentManager {
 
 	//Method for adding a faculty member
 	public static void addFacultyMember(){
-		int action, itsBadID, ID, monthlyPay,numCourses,hours,monthsLeft,bonus=0;
+		int action, ID, monthlyPay,numCourses,hours,monthsLeft,bonus=0;
 		String name="";
 		String [] classNames;
 		int [] studentsPerClass;
@@ -355,13 +328,7 @@ public class PaymentManager {
 			case 1:
 				
 				//generate ID
-				itsBadID=isItBadID(permanentFacultyID);
-				if(itsBadID!=0){
-					permanentFaculty.remove(itsBadID-3000000);
-					ID=itsBadID;
-				}
-				else
-					ID=permanentFacultyID++;
+				ID=concordiaID++;
 
 		 		//input numClasses
 		 		System.out.println("Please input the number of courses this faculty member will be teaching");
@@ -385,25 +352,14 @@ public class PaymentManager {
 		 			studentsPerClass[i]=getInputRange(0,999999999);
 		 			}
 		 		
-		 		//PermenantFaculty permenantFaculty=
-		 		if (itsBadID!=0){
-			 		permanentFaculty.add(itsBadID-3000000,new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
-
-		 		}
-			 		else
+		 	
+		 		//PermenantFaculty permenantFaculty
 		 			permanentFaculty.add(new PermanentFaculty(ID, name, monthlyPay, numCourses, classNames, studentsPerClass));
 
 		 		break;
 			case 2:
 		 		//generate ID
-				itsBadID=isItBadID(partTimeFacultyID);
-				if(itsBadID!=0){
-					ID=itsBadID;
-					partTimeFaculty.remove(itsBadID-4000000);
-				}
-				else
-					ID=partTimeFacultyID++;
-
+					ID=concordiaID++;
 					
 				//input months to be hired for
 		 		System.out.println("Please input for how long will this faculty member be hired");
@@ -438,18 +394,14 @@ public class PaymentManager {
 		 		for (int i=0; i<numCourses;i++){
 		 			bonus+=((studentsPerClass[i]>=40 && studentsPerClass[i]<=60)? 500:0);
 		 			bonus+=((studentsPerClass[i]>60)? 1000:0);		 		}
-		 		if(itsBadID==0)
-		 		partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus,monthsLeft));
-		 		else
-			 		partTimeFaculty.add(itsBadID-4000000,new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus, monthsLeft));
+		 			partTimeFaculty.add(new PartTimeFaculty(ID, name, hours, hourlyRate, numCourses, classNames, studentsPerClass, bonus,monthsLeft));
 
-		 		break;
 		}
 	 }
 	
 	//Method for adding any kind of staff member
 	public static void addStaffMember(){
-		int action, duration,id,itsBadID;
+		int action, duration,id;
 		String name = "", input;
 		double pay;
 		System.out.println("Is the staff a \n" +
@@ -476,50 +428,31 @@ public class PaymentManager {
 		 		System.out.println("How much will this person be paid over the duration of their contract?");
 		 		pay = getInputDouble();
 				switch(action){
+					switch(action){
 					case 1:
 						System.out.println("Where at Concordia does this person work?");
 				 		input = scanner.next();
 				 		//generate ID
-						itsBadID=isItBadID(commissionedStaffID);
-						if(itsBadID!=0){
-							id=itsBadID;
-							commissionStaff.add(itsBadID-7000000,new CommissionStaff(id, name, pay, duration, input));
-						}
-						else{
-							id=commissionedStaffID++;
+							id=concordiaID++;
 					 		commissionStaff.add(new CommissionStaff(id, name, pay, duration, input));
-							}
+							
 						break;
 					case 2:
 						//generate ID
-						itsBadID=isItBadID(partTimeStaffID);
-						if(itsBadID!=0){
-							id=itsBadID;
-							partTimeStaff.remove(itsBadID-6000000);
-							partTimeStaff.add(itsBadID-6000000,new PartTimeStaff(id, name, pay, duration));	
-						}
-						else{
-							id=partTimeStaffID++;
+							id=concordiaID++;
 							partTimeStaff.add(new PartTimeStaff(id, name, pay, duration));
 							
-						}						break;
+							break;
+					}
 				}
 				break;
 			case 2:
 				System.out.println("Please input this staff member's yearly salary");
 		 		pay = getInputDouble();
 		 		//generate ID
-				itsBadID=isItBadID(permanentStaffID);
-				if(itsBadID!=0){
-					id=itsBadID;
-					permanentStaff.remove(itsBadID-5000000);
-					permanentStaff.add(itsBadID-5000000,new PermanentStaff(id, name, pay));
-					
-				}
-				else{
-					id=permanentStaffID++;
+				id=concordiaID++;
 		 			permanentStaff.add(new PermanentStaff(id, name, pay));
-				}				break;
+					break;
 		}
 	}
 	
@@ -854,7 +787,7 @@ public class PaymentManager {
 	}
 	
 	
-	//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
+//method to advance the system one month. Deletes employees from the system if their contract has expired and changes employees to alumni if they
 	//have graduated. Also changes TAs to regular student alumni if they graduate
 	public static void advanceToNextMonth(){
 		int id;
@@ -867,8 +800,7 @@ public class PaymentManager {
 		for(int i=0; i<partTimeFaculty.size(); i++){
 			partTimeFaculty.get(i).advanceMonthsLeft();
 			if (partTimeFaculty.get(i).getMonthsLeft()<=0){
-				id=partTimeFaculty.get(i).getID();
-				partTimeFaculty.get(i).setID(id/1000000-1);
+				partTimeFaculty.remove(i);
 			}
 		}
 		double totalSales=0;
@@ -882,15 +814,15 @@ public class PaymentManager {
 			commissionStaff.get(i).setMonthlyPay(commissionStaff.get(i).getMonthlyPay()+(totalSales/100));
 			commissionStaff.get(i).advanceMonth();
 			if (commissionStaff.get(i).getMonthsLeft()<=0){
-				id=commissionStaff.get(i).getID();
-				commissionStaff.get(i).setID(id/1000000-1);
+				commissionStaff.remove(i);
+				
 			}
 		}
 		for (int i=0; i<partTimeStaff.size();i++){
 			partTimeStaff.get(i).advanceMonthlyContractDuration();
 			if (partTimeStaff.get(i).getMonthsLeft()<=0){
-				id=partTimeStaff.get(i).getID();
-				partTimeStaff.get(i).setID(id/1000000-1);
+				partTimeStaff.remove(i);
+				
 			}
 			}
 		
@@ -898,19 +830,7 @@ public class PaymentManager {
 	
 	
 
-	//method for replacing the ID of old and deleted ConcordiaPerson's
-	public static int isItBadID(int id){
-		int employeeType=id/1000000;
-		int itIs=0;
-		for(int i=0;i<badID.size();i++){
-			if(badID.get(i)/1000000==employeeType){
-				itIs=badID.get(i);
-				badID.remove(i);
-				break;
-			}
-		}
-		return itIs;
-	}
+	
 	
 	//method to delete individuals from the system
 	public static void deleteIndividual(){
