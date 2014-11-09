@@ -126,8 +126,6 @@ public class PaymentManager {
 			catch(ClassNotFoundException e){
 				e.printStackTrace();
 			}
-		
-			System.out.println(load);
 		return load;
 	}
 	
@@ -469,8 +467,9 @@ public class PaymentManager {
 			System.out.println("First we need to find the individual");
 			person=search();
 		}while(person[0]>0);
+		System.out.println(person[0] + " " + person[1]);
 		switch(person[0]){
-			case 1:
+			case 0:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Alumni status\n" +
@@ -517,7 +516,7 @@ public class PaymentManager {
 					}
 				}
 				break;
-			case 2:
+			case 1:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Alumni status\n" +
@@ -558,7 +557,7 @@ public class PaymentManager {
 					gradTAs.get(person[1]).setMonthlyPay(getInputDouble()*gradTAs.get(person[1]).getHours());
 				}
 				break;
-			case 3:
+			case 2:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Alumni status\n" +
@@ -598,7 +597,7 @@ public class PaymentManager {
 					underGradTAs.get(person[1]).setMonthlyPay(getInputDouble()*underGradTAs.get(person[1]).getHours());
 				}
 				break;
-			case 4:
+			case 3:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Monthly pay\n" +
@@ -626,7 +625,7 @@ public class PaymentManager {
 					}
 				}
 				break;
-			case 5:
+			case 4:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Hourly pay\n" +
@@ -700,7 +699,7 @@ public class PaymentManager {
 					partTimeFaculty.get(person[1]).setMonthsleft(getInputRange(1,1000000));
 				}
 				break;
-			case 6:
+			case 5:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Annual salary");
@@ -714,7 +713,7 @@ public class PaymentManager {
 					permanentStaff.get(person[1]).setMonthlyPay((getInputDouble()/12));
 				}
 				break;
-			case 7:
+			case 6:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Countract pay\n" +
@@ -741,7 +740,7 @@ public class PaymentManager {
 					partTimeStaff.get(person[1]).setMonthsLeft(getInputRange(1,1000000));
 				}
 				break;
-			case 8:
+			case 7:
 				System.out.println("Would you like to update the \n" +
 						"1: Name\n" +
 						"2: Countract pay\n" +
@@ -875,11 +874,6 @@ public class PaymentManager {
 		
 	}
 	
-	
-
-	
-	
-	
 	//method to delete individuals from the system
 	public static void deleteIndividual(){
 		int action=2;
@@ -888,8 +882,7 @@ public class PaymentManager {
 			action=3;
 		}
 		if(action==2){
-		System.out.println("are you sure you want to delete\n"
-				+ (ConcordiaPerson)arrayCeption.get(arrayLocation[0]).get(arrayLocation[1])+"\n"
+		System.out.println("are you sure you want to delete this person?\n"
 						+ "1.Yes\n"
 						+ "2.No");
 		action=getInputRange(1,2);
@@ -1117,7 +1110,7 @@ public class PaymentManager {
 		boolean parsed = false;
 		do{
 			input = scanner.next();
-			parsed = parseable(false, input);
+			parsed = parseable(true, input);
 		}while(!parsed);
 		return Integer.parseInt(input);
 	}
