@@ -57,7 +57,7 @@ public class PaymentManager {
 				if(loadingBuffer instanceof GradTA){
 					gradTAs.add((GradTA) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 					// to make sure it isn't loaded into the Student ArrayList as Well
 					loadingBuffer=null;
 				}
@@ -66,7 +66,7 @@ public class PaymentManager {
 				if(loadingBuffer instanceof UnderGradTA){
 					underGradTAs.add((UnderGradTA) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 					loadingBuffer=null;
 				}
 			
@@ -74,51 +74,44 @@ public class PaymentManager {
 				if(loadingBuffer instanceof Student){
 					students.add((Student) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 				}
 			
 				//permanentFaculty 
 				if(loadingBuffer instanceof PermanentFaculty){
 					permanentFaculty.add((PermanentFaculty) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 				}
 				
 				//partTimeFaculty 
 				if(loadingBuffer instanceof PartTimeFaculty){
 					partTimeFaculty.add((PartTimeFaculty) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 				}			
 				
 				//permanentStaff 
 				if(loadingBuffer instanceof PermanentStaff){
 					permanentStaff.add((PermanentStaff) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 				}
 				
 				//commissionStaff 
 				if(loadingBuffer instanceof CommissionStaff){
 					commissionStaff.add((CommissionStaff) loadingBuffer);
 					load++;
-					concordiaPersonID++;
+					concordiaID++;
 					loadingBuffer=null;
 				}
 				
 				//partTimeStaff 
 				if(loadingBuffer instanceof PartTimeStaff){
 				partTimeStaff.add((PartTimeStaff) loadingBuffer);
-				concordiaPersonID++;
+				concordiaID++;
 					load++;
 				}
-				
-				
-				
-			
-				
-			
-			
 		}
 			
 			in.close();
