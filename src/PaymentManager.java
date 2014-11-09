@@ -809,7 +809,7 @@ public class PaymentManager {
 			break;
 		DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date=new Date();
-			System.out.println("\n"+dateFormat.format(date));
+			System.out.println(dateFormat.format(date));
 			break;
 			
 		
