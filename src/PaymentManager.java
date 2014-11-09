@@ -47,7 +47,7 @@ public class PaymentManager {
 		try{
 			
 			ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
-			baseRate=((UnderGradTA) in.readObject);
+			baseRate=((UnderGradTA) in.readObject());
 			
 			//wont stop until IOException is recieved (meaning we hit the end of the file)
 			while(!stop){
@@ -861,6 +861,7 @@ public class PaymentManager {
 			gradTAs.get(i).advanceMonthsLeftUntilGraduation();
 			if(!gradTAs.get(i).qualifiesForTA()){
 				students.add(new Student(gradTAs.get(i).getID(), gradTAs.get(i).getName(), 0, true, 0));
+				gradTAs.remove(i);
 			}
 		}
 		
@@ -868,6 +869,7 @@ public class PaymentManager {
 			underGradTAs.get(i).advanceMonthsLeftUntilGraduation();
 			if(!underGradTAs.get(i).qualifiesForTA()){
 				students.add(new Student(underGradTAs.get(i).getID(), underGradTAs.get(i).getName(), 0, true, 0));
+				underGradTAs.remove(i);
 			}
 		}
 		
