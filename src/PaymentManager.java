@@ -798,7 +798,7 @@ public class PaymentManager {
 		case 1:
 			for(int i=0;i<arrayCeption.size();i++){
 				for(int j=0;j<arrayCeption.get(i).size();j++){
-					System.out.println(arrayCeption.get(i).get(j));
+					System.out.println(arrayCeption.get(i).get(j)+"\n");
 				}
 			}
 		
