@@ -801,7 +801,7 @@ public class PaymentManager {
 					System.out.println(arrayCeption.get(i).get(j)+"\n");
 				}
 			}
-		
+		break;
 		case 2:
 		int [] arrayLocation=search();
 		
