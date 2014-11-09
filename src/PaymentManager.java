@@ -35,115 +35,81 @@ public class PaymentManager {
 		load();
 		action();
 	}
-	
-//The method to load the system (returns 0 if there is no system to load)
+	//The method to load the system (returns 0 if there is no system to load)
 	public static int load(){
-		ArrayList<Integer> ID=new ArrayList();
+		ConcordiaPerson loadingBuffer=new ConcordiaPerson();
 		int index=0;
 		boolean stop=false;
 		try{
-			//making two input streams "idIn" is for retrieving the ID of the person and using an id
-			//cataloging system (that we will have to implement) determines to what group he belongs to
-			//"in2" is used to return the actual constructor and casts it into the correct group by
-			//using "idIn"
-			ObjectInputStream idIn=new ObjectInputStream(new FileInputStream(file));
-			ObjectInputStream in2=new ObjectInputStream(new FileInputStream(file));
+			
+			ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
 
 			
 			//wont stop until IOException is recieved (meaning we hit the end of the file)
 			while(!stop){
 				//retrieving the id and inputing it into an ArrayList ID
-				ID.add(((ConcordiaPerson) idIn.readObject()).getID());
-				
-				//students 1000000-2000000
-				if((ID.get(index)>=1000000 && ID.get(index)<2000000)||ID.get(index)==0){
-					students.add((Student) in2.readObject());
-					//if they were deleted in the previous session
-					if(ID.get(index)==0){
-						badID.add(studentID);
-					}
-					studentID++;
+				loadingBuffer=((ConcordiaPerson) in.readObject());
+				//grad ta 
+				if(loadingBuffer instanceof GradTA){
+					gradTAs.add((GradTA) loadingBuffer);
 					load++;
-					
-				}
-				//grad ta 2000000-3000000
-				if((ID.get(index)>=2000000 && ID.get(index)<3000000)||ID.get(index)==1){
-					gradTAs.add((GradTA) in2.readObject());
-					if(ID.get(index)==1){
-						badID.add(gradTAID);
-					}
-					gradTAID++;
-					load++;
+					// to make sure it isn't loaded into the Student ArrayList as Well
+					loadingBuffer=null;
 				}
 				
-				//permanentFaculty 3000000-4000000
-				if((ID.get(index)>=3000000 && ID.get(index)<4000000)||ID.get(index)==2){
-					permanentFaculty.add((PermanentFaculty) in2.readObject());
-					if(ID.get(index)==2){
-						badID.add(permanentFacultyID);
-					}
-					permanentFacultyID++;
+				//undergrad ta 
+				if(loadingBuffer instanceof UnderGradTA){
+					underGradTAs.add((UnderGradTA) loadingBuffer);
+					load++;
+					loadingBuffer=null;
+				}
+			
+				//students 
+				if(loadingBuffer instanceof Student){
+					students.add((Student) loadingBuffer);
+					load++;
+				}
+			
+				//permanentFaculty 
+				if(loadingBuffer instanceof PermanentFaculty){
+					permanentFaculty.add((PermanentFaculty) loadingBuffer);
 					load++;
 				}
 				
-				//partTimeFaculty 4000000-5000000
-				if((ID.get(index)>=4000000 && ID.get(index)<5000000)||ID.get(index)==3){
-					partTimeFaculty.add((PartTimeFaculty) in2.readObject());
-					if(ID.get(index)==3){
-						badID.add(partTimeFacultyID);
-					}
-					partTimeFacultyID++;
+				//partTimeFaculty 
+				if(loadingBuffer instanceof PartTimeFaculty){
+					partTimeFaculty.add((PartTimeFaculty) loadingBuffer);
 					load++;
 				}			
 				
-				//permanentStaff 5000000-6000000
-				if((ID.get(index)>=5000000 && ID.get(index)<6000000)||ID.get(index)==4){
-					permanentStaff.add((PermanentStaff) in2.readObject());
-					if(ID.get(index)==4){
-						badID.add(permanentStaffID);
-					}
-					permanentStaffID++;
+				//permanentStaff 
+				if(loadingBuffer instanceof PermanentStaff){
+					permanentStaff.add((PermanentStaff) loadingBuffer);
 					load++;
 				}
 				
-				//partTimeStaff 6000000-7000000
-				if((ID.get(index)>=6000000 && ID.get(index)<7000000)||ID.get(index)==5){
-				partTimeStaff.add((PartTimeStaff) in2.readObject());
-					if(ID.get(index)==5){
-						badID.add(partTimeStaffID);
-					}
-					partTimeStaffID++;
+				//commissionStaff 
+				if(loadingBuffer instanceof CommissionStaff){
+					commissionStaff.add((CommissionStaff) loadingBuffer);
+					load++;
+					loadingBuffer=null;
+				}
+				
+				//partTimeStaff 
+				if(loadingBuffer instanceof PartTimeStaff){
+				partTimeStaff.add((PartTimeStaff) loadingBuffer);
 					load++;
 				}
 				
-				//commissionStaff 7000000-8000000
-				if((ID.get(index)>=7000000 && ID.get(index)<8000000)||ID.get(index)==6){
-					commissionStaff.add((CommissionStaff) in2.readObject());
-
-					if(ID.get(index)==6){
-						badID.add(commissionedStaffID);
-					}
-					commissionedStaffID++;
-					load++;
-				}
 				
-				//undergrad ta 8000000-9000000
-				if((ID.get(index)>=8000000 && ID.get(index)<9000000)||ID.get(index)==7){
-					underGradTAs.add((UnderGradTA) in2.readObject());
-					if(ID.get(index)==1){
-						badID.add(gradTAID);
-					}
-					gradTAID++;
-					load++;
-				}
+				
 			
 				
 			
 			index++;
 		}
-			idIn.close();
 			
-			in2.close();
+			in.close();
 			}
 			catch(FileNotFoundException e){
 				return 0;
@@ -159,6 +125,7 @@ public class PaymentManager {
 			System.out.println(load);
 		return load;
 	}
+	
 	
 	
 //overwrites the old save contents with the new ones
